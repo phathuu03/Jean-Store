@@ -24,7 +24,7 @@
             </div>
 
             <div class="form-floating mb-3">
-                <input type="password" id="typePasswordX-2" class="form-control form-control-sm" name="password" required />
+                <input type="password" id="typePasswordX-2" class="form-control form-control-sm" name="password"  required />
                 <label class="form-label" for="typePasswordX-2">Password</label>
             </div>
 
