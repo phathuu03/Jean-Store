@@ -15,33 +15,34 @@
         <div class="card shadow-2-strong" style="border-radius: 1rem;">
           <div class="card-body p-3 text-center">
 
-            <h3 class="mb-5">Sign in</h3>
 
-            <form action="#" method="">
+
+            <h3 class="text-danger mb-5">Sign in</h3>
+
+            <form action="" method="">
             <div class="form-floating mb-3">
                 <input type="email" id="typeEmailX-2" class="form-control form-control-sm" name="email" required />
                 <label class="form-label" for="typeEmailX-2">Email</label>
             </div>
 
             <div class="form-floating mb-3">
-                <input type="password" id="typePasswordX-2" class="form-control form-control-sm" name="password" required />
+                <input type="password" id="typePasswordX-2" class="form-control form-control-sm" name="password"  required />
                 <label class="form-label" for="typePasswordX-2">Password</label>
             </div>
 
+            <div class="row mb-3">
+              <div class="col-6">
 
-                <!-- Checkbox -->
-                <div class="form-check d-flex justify-content-start mb-3">
-                    <input class="form-check-input" type="checkbox" value="" id="form1Example3" />
-                    <label class="form-check-label" for="form1Example3"> Remember password </label>
-                </div>
+                <select class="form-select form-select-sm" id="role" name="role" required>
+                    <option value="" selected disabled hidden>-- Role --</option>
+                    <option value="admin">Admin</option>
+                    <option value="user">User</option>
+                </select>
+              </div>
+            </div>
 
                 <button class="btn btn-primary btn-sm btn-block" type="submit">Login</button>
 
-                <hr class="my-4">
-
-                <button class="btn btn-sm btn-block btn-primary" style="background-color: #dd4b39;" type="button">
-                    <i class="fab fa-google me-2"></i> Sign up
-                </button>
             </form>
 
           </div>
