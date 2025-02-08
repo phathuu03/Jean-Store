@@ -35,7 +35,7 @@
 
 </header>
 <div class="banner">
-    <img src="${pageContext.request.contextPath}/image/bannerJeans.png" class="img-fluid" style="margin-top: 20px;">
+    <img src="${pageContext.request.contextPath}/image/bannerJeans.png" class="img-fluid w-100 h-90" style="margin-top: 20px;">
 </div>
 <div ng-app="myApp" class="content" style="margin-top: 50px;margin-left: 100px">
     <div class="container" style="margin: 40px;">
