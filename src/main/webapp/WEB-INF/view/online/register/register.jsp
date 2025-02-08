@@ -2,25 +2,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
+    <style>
+        .margin-top{
+            margin-top: 100px;
+        }
+
+    </style>
     <meta charset="UTF-8">
     <title>Register</title>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<header class="p-3 bg-dark text-white  mb-5">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
+<header class="p-3 bg-dark text-white mb-5 fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="/#">Jeans Store</a>
         </div>
     </nav>
 </header>
 
-<div class="container mt-5 mb-3 ">
+<div class="container  mb-3 pt-5 margin-top">
     <h2 class="text-center">Đăng Ký</h2>
     <div class="card mt-4">
         <div class="card-body">
             <form>
+                <!-- Các trường nhập liệu của bạn ở đây -->
                 <div class="mb-3">
                     <label for="TENKHACHHANG" class="form-label">Tên Khách Hàng</label>
                     <input type="text" class="form-control" id="TENKHACHHANG" required>
@@ -54,20 +60,30 @@
                         <option value="Khác">Khác</option>
                     </select>
                 </div>
-                <div class="d-md-flex justify-content-md-center align-items-center mb-3">
-                    <button type="submit" class="btn btn-primary "> Đăng Ký</button>
+                <div class="d-md-flex justify-content-md-center align-items-center mb-3 mt-3">
+                    <button type="submit" class="btn btn-primary mt-3">Đăng Ký</button>
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <span >Đã có tài khoản? <a href="#">Đăng nhập</a></span>
+                    <span>Đã có tài khoản? <a href="#">Đăng nhập</a></span>
                 </div>
-
             </form>
         </div>
-
     </div>
+    <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-md-4 d-flex align-items-center">
+                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                </a>
+                <span class="text-muted">© 2025 Company, Jeans Store</span>
+            </div>
 
+            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
 
+            </ul>
+        </footer>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
