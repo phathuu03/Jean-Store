@@ -9,7 +9,7 @@ public class RegisterController {
     @GetMapping("/register")
     public String register(){
 
-        return "online/register/register";
+        return "khachang/login/register";
     }
 
 }

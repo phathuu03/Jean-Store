@@ -16,7 +16,7 @@
 <header class="p-3 bg-dark text-white mb-5 fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/#">Jeans Store</a>
+            <a class="navbar-brand" href="/intro">Jeans Store</a>
         </div>
     </nav>
 </header>
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="d-flex justify-content-center">
-                    <span>Đã có tài khoản? <a href="#">Đăng nhập</a></span>
+                    <span>Đã có tài khoản? <a href="/login">Đăng nhập</a></span>
                 </div>
             </form>
         </div>

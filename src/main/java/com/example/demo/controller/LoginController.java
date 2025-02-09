@@ -11,7 +11,7 @@ public class LoginController {
     @GetMapping("/login")
     public String viewLogin(){
 
-        return "online/login/login";
+        return "khachang/login/login";
     }
 
 }

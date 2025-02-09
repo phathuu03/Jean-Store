@@ -18,7 +18,7 @@ public class VoucherController {
     @GetMapping("/voucher/hien-thi")
     public String hienThiVoucher(Model model){
         model.addAttribute("listVoucher", voucherRepository.findAll());
-        return "/online/voucher/voucher";
+        return "/quanly/voucher/voucher";
     }
 
     @GetMapping("/voucher/view-add")

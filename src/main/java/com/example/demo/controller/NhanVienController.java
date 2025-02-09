@@ -14,6 +14,6 @@ public class NhanVienController {
     @GetMapping("/nhan-vien/hien-thi")
     public String hienThiNhanVien(Model model) {
         model.addAttribute("list", nhanVienRepository.findAll());
-        return "online/nhanvien/nhanvien";
+        return "quanly/nhanvien/nhanvien";
     }
 }
