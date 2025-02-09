@@ -19,7 +19,7 @@ public class HomeController {
 
     @GetMapping("/home")
     public String viewHome(Model model) {
-        model.addAttribute("hinhAnh",hinhAnhRepository.findAll());
+//        model.addAttribute("hinhAnh",hinhAnhRepository.findAll());
         model.addAttribute("quanJeans",quanJeansRepository.findAll());
 //        model.addAttribute("quanJeansCT",quanJeansChiTietRepository.findAllById());
         return "online/home";

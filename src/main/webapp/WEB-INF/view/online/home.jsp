@@ -17,7 +17,8 @@
 <header class="p-3 bg-dark text-white">
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <div class="d-flex align-items-center mb-2 mb-lg-0 text-red text-decoration-none"style="color: cornflowerblue">
+            <div class="d-flex align-items-center mb-2 mb-lg-0 text-red text-decoration-none"
+                 style="color: cornflowerblue">
                 Jeans Store
             </div>
 
@@ -39,7 +40,8 @@
     </div>
 </header>
 <div class="banner">
-    <img src="${pageContext.request.contextPath}/image/bannerJeans.png" style="margin-top: 20px;margin-left: 20px;margin-right: 20px">
+    <img src="${pageContext.request.contextPath}/image/bannerJeans.png"
+         style="margin-top: 20px;margin-left: 20px;margin-right: 20px">
 </div>
 <div ng-app="myApp" class="content" style="margin-top: 50px;margin-left: 100px">
     <div class="container" style="margin: 40px;">
@@ -55,23 +57,30 @@
 
             <!-- Danh sách hình ảnh sản phẩm -->
             <div class="col-md-9 row g-3" style="margin-top: 50px;">
-                <c:forEach var="item" items="${hinhAnh}">
+                <c:forEach var="item1" items="${quanJeans}">
                     <div class="col-md-3 product-card">
                         <div class="product-img-wrapper">
-                            <img src="${item.url}" alt="Hình ảnh sản phẩm" class="product-img">
+                            <c:forEach var="hinhAnh" items="${item1.hinhAnh}" begin="0" end="0">
+                                <img src="${hinhAnh.url}" alt="Hình ảnh sản phẩm" class="product-img">
+                            </c:forEach>
                         </div>
-                        <label class="product-name">${item.quanJeans.tenSanPham}</label>
+                        <c:forEach var="quanCT" items="${item1.quanJeansChiTiets}" begin="0" end="0">
+                            <label class="product-price">${quanCT.gia}</label>
+                        </c:forEach>
+                        <label class="product-name">${item1.tenSanPham}</label>
                     </div>
                 </c:forEach>
             </div>
         </div>
     </div>
 
-    <div class="container">
+    <div class="footer">
         <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
             <div class="col-md-4 d-flex align-items-center">
                 <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                    <svg class="bi" width="30" height="24">
+                        <use xlink:href="#bootstrap"></use>
+                    </svg>
                 </a>
                 <span class="text-muted">© 2025 Company, Jeans Store</span>
             </div>
