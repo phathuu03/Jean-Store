@@ -22,6 +22,6 @@ public class HomeController {
 //        model.addAttribute("hinhAnh",hinhAnhRepository.findAll());
         model.addAttribute("quanJeans",quanJeansRepository.findAll());
 //        model.addAttribute("quanJeansCT",quanJeansChiTietRepository.findAllById());
-        return "online/home";
+        return "online/login/intro";
     }
 }
