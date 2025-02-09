@@ -42,7 +42,7 @@
 <header class="p-2 bg-dark text-white mb-5 fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/intro">Jeans Store</a>
+            <a class="navbar-brand" href="/index">Jeans Store</a>
         </div>
     </nav>
 </header>
