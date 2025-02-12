@@ -11,5 +11,5 @@ import java.util.List;
 @Repository
 public interface QuanJeansRepository extends JpaRepository<QuanJeans, Long> {
 
-
+    List<QuanJeans> findByTenSanPhamContainingIgnoreCase(String keyword);
 }

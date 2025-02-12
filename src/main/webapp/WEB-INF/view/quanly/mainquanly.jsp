@@ -56,7 +56,7 @@
                     <a class="nav-link text-white" href="/nhan-vien/hien-thi" target="contentFrame">Quản lý nhân viên</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="page2.jsp" target="contentFrame">Page 2</a>
+                    <a class="nav-link text-white" href="/api/quan-jean/quanjeans" target="contentFrame">Quản lý sản phẩm</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="page3.jsp" target="contentFrame">Page 3</a>
