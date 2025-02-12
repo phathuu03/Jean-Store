@@ -106,6 +106,11 @@
         </form>
     </div>
 </div>
+<!-- Form tìm kiếm -->
+<form action="/api/quan-jean/quanjeans-search" method="get">
+    <input type="text" name="search" placeholder="Tìm kiếm sản phẩm..." value="${param.search}">
+    <button type="submit">Tìm kiếm</button>
+</form>
 <!-- Bảng danh sách sản phẩm -->
 <table class="table table-striped table-hover mt-4">
     <thead class="table-dark">

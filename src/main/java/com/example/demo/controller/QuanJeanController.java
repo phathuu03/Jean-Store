@@ -91,6 +91,20 @@ public class QuanJeanController {
         return "redirect:/api/quan-jean/quanjeans"; // Quay lại danh sách sản phẩm
     }
 
+    @GetMapping("/quanjeans-search")
+    public String hienThiQuan(@RequestParam(value = "search", required = false) String search, Model model) {
+        if (search != null && !search.isEmpty()) {
+            model.addAttribute("listQuanJean", quanJeanService.searchQuanJean(search));  // Tìm kiếm sản phẩm theo từ khóa
+        } else {
+            model.addAttribute("listQuanJean", quanJeanService.getAllQuanJean());  // Hiển thị tất cả sản phẩm
+        }
+
+        model.addAttribute("listOngQuan", ongQuanService.getAllOngQuan());
+        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieu());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAllThuongHieu());
+        return "quanly/sanpham/sanpham";
+    }
+
 
 
 

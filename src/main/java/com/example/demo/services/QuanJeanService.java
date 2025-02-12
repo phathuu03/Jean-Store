@@ -39,4 +39,8 @@ public class QuanJeanService {
         }
     }
 
+    public List<QuanJeans>searchQuanJean(String nameQuanJean){
+        return quanJeansRepository.findByTenSanPhamContainingIgnoreCase(nameQuanJean);
+    }
+
 }
