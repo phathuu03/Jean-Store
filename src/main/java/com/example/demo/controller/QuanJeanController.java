@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Controller
 @RequestMapping("/api/quan-jean")
 public class QuanJeanController {
@@ -48,13 +50,49 @@ public class QuanJeanController {
     }
 
     // Hiển thị form chỉnh sửa quần jeans
+    @GetMapping("/detail/{id}")
+    public String showDetailForm(@PathVariable Long id, Model model) {
+        QuanJeans quanJeans = quanJeanService.getQuanJeanById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm có ID: " + id));
+        model.addAttribute("quanJeans", quanJeans);
+        return "quanly/sanpham/detail";
+    }
+
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         QuanJeans quanJeans = quanJeanService.getQuanJeanById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm có ID: " + id));
+
         model.addAttribute("quanJeans", quanJeans);
+        model.addAttribute("listThuongHieu", thuongHieuService.getAllThuongHieu());
+        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieu());
+        model.addAttribute("listOngQuan", ongQuanService.getAllOngQuan());
         return "quanly/sanpham/edit";
     }
+
+
+    @PostMapping("/update/{id}")
+    public String updateQuanJean(@PathVariable Long id, @ModelAttribute QuanJeans quanJeans) {
+        // Kiểm tra sản phẩm có tồn tại không
+        QuanJeans existingQuanJeans = quanJeanService.getQuanJeanById(id)
+                .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm có ID: " + id));
+
+        // Cập nhật thông tin sản phẩm
+        existingQuanJeans.setTenSanPham(quanJeans.getTenSanPham());
+        existingQuanJeans.setTrangThai(quanJeans.getTrangThai());
+        existingQuanJeans.setThuongHieu(quanJeans.getThuongHieu());
+        existingQuanJeans.setChatLieu(quanJeans.getChatLieu());
+        existingQuanJeans.setOngQuan(quanJeans.getOngQuan());
+        existingQuanJeans.setNgaySua(LocalDate.now());
+
+        // Lưu lại dữ liệu cập nhật
+        quanJeanService.updateQuanJean(id,existingQuanJeans);
+
+        return "redirect:/api/quan-jean/quanjeans"; // Quay lại danh sách sản phẩm
+    }
+
+
+
 
 
 }

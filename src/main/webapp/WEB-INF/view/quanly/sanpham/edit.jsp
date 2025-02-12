@@ -5,49 +5,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Chi tiết Quần Jeans</title>
-
-    <!-- Bootstrap 5 -->
+    <title>Chỉnh sửa Quần Jeans</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-<div class="container mt-5">
-    <h2 class="text-center mb-4">Chi tiết Quần Jeans</h2>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Chỉnh sửa Quần Jeans</h2>
 
     <div class="card shadow-lg p-4">
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="text-primary">Thông tin sản phẩm</h4>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>ID:</strong> ${quanJeans.id}</li>
-                    <li class="list-group-item"><strong>Tên sản phẩm:</strong> ${quanJeans.tenSanPham}</li>
-                    <li class="list-group-item"><strong>Ngày tạo:</strong> ${quanJeans.ngayTao}</li>
-                    <li class="list-group-item"><strong>Ngày sửa:</strong> ${quanJeans.ngaySua}</li>
-                    <li class="list-group-item"><strong>Trạng thái:</strong> ${quanJeans.trangThai}</li>
-                </ul>
-            </div>
+        <form action="/api/quan-jean/update/${quanJeans.id}" method="post">
+            <input type="hidden" name="id" value="${quanJeans.id}">
 
-            <div class="col-md-6">
-                <h4 class="text-success">Thông tin bổ sung</h4>
-                <ul class="list-group">
-                    <li class="list-group-item"><strong>Thương hiệu:</strong> ${quanJeans.thuongHieu.tenThuongHieu}</li>
-                    <li class="list-group-item"><strong>Chất liệu:</strong> ${quanJeans.chatLieu.tenChatLieu}</li>
-                    <li class="list-group-item"><strong>Ống quần:</strong> ${quanJeans.ongQuan.tenOngQuan}</li>
-                </ul>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="text-primary">Thông tin sản phẩm</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm:</label>
+                        <input type="text" name="tenSanPham" value="${quanJeans.tenSanPham}" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Thương hiệu:</label>
+                        <select name="thuongHieu.id" class="form-select">
+                            <c:forEach var="thuongHieu" items="${listThuongHieu}">
+                                <option value="${thuongHieu.id}" ${quanJeans.thuongHieu.id == thuongHieu.id ? 'selected' : ''}>
+                                        ${thuongHieu.tenThuongHieu}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái:</label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trangThai" value="0" ${quanJeans.trangThai == 0 ? 'checked' : ''}>
+                                <label class="form-check-label">Còn hàng</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trangThai" value="1" ${quanJeans.trangThai == 1 ? 'checked' : ''}>
+                                <label class="form-check-label">Hết hàng</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trangThai" value="2" ${quanJeans.trangThai == 2 ? 'checked' : ''}>
+                                <label class="form-check-label">Sắp về hàng</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h4 class="text-success">Thông tin bổ sung</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Ống quần:</label>
+                        <select name="ongQuan.id" class="form-select">
+                            <c:forEach var="ongQuan" items="${listOngQuan}">
+                                <option value="${ongQuan.id}" ${quanJeans.ongQuan.id == ongQuan.id ? 'selected' : ''}>
+                                        ${ongQuan.tenOngQuan}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Chất liệu:</label>
+                        <select name="chatLieu.id" class="form-select">
+                            <c:forEach var="chatLieu" items="${listChatLieu}">
+                                <option value="${chatLieu.id}" ${quanJeans.chatLieu.id == chatLieu.id ? 'selected' : ''}>
+                                        ${chatLieu.tenChatLieu}
+                                </option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- Nút điều hướng -->
-        <div class="mt-4 text-center">
-            <a href="edit/${quanJeans.id}" class="btn btn-warning me-2">Chỉnh sửa</a>
-            <a href="/api/quan-jean/delete/${quanJeans.id}" class="btn btn-danger me-2" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
-            <a href="/api/quan-jean/quanjeans" class="btn btn-secondary">Quay lại danh sách</a>
-        </div>
+            <div class="mt-4 text-center">
+                <button type="submit" class="btn btn-primary">Cập nhật</button>
+                <a href="/api/quan-jean/quanjeans" class="btn btn-secondary">Hủy</a>
+            </div>
+        </form>
     </div>
 </div>
 
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
