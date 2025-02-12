@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -35,12 +35,13 @@
 
             <div class="col-md-6 mb-3">
                 <label for="phanTramGiamGia" class="form-label">Điều Kiện Áp Dụng</label>
-                <select id="dieuKien" name="dieuKien" class="form-select" required>
+                <select id="dieuKienApDung" name="dieuKienApDung" class="form-select" required>
                     <option value="" disabled selected>Chọn điều kiện áp dụng</option>
-                    <option value="Không giới hạn">Không giới hạn</option>
-                    <option value="Áp dụng cho đơn hàng từ 500k">Áp dụng cho đơn hàng từ 500k</option>
-                    <option value="Áp dụng cho khách hàng mới">Áp dụng cho khách hàng mới</option>
+                    <option value="0">Không giới hạn</option>
+                    <option value="500000">Áp dụng cho đơn hàng từ 500k</option>
+                    <option value="1">Áp dụng cho khách hàng mới</option>
                 </select>
+
             </div>
         </div>
 
@@ -57,7 +58,7 @@
         </div>
 
         <button type="submit" class="btn btn-success">ADD</button>
-        <a href="/voucher" class="btn btn-secondary">Quay Lại</a>
+        <a href="/voucher/hien-thi" class="btn btn-secondary">Quay Lại</a>
     </form>
 </div>
 

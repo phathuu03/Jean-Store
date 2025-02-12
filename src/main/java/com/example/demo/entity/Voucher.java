@@ -2,14 +2,13 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "Voucher")
 @Data
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Voucher {
@@ -17,7 +16,7 @@ public class Voucher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 50)
+    @Column(length = 50, nullable = false)
     private String tenVoucher;
 
     @Column(length = 125)
@@ -27,11 +26,23 @@ public class Voucher {
 
     private Double phanTramGiamGia;
 
-    private Double dieuKienApDung;
+    @Column(length = 100) // Điều kiện áp dụng dạng text (hoặc dùng Enum nếu cần)
+    private String dieuKienApDung;
 
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayBatDau;
 
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date ngayKetThuc;
 
-    private Integer trangThai;
+    private Integer trangThai; // 0: Chưa diễn ra, 1: Đang diễn ra, 2: Đã kết thúc
+
+    @PrePersist
+    public void prePersist() {
+        if (trangThai == null) {
+            this.trangThai = 0; // Mặc định là "Chưa diễn ra"
+        }
+    }
 }
