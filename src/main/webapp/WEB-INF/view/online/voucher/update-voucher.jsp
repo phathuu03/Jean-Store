@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="container mt-5">
+<div class="card p-4 shadow-sm">
     <h2 class="text-info">Update Voucher</h2>
 
     <form action="/voucher/update/${voucher.id}" method="post">
@@ -61,6 +62,7 @@
 
         </a>
     </form>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

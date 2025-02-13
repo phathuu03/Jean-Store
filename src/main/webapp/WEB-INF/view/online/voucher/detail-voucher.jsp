@@ -8,6 +8,7 @@
 </head>
 <body>
 <div class="container mt-5">
+<div class="card p-4 shadow-sm">
     <h2 class="text-info mb-4">Chi Tiết Voucher</h2>
 
     <form>
@@ -55,6 +56,7 @@
             <a href="/voucher/hien-thi" class="btn btn-secondary">Quay Lại</a>
         </div>
     </form>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
