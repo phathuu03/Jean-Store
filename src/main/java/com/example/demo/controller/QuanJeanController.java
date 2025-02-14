@@ -30,9 +30,9 @@ public class QuanJeanController {
     @GetMapping("/quanjeans")
     public String hienThiQuan(Model model) {
         model.addAttribute("listQuanJean", quanJeanService.getAllQuanJean());
-        model.addAttribute("listOngQuan", ongQuanService.getAllOngQuan());
-        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieu());
-        model.addAttribute("listThuongHieu", thuongHieuService.getAllThuongHieu());
+        model.addAttribute("listOngQuan", ongQuanService.getAllActiveOngQuan());
+        model.addAttribute("listChatLieu", chatLieuService.getAllActiveChatLieu());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAllActiveThuongHieu());
         return "quanly/sanpham/sanpham";
     }
 
@@ -64,9 +64,9 @@ public class QuanJeanController {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm có ID: " + id));
 
         model.addAttribute("quanJeans", quanJeans);
-        model.addAttribute("listThuongHieu", thuongHieuService.getAllThuongHieu());
-        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieu());
-        model.addAttribute("listOngQuan", ongQuanService.getAllOngQuan());
+        model.addAttribute("listThuongHieu", thuongHieuService.getAllActiveThuongHieu());
+        model.addAttribute("listChatLieu", chatLieuService.getAllActiveChatLieu());
+        model.addAttribute("listOngQuan", ongQuanService.getAllActiveOngQuan());
         return "quanly/sanpham/edit";
     }
 
