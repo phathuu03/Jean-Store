@@ -19,8 +19,8 @@ public class HinhAnh {
     @Column(length = 500)
     private String url;
 
-    @Column(name = "Boolean")
-    private Boolean active;
+    @Column(name = "ID_MauSac")
+    private Integer idMauSac;
 
     private Date ngayTao;
 

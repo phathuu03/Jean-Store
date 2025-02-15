@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <html>
 <head>
     <title>Jeans-Store</title>
@@ -23,9 +25,9 @@
             </div>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="#" class="nav-link px-2 text-white">Trang chủ</a></li>
+                <li><a href="/home" class="nav-link px-2 text-white">Trang chủ</a></li>
                 <li><a href="#" class="nav-link px-2 text-white">Quản lý đơn hàng</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Giỏ hàng</a></li>
+                <li><a href="/cart/detail" class="nav-link px-2 text-white">Giỏ hàng</a></li>
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -39,19 +41,19 @@
         </div>
     </div>
 </header>
-<div class="banner">
+<div class="banner d-flex justify-content-center">
     <img src="${pageContext.request.contextPath}/image/bannerJeans.png"
-         style="margin-top: 20px;margin-left: 20px;margin-right: 20px">
+         class="img-fluid mt-3" style="max-width: 100%;">
 </div>
 <div ng-app="myApp" class="content" style="margin-top: 50px;margin-left: 100px">
     <div class="container" style="margin: 40px;">
         <div class="row">
             <!-- Danh sách tên sản phẩm -->
             <div class="col-md-3 border fixed-sidebar">
-                <h5 class="text-center">Danh sách sản phẩm</h5>
+                <h5 class="text-center">Thương Hiệu</h5>
                 <hr>
-                <c:forEach var="item" items="${quanJeans}">
-                    <a href="#" class="product-link">${item.tenSanPham}</a><br>
+                <c:forEach var="item" items="${thuongHieu}">
+                    <a href="#" class="product-link">${item.tenThuongHieu}</a><br>
                 </c:forEach>
             </div>
 
@@ -65,9 +67,9 @@
                             </c:forEach>
                         </div>
                         <c:forEach var="quanCT" items="${item1.quanJeansChiTiets}" begin="0" end="0">
-                            <label class="product-price">${quanCT.gia}</label>
+                            <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="đ" minFractionDigits="2" maxFractionDigits="2"/>
                         </c:forEach>
-                        <label class="product-name">${item1.tenSanPham}</label>
+                        <a href="/home/product-detail?id=${item1.id}" class="product-name">${item1.tenSanPham}</a>
                     </div>
                 </c:forEach>
             </div>
