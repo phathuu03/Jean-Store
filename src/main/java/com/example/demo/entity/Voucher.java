@@ -26,8 +26,10 @@ public class Voucher {
 
     private Double phanTramGiamGia;
 
+    private Double giamGiaToiDa;
+
     @Column(length = 100) // Điều kiện áp dụng dạng text (hoặc dùng Enum nếu cần)
-    private String dieuKienApDung;
+    private Double dieuKienApDung;
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

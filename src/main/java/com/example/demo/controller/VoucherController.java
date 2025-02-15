@@ -52,6 +52,10 @@ public class VoucherController {
         if (result.hasErrors()) {
             return "online/voucher/add-voucher";
         }
+        // Kiểm tra nếu khách hàng mới thì cập nhật đúng giá trị mới
+        if (voucher.getDieuKienApDung() == 1) {
+            voucher.setDieuKienApDung(100000.0); // Sửa lại đúng giá trị
+        }
         voucherRepository.save(voucher);
         return "redirect:/voucher/hien-thi";
     }
@@ -80,6 +84,9 @@ public class VoucherController {
 
         if (voucherRepository.existsById(id)) {
             voucher.setId(id); // Đảm bảo ID không bị thay đổi
+            if (voucher.getDieuKienApDung() == 1) {
+                voucher.setDieuKienApDung(100000.0);
+            }
             voucherRepository.save(voucher);
         }
 

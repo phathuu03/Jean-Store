@@ -52,6 +52,7 @@
             <th>Số Lượng</th>
             <th>Phần Trăm Giảm Giá</th>
             <th>Điều Kiện Áp Dụng</th>
+            <th>Giảm Giá Tối Đa</th>
             <th>Ngày Bắt Đầu</th>
             <th>Ngày kết thúc</th>
             <th>Trạng thái</th>
@@ -68,6 +69,7 @@
                     <td>${voucher.soLuong}</td>
                     <td>${voucher.phanTramGiamGia}%</td>
                     <td>${voucher.dieuKienApDung}</td>
+                    <td>${voucher.giamGiaToiDa}</td>
                     <td>${voucher.ngayBatDau}</td>
                     <td>${voucher.ngayKetThuc}</td>
                     <td>${voucher.trangThai == 0 ? "Đang Diễn Ra" : "Đã Kết Thúc"}</td>

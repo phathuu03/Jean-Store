@@ -35,6 +35,12 @@
                 <label for="dieuKien" class="form-label">Điều Kiện Áp Dụng</label>
                 <input type="text" id="dieuKien" name="dieuKien" class="form-control" value="${voucher.dieuKienApDung}" readonly>
             </div>
+
+            <div class="col-md-6">
+                <label for="giamGiaToiDa" class="form-label">Giảm Giá Tối Đa</label>
+                <input type="text" id="giamGiaToiDa" name="giamGiaToiDa" class="form-control" value="${voucher.giamGiaToiDa}" readonly>
+            </div>
+
             <div class="col-md-6">
                 <label for="ngayBatDau" class="form-label">Ngày Bắt Đầu</label>
                 <input type="date" id="ngayBatDau" name="ngayBatDau" class="form-control" value="${voucher.ngayBatDau}" readonly>

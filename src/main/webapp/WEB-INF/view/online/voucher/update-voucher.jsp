@@ -47,16 +47,19 @@
 
         <div class="row">
             <div class="col-md-6 mb-3">
+                <label for="giamGiaToiDa" class="form-label">Giảm Giá Tối Đa</label>
+                <input type="number" id="giamGiaToiDa" name="giamGiaToiDa" class="form-control" value="${voucher.giamGiaToiDa}" step="0.01" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
                 <label for="ngayBatDau" class="form-label">Ngày Bắt Đầu</label>
                 <input type="date" id="ngayBatDau" name="ngayBatDau" class="form-control" value="${voucher.ngayBatDau}" required>
             </div>
-
+        </div>
             <div class="col-md-6 mb-3">
                 <label for="ngayKetThuc" class="form-label">Ngày Kết Thúc</label>
                 <input type="date" id="ngayKetThuc" name="ngayKetThuc" class="form-control" value="${voucher.ngayKetThuc}" required>
             </div>
-        </div>
-
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="/voucher/hien-thi" class="btn btn-secondary">Quay Lại
 
