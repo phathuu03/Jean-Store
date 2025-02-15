@@ -1,8 +1,12 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -10,37 +14,46 @@ import java.util.Date;
 @Data
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
+
 public class NhanVien {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 125)
     private String tenNhanVien;
 
-    @Column(length = 50)
     private String tenDangNhap;
 
-    @Column(length = 50)
     private String matKhau;
 
-    @Column(length = 11)
+    @Pattern(regexp = "0[0-9]{9}", message = "Số điện thoại phải có 10 chữ số và bắt đầu bằng 0")
+    @Column(unique = true)
     private String soDienThoai;
 
-    @Column(length = 125)
     private String diaChi;
 
-    @Column(length = 50)
+    @Email(message = "Email không hợp lệ")
+    @Column(unique = true)
     private String email;
 
     private Boolean gioiTinh;
 
-    @Column(length = 50)
     private String chucVu;
 
-    private Date ngayTao;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate ngayTao = LocalDate.now();
 
-    private Date ngaySua;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate ngaySua;
 
     private Integer trangThai;
+
+    @PrePersist
+    public void prePersist() {
+        if (trangThai == null) {
+            this.trangThai = 0; // Mặc định là "Chưa diễn ra"
+        }
+    }
 }

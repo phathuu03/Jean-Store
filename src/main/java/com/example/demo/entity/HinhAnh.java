@@ -1,4 +1,5 @@
 package com.example.demo.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +19,9 @@ public class HinhAnh {
 
     @Column(length = 500)
     private String url;
+
+    @Column(name = "ID_MauSac")
+    private Integer idMauSac;
 
     @Column(name = "Boolean")
     private Boolean active;

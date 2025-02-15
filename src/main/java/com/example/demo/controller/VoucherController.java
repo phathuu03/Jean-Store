@@ -37,33 +37,31 @@ public class VoucherController {
         model.addAttribute("totalPages", pageVoucher.getTotalPages());
         model.addAttribute("size", size); // Truyền size để cập nhật dropdown
 
-        return "/online/voucher/voucher";
+        return "/quanly/voucher/voucher";
     }
-
-
 
     @GetMapping("/voucher/view-add")
     public String viewAdd() {
-        return "online/voucher/add-voucher";
+        return "quanly/voucher/add-voucher";
     }
 
     @PostMapping("/voucher/add")
     public String add(@ModelAttribute("voucher") @Valid Voucher voucher, BindingResult result) {
         if (result.hasErrors()) {
-            return "online/voucher/add-voucher";
+            return "quanly/voucher/add-voucher";
         }
         // Kiểm tra nếu khách hàng mới thì cập nhật đúng giá trị mới
         if (voucher.getDieuKienApDung() == 1) {
             voucher.setDieuKienApDung(100000.0); // Sửa lại đúng giá trị
         }
         voucherRepository.save(voucher);
-        return "redirect:/voucher/hien-thi";
+        return "redirect:quanly/voucher/hien-thi";
     }
 
     @GetMapping("/voucher/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         model.addAttribute("voucher", voucherRepository.findById(id).orElse(null));
-        return "/online/voucher/detail-voucher";
+        return "/quanly/voucher/detail-voucher";
     }
 
     @GetMapping("/voucher/view-update/{id}")
@@ -71,7 +69,7 @@ public class VoucherController {
         Optional<Voucher> optionalVoucher = voucherRepository.findById(id);
         if (optionalVoucher.isPresent()) {
             model.addAttribute("voucher", optionalVoucher.get());
-            return "online/voucher/update-voucher";
+            return "quanly/voucher/update-voucher";
         }
         return "redirect:/voucher/hien-thi";
     }
@@ -79,7 +77,7 @@ public class VoucherController {
     @PostMapping("/voucher/update/{id}")
     public String updateVoucher(@PathVariable("id") Long id, @ModelAttribute("voucher") @Valid Voucher voucher, BindingResult result) {
         if (result.hasErrors()) {
-            return "online/voucher/update-voucher";
+            return "quanly/voucher/update-voucher";
         }
 
         if (voucherRepository.existsById(id)) {
