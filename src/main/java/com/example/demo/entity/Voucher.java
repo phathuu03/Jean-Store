@@ -29,6 +29,8 @@ public class Voucher {
 
     private Double dieuKienApDung;
 
+    private Double giamGiaToiDa;
+
     private Date ngayBatDau;
 
     private Date ngayKetThuc;

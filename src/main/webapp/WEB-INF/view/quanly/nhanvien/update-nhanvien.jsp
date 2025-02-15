@@ -65,16 +65,7 @@
                 </div>
             </div>
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <label for="ngayTao" class="form-label">Ngày Tạo</label>
-                    <input type="date" id="ngayTao" name="ngayTao" class="form-control" value="${nv.ngayTao}" disabled>
-                </div>
-                <div class="col-md-6 mb-3">
-                    <label for="ngaySua" class="form-label">Ngày Sửa</label>
-                    <input type="date" id="ngaySua" name="ngaySua" class="form-control" value="${nv.ngaySua}">
-                </div>
-            </div>
+
 
             <div class="row">
                 <div class="col-md-6 mb-3">

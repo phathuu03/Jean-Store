@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -41,11 +42,11 @@ public class NhanVien {
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date ngayTao;
+    private LocalDate ngayTao = LocalDate.now();
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date ngaySua;
+    private LocalDate ngaySua;
 
     private Integer trangThai;
 
