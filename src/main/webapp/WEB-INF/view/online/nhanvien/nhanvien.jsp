@@ -12,37 +12,37 @@
 <div class="container mt-4">
     <h2 class="text-info">Quản Lý Nhân Viên</h2>
 
-    <form action="" method="">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="tenNhanVien" class="form-label">Tên Nhân Viên:</label>
-                    <input type="text" id="tenNhanVien" name="tenNhanVien" class="form-control" placeholder="Nhập tên nhân viên">
-                </div>
-            </div>
+<%--    <form action="" method="">--%>
+<%--        <div class="row">--%>
+<%--            <div class="col-md-6">--%>
+<%--                <div class="mb-3">--%>
+<%--                    <label for="tenNhanVien" class="form-label">Tên Nhân Viên:</label>--%>
+<%--                    <input type="text" id="tenNhanVien" name="tenNhanVien" class="form-control" placeholder="Nhập tên nhân viên">--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="tenDangNhap" class="form-label">Tên Đăng Nhập:</label>
-                    <input type="text" id="tenDangNhap" name="tenDangNhap" class="form-control" placeholder="Nhập tên đăng nhập">
-                </div>
-            </div>
+<%--            <div class="col-md-6">--%>
+<%--                <div class="mb-3">--%>
+<%--                    <label for="tenDangNhap" class="form-label">Tên Đăng Nhập:</label>--%>
+<%--                    <input type="text" id="tenDangNhap" name="tenDangNhap" class="form-control" placeholder="Nhập tên đăng nhập">--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="matKhau" class="form-label">Mật Khẩu:</label>
-                    <input type="password" id="matKhau" name="matKhau" class="form-control" placeholder="Nhập mật khẩu">
-                </div>
-            </div>
+<%--            <div class="col-md-6">--%>
+<%--                <div class="mb-3">--%>
+<%--                    <label for="matKhau" class="form-label">Mật Khẩu:</label>--%>
+<%--                    <input type="password" id="matKhau" name="matKhau" class="form-control" placeholder="Nhập mật khẩu">--%>
+<%--                </div>--%>
+<%--            </div>--%>
 
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="soDienThoai" class="form-label">Số Điện Thoại:</label>
-                    <input type="text" id="soDienThoai" name="soDienThoai" class="form-control" placeholder="Nhập số điện thoại">
-                </div>
-            </div>
-        </div>
-    </form>
+<%--            <div class="col-md-6">--%>
+<%--                <div class="mb-3">--%>
+<%--                    <label for="soDienThoai" class="form-label">Số Điện Thoại:</label>--%>
+<%--                    <input type="text" id="soDienThoai" name="soDienThoai" class="form-control" placeholder="Nhập số điện thoại">--%>
+<%--                </div>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </form>--%>
 
     <div class="d-flex align-items-center justify-content-between mb-3">
         <form action="/search" class="d-flex">
