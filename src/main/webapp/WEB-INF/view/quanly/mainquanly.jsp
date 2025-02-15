@@ -59,7 +59,7 @@
                     <a class="nav-link text-white" href="/api/quan-jean/quanjeans" target="contentFrame">Quản lý sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="page3.jsp" target="contentFrame">Page 3</a>
+                    <a class="nav-link text-white" href="/api/quan-ly/quanly-thuoctinh" target="contentFrame">Quản lý thuộc tính</a>
                 </li> <li class="nav-item">
                     <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
                 </li>
