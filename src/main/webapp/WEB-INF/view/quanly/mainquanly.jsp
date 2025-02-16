@@ -5,39 +5,65 @@
     <meta charset="UTF-8">
     <title>Main Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         body {
-            overflow-x: hidden; /* Ngăn chặn cuộn ngang */
+            overflow-x: hidden;
         }
         .navbar {
-            height: 56px; /* Điều chỉnh chiều cao nếu cần */
+            height: 56px;
         }
         .margin-top {
-            margin-top: 56px; /* Chiều cao của thanh navbar */
+            margin-top: 56px;
         }
         .sidebar {
             position: fixed;
-            top: 70px; /* Dưới thanh điều hướng */
+            top: 70px;
             bottom: 0;
             left: 0;
-            z-index: 1000; /* Để trên cùng */
+            z-index: 1000;
             padding: 20px 0;
-            background-color: #bcc5cf; /* Màu nền cho sidebar */
-            width: 250px; /* Chiều rộng của sidebar */
+            background-color: #bcc5cf;
+            width: 250px;
         }
         .main-content {
-            margin-left: 250px; /* Rộng bằng với sidebar */
+            margin-left: 250px;
             padding: 20px;
         }
         .content-frame {
             width: 100%;
-            height: calc(100vh - 56px); /* Điều chỉnh chiều cao theo chiều cao của navbar */
+            height: calc(100vh - 56px);
             border: none;
+        }
+        .nav-item {
+            border-bottom: 1px solid #e0e0e0;
+            padding: 5px 0;
+        }
+        .nav-link.active {
+            background-color: #6c757d;
+            color: #fff !important;
+            font-weight: bold;
+        }
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+        .submenu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 5px 0;
+        }
+        .dropdown-icon {
+            float: right;
+        }
+        .triangle-icon {
+            font-size: 10px;
+            margin-left: 5px;
         }
     </style>
 </head>
 <body>
-
 
 <header class="p-2 bg-dark text-white mb-5 fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -59,8 +85,14 @@
                     <a class="nav-link text-white" href="/api/quan-jean/quanjeans" target="contentFrame">Quản lý sản phẩm</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-white" href="/api/quan-ly/quanly-thuoctinh" target="contentFrame">Quản lý thuộc tính</a>
-                </li> <li class="nav-item">
+                    <a class="nav-link text-white" href="#" id="quanlyThuocTinh">Quản lý thuộc tính <i class="fas fa-chevron-down dropdown-icon"></i> <i class="fas fa-caret-right triangle-icon"></i></a>
+                    <div class="submenu" id="thuocTinhSubmenu">
+                        <a href="/api/quan-ly/chuyen-muc/chat-lieu/page" target="contentFrame">Chất liệu</a>
+                        <a href="/api/quan-ly/chuyen-muc/ong-quan" target="contentFrame">Ống quần</a>
+                        <a href="/api/quan-ly/chuyen-muc/thuong-hieu" target="contentFrame">Thương hiệu</a>
+                    </div>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
                 </li>
             </ul>
@@ -72,5 +104,40 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let navLinks = document.querySelectorAll(".sidebar .nav-link");
+        let quanlyThuocTinh = document.getElementById("quanlyThuocTinh");
+        let thuocTinhSubmenu = document.getElementById("thuocTinhSubmenu");
+        let dropdownIcon = quanlyThuocTinh.querySelector(".dropdown-icon");
+        let triangleIcon = quanlyThuocTinh.querySelector(".triangle-icon");
+
+        navLinks.forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.forEach(function (item) {
+                    item.classList.remove("active");
+                });
+                this.classList.add("active");
+            });
+        });
+
+        quanlyThuocTinh.addEventListener("click", function (event) {
+            event.preventDefault();
+            if (thuocTinhSubmenu.style.display === "block") {
+                thuocTinhSubmenu.style.display = "none";
+                dropdownIcon.classList.remove("fa-chevron-up");
+                dropdownIcon.classList.add("fa-chevron-down");
+                triangleIcon.classList.remove("fa-caret-down");
+                triangleIcon.classList.add("fa-caret-right");
+            } else {
+                thuocTinhSubmenu.style.display = "block";
+                dropdownIcon.classList.remove("fa-chevron-down");
+                dropdownIcon.classList.add("fa-chevron-up");
+                triangleIcon.classList.remove("fa-caret-right");
+                triangleIcon.classList.add("fa-caret-down");
+            }
+        });
+    });
+</script>
 </body>
 </html>
