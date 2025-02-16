@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class NhanVienController {
     @GetMapping("/nhan-vien/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         model.addAttribute("nv", nhanVienRepository.findById(id).orElse(null));
-        return "/quanlu/nhanvien/detail-nhanvien";
+        return "/quanly/nhanvien/detail-nhanvien";
     }
 
     @GetMapping("/nhan-vien/view-add")
@@ -74,7 +75,7 @@ public class NhanVienController {
 
         if (nhanVienRepository.existsById(id)) {
             nhanVien.setId(id); // Đảm bảo ID không bị thay đổi
-            nhanVien.setNgaySua(LocalDate.now());
+            nhanVien.setNgaySua(new Date());
             nhanVienRepository.save(nhanVien);
         }
 

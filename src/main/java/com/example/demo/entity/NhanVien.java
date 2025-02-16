@@ -42,11 +42,11 @@ public class NhanVien {
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate ngayTao = LocalDate.now();
+    private Date ngayTao = new Date();
 
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate ngaySua;
+    private Date ngaySua;
 
     private Integer trangThai;
 
