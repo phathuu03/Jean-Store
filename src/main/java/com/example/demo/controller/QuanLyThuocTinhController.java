@@ -27,22 +27,11 @@ public class QuanLyThuocTinhController {
     @Autowired
     private ThuongHieuService thuongHieuService;
 
-    // Hiển thị quản lý các thực thể trong 1 view
-    @GetMapping("/quanly-thuoctinh")
-    public String quanLy(Model model) {
-        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieu());
-        return "quanly/thuoctinh/thuoctinhsanpham";  // Chỉ có 1 view quanly.jsp
-    }
 
     @GetMapping("/chuyen-muc/chat-lieu")
-    public String quanLyChuyenMucChatLieu(Model model) {
-        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieu());
-        return "quanly/thuoctinh/chat-lieu";  // Chỉ có 1 view quanly.jsp
-    }
-    @GetMapping("/chuyen-muc/chat-lieu/page")
     public String quanLyChuyenMucChatLieu(Model model,
                                           @RequestParam(defaultValue = "0") int page,
-                                          @RequestParam(defaultValue = "5") int size) {
+                                          @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ChatLieu> pageChatLieu = chatLieuService.getAllChatLieu(pageable);
 
@@ -51,25 +40,43 @@ public class QuanLyThuocTinhController {
         model.addAttribute("totalPages", pageChatLieu.getTotalPages());
         return "quanly/thuoctinh/chat-lieu";
     }
+    @GetMapping("/chuyen-muc/ong-quan")
+    public String quanLyChuyenMucOngQuan(Model model,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<OngQuan> pageOngQuan = ongQuanService.getAllOngQuan(pageable);
+
+        model.addAttribute("listOngQuan", pageOngQuan.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageOngQuan.getTotalPages());
+        return "quanly/thuoctinh/ong-quan";
+    }
 
     @GetMapping("/chuyen-muc/thuong-hieu")
-    public String quanLyChuyenMucThuongHieu(Model model) {
-        model.addAttribute("listThuongHieu", thuongHieuService.getAllThuongHieu());
-        return "quanly/thuoctinh/thuong-hieu";  // Chỉ có 1 view quanly.jsp
+    public String quanLyChuyenMucThuongHieu(Model model,
+                                            @RequestParam(defaultValue = "0") int page,
+                                            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<ThuongHieu> pageThuongHieu = thuongHieuService.getAllThuongHieu(pageable);
+
+        model.addAttribute("listThuongHieu", pageThuongHieu.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageThuongHieu.getTotalPages());
+        return "quanly/thuoctinh/thuong-hieu";
     }
 
-    @GetMapping("/chuyen-muc/ong-quan")
-    public String quanLyChuyenMucOngQuan(Model model) {
-        model.addAttribute("listOngQuan", ongQuanService.getAllOngQuan());
-        return "quanly/thuoctinh/ong-quan";  // Chỉ có 1 view quanly.jsp
-    }
+
+
+
+
 
 
     // Thêm mới ChatLieu
     @PostMapping("/new-chat-lieu")
     public String saveChatLieu(@ModelAttribute ChatLieu chatLieu) {
         chatLieuService.saveChatLieu(chatLieu);
-        return "redirect:/api/quan-ly/chuyen-muc/chat-lieu/page";
+        return "redirect:/api/quan-ly/chuyen-muc/chat-lieu";
     }
 
     // Xóa ChatLieu (chuyển trạng thái thành không hoạt động)

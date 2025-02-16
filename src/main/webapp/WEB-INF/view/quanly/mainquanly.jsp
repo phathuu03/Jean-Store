@@ -87,7 +87,7 @@
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" id="quanlyThuocTinh">Quản lý thuộc tính <i class="fas fa-chevron-down dropdown-icon"></i> <i class="fas fa-caret-right triangle-icon"></i></a>
                     <div class="submenu" id="thuocTinhSubmenu">
-                        <a href="/api/quan-ly/chuyen-muc/chat-lieu/page" target="contentFrame">Chất liệu</a>
+                        <a href="/api/quan-ly/chuyen-muc/chat-lieu" target="contentFrame">Chất liệu</a>
                         <a href="/api/quan-ly/chuyen-muc/ong-quan" target="contentFrame">Ống quần</a>
                         <a href="/api/quan-ly/chuyen-muc/thuong-hieu" target="contentFrame">Thương hiệu</a>
                     </div>

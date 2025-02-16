@@ -57,6 +57,18 @@
                     </c:forEach>
                     </tbody>
                 </table>
+                <div class="container mt-4">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            <c:forEach var="i" begin="0" end="${totalPages - 1}">
+                                <li class="page-item ${i == currentPage ? 'active' : ''}">
+                                    <a class="page-link" href="?page=${i}">${i + 1}</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </nav>
+                </div>
+
             </div>
         </div>
     </div>
