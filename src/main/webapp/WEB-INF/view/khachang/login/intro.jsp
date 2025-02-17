@@ -1,61 +1,83 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Jeans-Store</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
-    <script src="https://code.angularjs.org/1.8.2/angular.min.js"></script>
-    <script src="https://code.angularjs.org/1.8.2/angular-route.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+          crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+
+<style>
+    body {
+        background-color: aliceblue;
+    }
+    .banner-container {
+        position: relative;
+        text-align: center;
+        color: black;
+    }
+    .banner-container img {
+        width: 100%;
+        height: auto;
+    }
+    .banner-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+        background-color: #2c3e50; /* Darker solid color */
+        width: 50%;
+        padding: 50px;
+        border-radius: 30px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+        color: white;
+    }
+    .btn-role {
+        margin: 8px;
+        font-size: 22px;
+        padding: 14px 28px;
+        border-radius: 14px;
+        border: 2px solid #555;
+    }
+    .btn-outline-dark {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #333;
+        border-color: #333;
+    }
+
+    .btn-outline-info {
+        background-color: rgba(255, 255, 255, 0.9);
+        color: #333;
+        border-color: #333;
+    }
+
+    .btn-outline-info:hover {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+</style>
+
 </head>
-<body style="background-color: aliceblue">
-<header class="p-3 bg-dark text-white">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/intro">Jeans Store</a>
+<body>
+<!-- Banner với form chọn vai trò -->
+<div class="banner-container">
+    <img src="https://files.oaiusercontent.com/file-VNk4qd5UDwQnx31y4LvEew?se=2025-02-16T10%3A12%3A46Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dfadedb5f-7a7b-4e4f-9acf-b1be3e419c5c.webp&sig=beXJZ5EkjFEx3dUFYazzGOEiP7j8aPtEtqZJ/mKld5M%3D"
+         class="img-fluid">
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="/login" class="btn btn-outline-light me-2">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-warning" href="/register">Sign-up</a>
-                    </li>
-                </ul>
-            </div>
+    <!-- Form lớn với màu nền mới -->
+    <div class="banner-text">
+        <h1 class="fw-bold ">Welcome to Jeans Store</h1>
+        <p class="fs-4">Who are you?</p>
+        <div>
+            <a href="/login/user" class="btn btn-outline-dark btn-role btn-sm">User</a>
+            <a href="/login/admin" class="btn btn-outline-info btn-role btn-sm">Admin</a>
         </div>
-    </nav>
-
-</header>
-<div class="banner">
-    <img src="${pageContext.request.contextPath}/image/bannerJeans.png" class="img-fluid w-100 h-90" style="margin-top: 20px;">
-</div>
-<div ng-app="myApp" class="content" style="margin-top: 50px;margin-left: 100px">
-    <div class="container" style="margin: 40px;">
-
-    </div>
-
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-                <span class="text-muted">© 2025 Company, Jeans Store</span>
-            </div>
-
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-
-            </ul>
-        </footer>
     </div>
 </div>
+
 </body>
 </html>

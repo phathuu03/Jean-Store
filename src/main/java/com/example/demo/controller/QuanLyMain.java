@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class QuanLyMain {
 
-    @GetMapping("index")
+    @GetMapping("/index")
     public String indexQuanLy(){
 
         return "quanly/mainquanly";
