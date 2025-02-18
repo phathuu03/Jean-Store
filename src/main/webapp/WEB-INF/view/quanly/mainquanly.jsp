@@ -92,6 +92,14 @@
                         <a href="/api/quan-ly/chuyen-muc/thuong-hieu" target="contentFrame">Thương hiệu</a>
                     </div>
                 </li>
+                <!-- Thêm mục Quản lý trạng thái -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#" id="quanlyTrangThai">Quản lý trạng thái <i class="fas fa-chevron-down dropdown-icon"></i> <i class="fas fa-caret-right triangle-icon"></i></a>
+                    <div class="submenu" id="trangThaiSubmenu">
+                        <a href="/api/quan-ly/list-mau-sac" target="contentFrame">Màu sắc</a>
+                        <a href="/api/quan-ly/list-kich-thuoc" target="contentFrame">Kích thước</a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
                 </li>
@@ -112,6 +120,11 @@
         let dropdownIcon = quanlyThuocTinh.querySelector(".dropdown-icon");
         let triangleIcon = quanlyThuocTinh.querySelector(".triangle-icon");
 
+        let quanlyTrangThai = document.getElementById("quanlyTrangThai");
+        let trangThaiSubmenu = document.getElementById("trangThaiSubmenu");
+        let dropdownIconTrangThai = quanlyTrangThai.querySelector(".dropdown-icon");
+        let triangleIconTrangThai = quanlyTrangThai.querySelector(".triangle-icon");
+
         navLinks.forEach(function (link) {
             link.addEventListener("click", function () {
                 navLinks.forEach(function (item) {
@@ -121,6 +134,7 @@
             });
         });
 
+        // Toggle "Quản lý thuộc tính" submenu
         quanlyThuocTinh.addEventListener("click", function (event) {
             event.preventDefault();
             if (thuocTinhSubmenu.style.display === "block") {
@@ -135,6 +149,24 @@
                 dropdownIcon.classList.add("fa-chevron-up");
                 triangleIcon.classList.remove("fa-caret-right");
                 triangleIcon.classList.add("fa-caret-down");
+            }
+        });
+
+        // Toggle "Quản lý trạng thái" submenu
+        quanlyTrangThai.addEventListener("click", function (event) {
+            event.preventDefault();
+            if (trangThaiSubmenu.style.display === "block") {
+                trangThaiSubmenu.style.display = "none";
+                dropdownIconTrangThai.classList.remove("fa-chevron-up");
+                dropdownIconTrangThai.classList.add("fa-chevron-down");
+                triangleIconTrangThai.classList.remove("fa-caret-down");
+                triangleIconTrangThai.classList.add("fa-caret-right");
+            } else {
+                trangThaiSubmenu.style.display = "block";
+                dropdownIconTrangThai.classList.remove("fa-chevron-down");
+                dropdownIconTrangThai.classList.add("fa-chevron-up");
+                triangleIconTrangThai.classList.remove("fa-caret-right");
+                triangleIconTrangThai.classList.add("fa-caret-down");
             }
         });
     });

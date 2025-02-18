@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface QuanJeansChiTietRepository extends JpaRepository<QuanJeansChiTiet, Long> {
+public interface  QuanJeansChiTietRepository extends JpaRepository<QuanJeansChiTiet, Long> {
 
 }
