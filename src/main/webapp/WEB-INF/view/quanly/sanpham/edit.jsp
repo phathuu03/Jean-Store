@@ -45,10 +45,6 @@
                                 <input class="form-check-input" type="radio" name="trangThai" value="1" ${quanJeans.trangThai == 1 ? 'checked' : ''}>
                                 <label class="form-check-label">Hết hàng</label>
                             </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="trangThai" value="2" ${quanJeans.trangThai == 2 ? 'checked' : ''}>
-                                <label class="form-check-label">Sắp về hàng</label>
-                            </div>
                         </div>
                     </div>
                 </div>

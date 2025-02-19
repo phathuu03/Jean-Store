@@ -26,6 +26,7 @@
 
 <div class="container mt-4">
     <h2 class="text-info">Quản lý Quần Jeans</h2>
+
     <div class="d-flex align-items-center justify-content-between mb-3">
         <form action="/api/quan-jean/quanjeans-search" class="d-flex">
             <input type="text" name="search" class="form-control form-control-sm" placeholder="Nhập từ khóa..." value="${param.search}">
@@ -69,6 +70,16 @@
                             </c:forEach>
                         </select>
                     </div>
+                    <div class="d-flex gap-3 mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="trangThai" value="0" checked>
+                            <label class="form-check-label">Còn hàng</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="trangThai" value="1">
+                            <label class="form-check-label">Hết hàng</label>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-4 text-center">
@@ -77,44 +88,39 @@
         </form>
     </div>
 
-    <table class="table table-bordered table-striped">
-        <thead class="table-dark">
-        <tr>
-            <th>ID</th>
-            <th>Tên Sản Phẩm</th>
-            <th>Ngày Tạo</th>
-            <th>Ngày Sửa</th>
-            <th>Trạng Thái</th>
-            <th>Thương hiệu</th>
-            <th>Chất Liệu</th>
-            <th>Ống Quần</th>
-            <th>Hành động</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="quanJeans" items="${listQuanJean}">
-            <tr>
-                <td>${quanJeans.id}</td>
-                <td>${quanJeans.tenSanPham}</td>
-                <td>${quanJeans.ngayTao}</td>
-                <td>${quanJeans.ngaySua}</td>
-                <td>${quanJeans.trangThai == 0 ? "Còn hàng" : quanJeans.trangThai == 1 ? "Hết hàng" : "Sắp về hàng"}</td>
-                <td>${quanJeans.thuongHieu.tenThuongHieu}</td>
-                <td>${quanJeans.chatLieu.tenChatLieu}</td>
-                <td>${quanJeans.ongQuan.tenOngQuan}</td>
-                <td>
-                    <div class="d-flex gap-2">
-                        <a href="detail/${quanJeans.id}" class="d-flex justify-content-center align-items-center p-2">
-                            <i class="bi bi-eye-fill fs-5"></i>
-                        </a>
-                        <a href="edit/${quanJeans.id}" class="btn btn-primary btn-sm">Chỉnh sửa</a>
-                        <a href="delete/${quanJeans.id}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
-                    </div>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+    <!-- Bootstrap Tabs -->
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#all">Tất cả sản phẩm</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#available">Còn hàng</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#outofstock">Hết hàng</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-3">
+        <!-- Tất cả sản phẩm -->
+        <div class="tab-pane fade show active" id="all">
+            <jsp:include page="table.jsp"/>
+        </div>
+
+        <!-- Còn hàng -->
+        <div class="tab-pane fade" id="available">
+            <jsp:include page="table.jsp">
+                <jsp:param name="filter" value="0"/>
+            </jsp:include>
+        </div>
+
+        <!-- Hết hàng -->
+        <div class="tab-pane fade" id="outofstock">
+            <jsp:include page="table.jsp">
+                <jsp:param name="filter" value="1"/>
+            </jsp:include>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

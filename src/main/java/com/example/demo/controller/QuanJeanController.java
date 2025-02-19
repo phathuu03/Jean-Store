@@ -2,10 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.QuanJeans;
 import com.example.demo.repository.QuanJeansRepository;
-import com.example.demo.services.ChatLieuService;
-import com.example.demo.services.OngQuanService;
-import com.example.demo.services.QuanJeanService;
-import com.example.demo.services.ThuongHieuService;
+import com.example.demo.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,8 +21,9 @@ public class QuanJeanController {
     @Autowired
     private OngQuanService ongQuanService;
     @Autowired
-
     private ThuongHieuService thuongHieuService;
+    @Autowired
+    private QuanJeansChiTietService quanJeansChiTietService;
 
     @GetMapping("/quanjeans")
     public String hienThiQuan(Model model) {
@@ -55,6 +53,7 @@ public class QuanJeanController {
         QuanJeans quanJeans = quanJeanService.getQuanJeanById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm có ID: " + id));
         model.addAttribute("quanJeans", quanJeans);
+        model.addAttribute("listQuanJeans", quanJeansChiTietService.getAllByQuanJeansId(id));
         return "quanly/sanpham/detail";
     }
 
