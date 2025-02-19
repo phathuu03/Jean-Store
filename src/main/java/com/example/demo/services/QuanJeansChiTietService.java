@@ -51,4 +51,6 @@ public class QuanJeansChiTietService {
     public void deleteQuanJeansChiTiet(Long id) {
         repository.deleteById(id);
     }
+
+
 }

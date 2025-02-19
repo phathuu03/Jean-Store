@@ -1,6 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.MauSac;
+import com.example.demo.entity.QuanJeans;
 import com.example.demo.entity.QuanJeansChiTiet;
+import com.example.demo.entity.Size;
+import com.example.demo.repository.MauSacRepository;
+import com.example.demo.repository.QuanJeansRepository;
+import com.example.demo.repository.SizeRepository;
 import com.example.demo.services.QuanJeansChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,11 +16,38 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/quan-jeans-chi-tiet")
+@RequestMapping("api/quan-jeans-chi-tiet")
 public class QuanJeansChiTietController {
 
     @Autowired
     private QuanJeansChiTietService quanJeansChiTietService;
+
+
+    @Autowired
+    private QuanJeansRepository quanJeansRepository;
+
+    @Autowired
+    private MauSacRepository mauSacRepository;
+
+    @Autowired
+    private SizeRepository sizeRepository;
+
+    // Hiển thị form thêm mới
+    @GetMapping("/add-san-pham-chi-tiet/{id}")
+    public String showAddForm(@PathVariable Long id, Model model ) {
+        QuanJeans quanJeans = quanJeansRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy sản phẩm với ID: " + id));
+
+        List<MauSac> listMauSac = mauSacRepository.findAll();
+        List<Size> listSize = sizeRepository.findAll();
+
+        model.addAttribute("quanJeans", quanJeans);
+        model.addAttribute("listMauSac", listMauSac);
+        model.addAttribute("listSize", listSize);
+
+        return "quanly/sanpham/add-san-pham-chi-tiet"; // Trả về trang JSP
+    }
+
 
     @GetMapping("/detail/{id}")
     public String viewDetail(@PathVariable Long id, Model model) {
@@ -31,12 +64,7 @@ public class QuanJeansChiTietController {
         return "quan-jeans-chi-tiet/list";  // Trả về trang giao diện list.html (hoặc .jsp)
     }
 
-    // Hiển thị form thêm mới
-    @GetMapping("/add")
-    public String showAddForm(Model model) {
-        model.addAttribute("quanJeansChiTiet", new QuanJeansChiTiet());
-        return "quan-jeans-chi-tiet/add"; // Trả về trang thêm mới
-    }
+
 
     // Xử lý thêm sản phẩm
     @PostMapping("/add")

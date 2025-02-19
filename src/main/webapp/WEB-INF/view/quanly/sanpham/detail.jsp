@@ -40,6 +40,7 @@
 
         <!-- Nút điều hướng -->
         <div class="mt-4 text-center">
+            <a href="/api/quan-jeans-chi-tiet/add-san-pham-chi-tiet/${quanJeans.id}" class="btn btn-success me-2">Thêm sản phẩm chi tiết</a>
             <a href="/api/quan-jean/edit/${quanJeans.id}" class="btn btn-warning me-2">Chỉnh sửa</a>
             <a href="/api/quan-jean/delete/${quanJeans.id}" class="btn btn-danger me-2" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
             <a href="/api/quan-jean/quanjeans" class="btn btn-secondary">Quay lại danh sách</a>
