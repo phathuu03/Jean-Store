@@ -68,7 +68,7 @@
             <div class="col-md-4 position-relative">
                 <div class="login-container">
                     <div class="avatar-container">
-                        <img src="https://files.oaiusercontent.com/file-TyNfV4xdxxW9uKe5bCjny7?se=2025-02-16T09%3A23%3A26Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D1dde9d90-652e-4b6e-90fa-1215c0c077d5.webp&sig=M4CTelLEhH/IgLv29N4opuFLQ9zyvl82lQCJk%2BBbcJY%3D"
+                        <img src="https://file.hstatic.net/200000962346/file/icon_admin.webp"
                              alt="Avatar" class="avatar">
                     </div>
                     <h2 class="text-primary mb-4 mt-5">Login with Admin</h2>

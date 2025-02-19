@@ -65,7 +65,7 @@
 <body>
 <!-- Banner với form chọn vai trò -->
 <div class="banner-container">
-    <img src="https://files.oaiusercontent.com/file-VNk4qd5UDwQnx31y4LvEew?se=2025-02-16T10%3A12%3A46Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3Dfadedb5f-7a7b-4e4f-9acf-b1be3e419c5c.webp&sig=beXJZ5EkjFEx3dUFYazzGOEiP7j8aPtEtqZJ/mKld5M%3D"
+    <img src="https://file.hstatic.net/200000962346/file/banner_jeans_store.jpg"
          class="img-fluid">
 
     <!-- Form lớn với màu nền mới -->
