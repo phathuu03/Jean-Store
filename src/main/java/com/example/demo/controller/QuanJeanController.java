@@ -53,7 +53,7 @@ public class QuanJeanController {
         QuanJeans quanJeans = quanJeanService.getQuanJeanById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm có ID: " + id));
         model.addAttribute("quanJeans", quanJeans);
-        model.addAttribute("listQuanJeans", quanJeansChiTietService.getAllByQuanJeansId(id));
+        model.addAttribute("listQuanJeansChiTiet", quanJeansChiTietService.getAllByQuanJeansId(id));
         return "quanly/sanpham/detail";
     }
 

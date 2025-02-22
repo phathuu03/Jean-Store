@@ -19,6 +19,11 @@ public class MauSacService {
         return mauSacRepository.findAll();
     }
 
+    public List<MauSac> findAllByTrangThai() { return mauSacRepository.findAllByTrangThai(1);
+    }
+
+
+
     // Lấy Màu sắc theo ID
     public MauSac findById(Long id) {
         Optional<MauSac> mauSac = mauSacRepository.findById(id);

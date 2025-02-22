@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="chiTiet" items="${listQuanJeans}">
+    <c:forEach var="chiTiet" items="${listQuanJeansChiTiet}">
         <c:if test="${empty param.filter || chiTiet.trangThai == param.filter}">
             <tr>
                 <td>${chiTiet.id}</td>
@@ -21,10 +21,10 @@
                 <td>${chiTiet.size.tenSize}</td>
                 <td>${chiTiet.gia} VND</td>
                 <td>${chiTiet.soLuong}</td>
-                <td>${chiTiet.trangThai == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                <td>${chiTiet.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</td>
                 <td>
-                    <a href="/api/quan-jean/chi-tiet/edit/${chiTiet.id}" class="btn btn-primary btn-sm">Chỉnh sửa</a>
-                    <a href="/api/quan-jean/chi-tiet/delete/${chiTiet.id}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+                    <a href="/api/quan-jeans-chi-tiet/edit/${chiTiet.id}" class="btn btn-primary btn-sm">Chỉnh sửa</a>
+                    <a href="/api/quan-jeans-chi-tiet/delete/${chiTiet.id}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
                 </td>
             </tr>
         </c:if>

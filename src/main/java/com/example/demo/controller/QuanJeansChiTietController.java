@@ -5,6 +5,7 @@ import com.example.demo.entity.QuanJeans;
 import com.example.demo.entity.QuanJeansChiTiet;
 import com.example.demo.entity.Size;
 import com.example.demo.repository.MauSacRepository;
+import com.example.demo.repository.QuanJeansChiTietRepository;
 import com.example.demo.repository.QuanJeansRepository;
 import com.example.demo.repository.SizeRepository;
 import com.example.demo.services.QuanJeansChiTietService;
@@ -31,6 +32,8 @@ public class QuanJeansChiTietController {
 
     @Autowired
     private SizeRepository sizeRepository;
+    @Autowired
+    private QuanJeansChiTietRepository quanJeansChiTietRepository;
 
     // Hiển thị form thêm mới
     @GetMapping("/add-san-pham-chi-tiet/{id}")
@@ -38,8 +41,8 @@ public class QuanJeansChiTietController {
         QuanJeans quanJeans = quanJeansRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy sản phẩm với ID: " + id));
 
-        List<MauSac> listMauSac = mauSacRepository.findAll();
-        List<Size> listSize = sizeRepository.findAll();
+        List<MauSac> listMauSac = mauSacRepository.findAllByTrangThai(1);
+        List<Size> listSize = sizeRepository.findAllByTrangThai(1);
 
         model.addAttribute("quanJeans", quanJeans);
         model.addAttribute("listMauSac", listMauSac);
@@ -47,6 +50,14 @@ public class QuanJeansChiTietController {
 
         return "quanly/sanpham/add-san-pham-chi-tiet"; // Trả về trang JSP
     }
+
+    // Xử lý thêm sản phẩm
+    @PostMapping("/add")
+    public String addQuanJeansChiTiet(@ModelAttribute QuanJeansChiTiet quanJeansChiTiet) {
+        quanJeansChiTietService.addQuanJeansChiTiet(quanJeansChiTiet);
+        return "redirect:/api/quan-jean/detail/" + quanJeansChiTiet.getQuanJeans().getId(); // Chuyển hướng về danh sách
+    }
+
 
 
     @GetMapping("/detail/{id}")
@@ -66,33 +77,33 @@ public class QuanJeansChiTietController {
 
 
 
-    // Xử lý thêm sản phẩm
-    @PostMapping("/add")
-    public String addQuanJeansChiTiet(@ModelAttribute QuanJeansChiTiet quanJeansChiTiet) {
-        quanJeansChiTietService.addQuanJeansChiTiet(quanJeansChiTiet);
-        return "redirect:/quan-jeans-chi-tiet"; // Chuyển hướng về danh sách
-    }
 
-    // Hiển thị form chỉnh sửa
+
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable Long id, Model model) {
         QuanJeansChiTiet quanJeansChiTiet = quanJeansChiTietService.getQuanJeansChiTietById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy sản phẩm chi tiết với ID: " + id));
         model.addAttribute("quanJeansChiTiet", quanJeansChiTiet);
-        return "quan-jeans-chi-tiet/edit"; // Trả về trang chỉnh sửa
+        model.addAttribute("listMauSac", mauSacRepository.findAllByTrangThai(1));
+        model.addAttribute("listSize", sizeRepository.findAllByTrangThai(1));
+        return "quanly/sanpham/edit-san-pham-chi-tiet";
     }
+
 
     // Xử lý cập nhật sản phẩm
     @PostMapping("/update/{id}")
     public String updateQuanJeansChiTiet(@PathVariable Long id, @ModelAttribute QuanJeansChiTiet quanJeansChiTiet) {
         quanJeansChiTietService.updateQuanJeansChiTiet(id, quanJeansChiTiet);
-        return "redirect:/quan-jeans-chi-tiet"; // Chuyển hướng về danh sách
+        return "redirect:/api/quan-jean/detail/" + quanJeansChiTiet.getQuanJeans().getId();
     }
 
     // Xóa sản phẩm
     @GetMapping("/delete/{id}")
     public String deleteQuanJeansChiTiet(@PathVariable Long id) {
         quanJeansChiTietService.deleteQuanJeansChiTiet(id);
-        return "redirect:/quan-jeans-chi-tiet"; // Chuyển hướng về danh sách
+        QuanJeansChiTiet quz = quanJeansChiTietRepository.findById(id).get();
+        return "redirect:/api/quan-jean/detail/" + quz.getQuanJeans().getId();
     }
+
+
 }

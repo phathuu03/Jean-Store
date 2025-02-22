@@ -49,7 +49,11 @@ public class QuanJeansChiTietService {
 
     // Xóa sản phẩm chi tiết
     public void deleteQuanJeansChiTiet(Long id) {
-        repository.deleteById(id);
+       QuanJeansChiTiet quanJeansChiTiet = repository.findById(id).get();
+       if (quanJeansChiTiet!=null){
+           quanJeansChiTiet.setTrangThai(0);
+           repository.save(quanJeansChiTiet);
+       }
     }
 
 

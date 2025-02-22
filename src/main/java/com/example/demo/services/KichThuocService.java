@@ -19,6 +19,10 @@ public class KichThuocService {
         return sizeRepository.findAll();
     }
 
+    public List<Size> findAllByTrangThai() {
+        return sizeRepository.findAllByTrangThai(1);
+    }
+
     // Lấy Kích thước theo ID
     public Size findById(Long id) {
         Optional<Size> size = sizeRepository.findById(id);
