@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "QuanJeans")
@@ -37,4 +38,7 @@ public class QuanJeans {
     @ManyToOne
     @JoinColumn(name = "ID_ChatLieu")
     private ChatLieu chatLieu;
+
+    @OneToMany(mappedBy = "quanJeans", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<HinhAnh> hinhAnhs;
 }

@@ -75,6 +75,15 @@
                 </div>
             </div>
 
+            <!-- Thêm phần nhập URL hình ảnh -->
+            <h4 class="text-primary">Hình Ảnh</h4>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">URL Hình Ảnh:</label>
+                    <input type="text" name="imageUrl" class="form-control" placeholder="Nhập URL hình ảnh" required>
+                </div>
+            </div>
+
             <!-- Trạng thái -->
             <div class="row mb-3">
                 <div class="col-md-6">
