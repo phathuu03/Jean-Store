@@ -64,12 +64,6 @@
                         </div>
 
                         <div class="mb-3 form-group">
-                            <input type="text" name="username" class="form-control" placeholder="Username" value="${param.username}" required>
-                            <i class="bi bi-person-circle icon"></i>
-                            <p class="error-message">${errorTenDangNhap}</p>
-                        </div>
-
-                        <div class="mb-3 form-group">
                             <input type="password" name="password" class="form-control" placeholder="Password" required>
                             <i class="bi bi-lock icon"></i>
                             <p class="error-message">${errorPassword}</p>

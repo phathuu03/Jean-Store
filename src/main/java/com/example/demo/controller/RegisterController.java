@@ -31,7 +31,6 @@ public class RegisterController {
 
     @PostMapping("/register")
     public String registerUser(@RequestParam(required = false) String customerName,
-                               @RequestParam(required = false) String username,
                                @RequestParam(required = false) String password,
                                @RequestParam(required = false) String phoneNumber,
                                @RequestParam(required = false) String address,
@@ -47,14 +46,14 @@ public class RegisterController {
             hasError = true;
         }
 
-        // Kiểm tra tên đăng nhập
-        if (username == null || username.trim().isEmpty()) {
-            model.addAttribute("errorTenDangNhap", "⚠️ Tên đăng nhập không được để trống!");
-            hasError = true;
-        } else if (userRepository.findByUsernameIgnoreCase(username.trim()) != null) {
-            model.addAttribute("errorTenDangNhap", "⚠️ Tên đăng nhập đã tồn tại!");
-            hasError = true;
-        }
+//        // Kiểm tra tên đăng nhập
+//        if (username == null || username.trim().isEmpty()) {
+//            model.addAttribute("errorTenDangNhap", "⚠️ Tên đăng nhập không được để trống!");
+//            hasError = true;
+//        } else if (userRepository.findByUsernameIgnoreCase(username.trim()) != null) {
+//            model.addAttribute("errorTenDangNhap", "⚠️ Tên đăng nhập đã tồn tại!");
+//            hasError = true;
+//        }
 
         // Kiểm tra mật khẩu
         if (password == null || password.trim().isEmpty()) {
@@ -105,7 +104,7 @@ public class RegisterController {
         // Lưu thông tin người dùng mới vào database
         User newUser = new User();
         newUser.setCustomerName(customerName.trim());
-        newUser.setUsername(username.trim());
+//        newUser.setUsername(username.trim());
         newUser.setEmail(email.trim());
         newUser.setPassword(password.trim()); // **Lưu mật khẩu trực tiếp, không mã hóa**
         newUser.setPhoneNumber(phoneNumber.trim());
@@ -115,7 +114,7 @@ public class RegisterController {
 
         userRepository.save(newUser);
 
-        System.out.println("Đăng ký thành công: " + newUser.getUsername() + " - Email: " + newUser.getEmail());
+        System.out.println("Đăng ký thành công: " + " - Email: " + newUser.getEmail());
 
         // Chuyển hướng về trang đăng ký nhưng thêm ?success để hiển thị thông báo
         redirectAttributes.addFlashAttribute("successMessage", "✅ Đăng ký thành công! Hãy đăng nhập.");
