@@ -22,7 +22,7 @@
                 <td>${quanJeans.tenSanPham}</td>
                 <td>${quanJeans.ngayTao}</td>
                 <td>${quanJeans.ngaySua}</td>
-                <td>${quanJeans.trangThai == 0 ? "Còn hàng" : "Hết hàng"}</td>
+                <td>${quanJeans.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</td>
                 <td>${quanJeans.thuongHieu.tenThuongHieu}</td>
                 <td>${quanJeans.chatLieu.tenChatLieu}</td>
                 <td>${quanJeans.ongQuan.tenOngQuan}</td>

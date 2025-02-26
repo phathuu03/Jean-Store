@@ -20,46 +20,7 @@
                 toggleButton.textContent = "Thêm mới";
             }
         }
-
-        // Hàm để hiển thị danh sách hình ảnh đã chọn
-        function previewImages() {
-            var fileInput = document.getElementById("imageFiles");
-            var previewContainer = document.getElementById("imagePreview");
-
-            // Xóa hình ảnh trước đó
-            previewContainer.innerHTML = "";
-
-            // Lặp qua các file đã chọn và hiển thị chúng
-            for (var i = 0; i < fileInput.files.length; i++) {
-                var file = fileInput.files[i];
-                var reader = new FileReader();
-
-                reader.onload = function(event) {
-                    var img = document.createElement("img");
-                    img.src = event.target.result;
-                    img.classList.add("img-thumbnail", "m-2", "image-preview"); // Thêm lớp để thay đổi kích thước
-                    previewContainer.appendChild(img);
-                }
-
-                reader.readAsDataURL(file); // Đọc tệp hình ảnh và hiển thị
-            }
-        }
     </script>
-
-    <style>
-        .image-preview {
-            width: 100px; /* Đặt chiều rộng hình ảnh */
-            height: auto;
-            margin-right: 10px;
-        }
-
-        #imagePreview {
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto; /* Cho phép cuộn ngang nếu nhiều hình ảnh */
-            padding: 5px;
-        }
-    </style>
 </head>
 <body>
 
@@ -75,7 +36,7 @@
     </div>
 
     <div id="addForm" class="card shadow-lg p-4 mb-4" style="display: none;">
-            <form action="${quanJeans.id == null ? '/api/quan-jean/new-quan-jean' : 'update/' + quanJeans.id}" method="post" enctype="multipart/form-data">
+        <form action="${quanJeans.id == null ? '/api/quan-jean/new-quan-jean' : 'update/' + quanJeans.id}" method="post">
             <input type="hidden" name="id" value="${quanJeans.id}">
             <div class="row">
                 <div class="col-md-6">
@@ -121,26 +82,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Thêm phần tải lên nhiều hình ảnh -->
-            <h4 class="text-primary">Hình Ảnh Sản Phẩm</h4>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label fw-bold">Chọn hình ảnh (chọn nhiều hình ảnh):</label>
-                    <input type="file" name="imageFiles" id="imageFiles" class="form-control" multiple required onchange="previewImages()">
-                </div>
-            </div>
-
-            <!-- Hiển thị các hình ảnh đã chọn -->
-            <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>
-
             <div class="mt-4 text-center">
                 <button type="submit" class="btn btn-primary">Lưu</button>
             </div>
         </form>
     </div>
 
-    <!-- Bootstrap Tabs -->
     <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" data-bs-toggle="tab" href="#all">Tất cả sản phẩm</a>
@@ -154,19 +101,14 @@
     </ul>
 
     <div class="tab-content mt-3">
-        <!-- Tất cả sản phẩm -->
         <div class="tab-pane fade show active" id="all">
             <jsp:include page="table.jsp"/>
         </div>
-
-        <!-- Còn hàng -->
         <div class="tab-pane fade" id="available">
             <jsp:include page="table.jsp">
                 <jsp:param name="filter" value="0"/>
             </jsp:include>
         </div>
-
-        <!-- Hết hàng -->
         <div class="tab-pane fade" id="outofstock">
             <jsp:include page="table.jsp">
                 <jsp:param name="filter" value="1"/>

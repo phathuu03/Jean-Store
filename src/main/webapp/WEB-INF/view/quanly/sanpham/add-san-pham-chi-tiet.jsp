@@ -7,6 +7,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Thêm Chi Tiết Sản Phẩm</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        function previewImages() {
+            var fileInput = document.getElementById("imageFiles");
+            var previewContainer = document.getElementById("imagePreview");
+            previewContainer.innerHTML = "";
+            for (var i = 0; i < fileInput.files.length; i++) {
+                var file = fileInput.files[i];
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var img = document.createElement("img");
+                    img.src = event.target.result;
+                    img.classList.add("img-thumbnail", "m-2", "image-preview");
+                    previewContainer.appendChild(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+    <style>
+        .image-preview {
+            width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+        #imagePreview {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding: 5px;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,11 +45,9 @@
     <h2 class="text-info text-center">Thêm Chi Tiết Sản Phẩm</h2>
 
     <div class="card shadow-lg p-4">
-        <form action="${pageContext.request.contextPath}/api/quan-jeans-chi-tiet/add" method="post">
-            <!-- ID sản phẩm -->
+        <form action="${pageContext.request.contextPath}/api/quan-jeans-chi-tiet/add" method="post" enctype="multipart/form-data">
             <input type="hidden" name="quanJeans.id" value="${quanJeans.id}">
 
-            <!-- Hiển thị thông tin sản phẩm -->
             <h4 class="text-primary">Thông Tin Sản Phẩm</h4>
             <div class="row mb-3">
                 <div class="col-md-3">
@@ -39,7 +68,6 @@
                 </div>
             </div>
 
-            <!-- Nhập thông tin chi tiết sản phẩm -->
             <h4 class="text-primary">Chi Tiết Sản Phẩm</h4>
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -75,33 +103,15 @@
                 </div>
             </div>
 
-            <!-- Thêm phần nhập URL hình ảnh -->
             <h4 class="text-primary">Hình Ảnh</h4>
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <label class="form-label fw-bold">URL Hình Ảnh:</label>
-                    <input type="text" name="imageUrl" class="form-control" placeholder="Nhập URL hình ảnh" required>
+                    <label class="form-label fw-bold">Chọn hình ảnh:</label>
+                    <input type="file" name="imageFiles" id="imageFiles" class="form-control" multiple required onchange="previewImages()">
                 </div>
             </div>
+            <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>
 
-            <!-- Trạng thái -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label fw-bold">Trạng thái:</label>
-                    <div class="d-flex gap-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trangThai" value="0" checked>
-                            <label class="form-check-label">Còn hàng</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trangThai" value="1">
-                            <label class="form-check-label">Hết hàng</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Nút Lưu -->
             <div class="mt-4 text-center">
                 <button type="submit" class="btn btn-primary">Lưu Chi Tiết</button>
                 <a href="${pageContext.request.contextPath}/api/quan-jean/detail/${quanJeans.id}" class="btn btn-secondary">Hủy</a>

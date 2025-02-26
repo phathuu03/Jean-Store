@@ -39,6 +39,4 @@ public class QuanJeans {
     @JoinColumn(name = "ID_ChatLieu")
     private ChatLieu chatLieu;
 
-    @OneToMany(mappedBy = "quanJeans", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<HinhAnh> hinhAnhs;
 }
