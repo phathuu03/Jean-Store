@@ -24,7 +24,7 @@
                     <li class="list-group-item"><strong>Tên sản phẩm:</strong> ${quanJeans.tenSanPham}</li>
                     <li class="list-group-item"><strong>Ngày tạo:</strong> ${quanJeans.ngayTao}</li>
                     <li class="list-group-item"><strong>Ngày sửa:</strong> ${quanJeans.ngaySua}</li>
-                    <li class="list-group-item"><strong>Trạng thái:</strong> ${quanJeans.trangThai}</li>
+                    <li class="list-group-item"><strong>Trạng thái:</strong> ${quanJeans.trangThai == 0 ? "Còn hàng" : "Hết hàng"}</li>
                 </ul>
             </div>
 
@@ -40,9 +40,45 @@
 
         <!-- Nút điều hướng -->
         <div class="mt-4 text-center">
+            <a href="/api/quan-jeans-chi-tiet/add-san-pham-chi-tiet/${quanJeans.id}" class="btn btn-success me-2">Thêm sản phẩm chi tiết</a>
             <a href="/api/quan-jean/edit/${quanJeans.id}" class="btn btn-warning me-2">Chỉnh sửa</a>
             <a href="/api/quan-jean/delete/${quanJeans.id}" class="btn btn-danger me-2" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
             <a href="/api/quan-jean/quanjeans" class="btn btn-secondary">Quay lại danh sách</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap Tabs -->
+    <h4 class="text-center mt-4 text-info">Danh sách Sản Phẩm Chi Tiết</h4>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="#all">Tất cả</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#available">Còn hàng</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="#outofstock">Hết hàng</a>
+        </li>
+    </ul>
+
+    <div class="tab-content mt-3">
+        <!-- Tất cả sản phẩm -->
+        <div class="tab-pane fade show active" id="all">
+            <jsp:include page="table-chi-tiet.jsp"/>
+        </div>
+
+        <!-- Còn hàng -->
+        <div class="tab-pane fade" id="available">
+            <jsp:include page="table-chi-tiet.jsp">
+                <jsp:param name="filter" value="0"/>
+            </jsp:include>
+        </div>
+
+        <!-- Hết hàng -->
+        <div class="tab-pane fade" id="outofstock">
+            <jsp:include page="table-chi-tiet.jsp">
+                <jsp:param name="filter" value="1"/>
+            </jsp:include>
         </div>
     </div>
 </div>
