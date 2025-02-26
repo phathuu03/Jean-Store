@@ -103,11 +103,26 @@
                 </div>
             </div>
 
+            <!-- Phần chọn trạng thái -->
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <label class="fw-bold">Trạng thái:</label>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="trangThai" id="trangThai0" value="0">
+                        <label class="form-check-label" for="trangThai0">Không hoạt động</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="trangThai" id="trangThai1" value="1" checked>
+                        <label class="form-check-label" for="trangThai1">Hoạt động</label>
+                    </div>
+                </div>
+            </div>
+
             <h4 class="text-primary">Hình Ảnh</h4>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Chọn hình ảnh:</label>
-                    <input type="file" name="imageFiles" id="imageFiles" class="form-control" multiple required onchange="previewImages()">
+                    <input type="file" name="imageFiles" id="imageFiles" class="form-control" multiple  onchange="previewImages()">
                 </div>
             </div>
             <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>
