@@ -90,16 +90,15 @@
                         <div class="mb-3 form-group">
                             <select name="gender" class="form-select" required>
                                 <option value="">Select Gender</option>
-                                <option value="Male" ${param.gender == 'Male' ? 'selected' : ''}>Male</option>
-                                <option value="Female" ${param.gender == 'Female' ? 'selected' : ''}>Female</option>
-                                <option value="Other" ${param.gender == 'Other' ? 'selected' : ''}>Other</option>
+                                <option value="Male" ${gender == 'Male' ? 'selected' : ''}>Male</option>
+                                <option value="Female" ${gender == 'Female' ? 'selected' : ''}>Female</option>
                             </select>
                             <i class="bi bi-gender-ambiguous icon"></i>
                             <p class="error-message">${errorGioiTinh}</p>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">Register</button>
-                        <p class="mt-3">Already have an account? <a href="/login/user" class="text-primary">Login</a></p>
+                        <p class="mt-3">Already have an account? <a href="/login" class="text-primary">Login</a></p>
                     </form>
                 </div>
             </div>

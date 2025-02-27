@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.entity.KhachHang;
+import com.example.demo.repository.KhachHangRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Date;
 import java.util.regex.Pattern;
 
 @Controller
 public class RegisterController {
 
     @Autowired
-    private UserRepository userRepository;
+    private KhachHangRepository khachHangRepository;
 
     private static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
     private static final Pattern PHONE_REGEX = Pattern.compile("^0\\d{9,10}$");
@@ -35,7 +36,7 @@ public class RegisterController {
                                @RequestParam(required = false) String phoneNumber,
                                @RequestParam(required = false) String address,
                                @RequestParam(required = false) String email,
-                               @RequestParam(required = false) String gender,
+                               @RequestParam(required = false) String gender, // <-- Nhận gender dạng String
                                Model model, RedirectAttributes redirectAttributes) {
 
         boolean hasError = false;
@@ -45,15 +46,6 @@ public class RegisterController {
             model.addAttribute("errorTenKhachHang", "⚠️ Tên khách hàng không được để trống!");
             hasError = true;
         }
-
-//        // Kiểm tra tên đăng nhập
-//        if (username == null || username.trim().isEmpty()) {
-//            model.addAttribute("errorTenDangNhap", "⚠️ Tên đăng nhập không được để trống!");
-//            hasError = true;
-//        } else if (userRepository.findByUsernameIgnoreCase(username.trim()) != null) {
-//            model.addAttribute("errorTenDangNhap", "⚠️ Tên đăng nhập đã tồn tại!");
-//            hasError = true;
-//        }
 
         // Kiểm tra mật khẩu
         if (password == null || password.trim().isEmpty()) {
@@ -86,13 +78,18 @@ public class RegisterController {
         } else if (!EMAIL_REGEX.matcher(email.trim()).matches()) {
             model.addAttribute("errorEmail", "⚠️ Email không hợp lệ!");
             hasError = true;
-        } else if (userRepository.findByEmailIgnoreCase(email.trim()) != null) {
+        } else if (khachHangRepository.findByEmail(email.trim()) != null) {
             model.addAttribute("errorEmail", "⚠️ Email đã tồn tại!");
             hasError = true;
         }
 
-        // Kiểm tra giới tính
-        if (gender == null || gender.trim().isEmpty()) {
+        // Kiểm tra giới tính (Ép kiểu từ String -> Boolean)
+        Boolean gioiTinh = null;
+        if ("Male".equalsIgnoreCase(gender)) {
+            gioiTinh = true;
+        } else if ("Female".equalsIgnoreCase(gender)) {
+            gioiTinh = false;
+        } else {
             model.addAttribute("errorGioiTinh", "⚠️ Vui lòng chọn giới tính!");
             hasError = true;
         }
@@ -101,23 +98,23 @@ public class RegisterController {
             return "khachang/login/register";
         }
 
-        // Lưu thông tin người dùng mới vào database
-        User newUser = new User();
-        newUser.setCustomerName(customerName.trim());
-//        newUser.setUsername(username.trim());
-        newUser.setEmail(email.trim());
-        newUser.setPassword(password.trim()); // **Lưu mật khẩu trực tiếp, không mã hóa**
-        newUser.setPhoneNumber(phoneNumber.trim());
-        newUser.setAddress(address.trim());
-        newUser.setGender(gender.trim());
-        newUser.setRole("user"); // Đặt mặc định role là "user"
+        // Lưu thông tin khách hàng mới vào database
+        KhachHang newCustomer = new KhachHang();
+        newCustomer.setTenKhachHang(customerName.trim());
+        newCustomer.setEmail(email.trim());
+        newCustomer.setMatKhau(password.trim()); // **Lưu mật khẩu trực tiếp, không mã hóa**
+        newCustomer.setSoDienThoai(phoneNumber.trim());
+        newCustomer.setDiaChi(address.trim());
+        newCustomer.setGioiTinh(gioiTinh); // <-- Lưu Boolean vào DB
+        newCustomer.setNgayTao(new Date());
+        newCustomer.setTrangThai(1); // Đặt trạng thái mặc định là 1 (hoạt động)
 
-        userRepository.save(newUser);
+        khachHangRepository.save(newCustomer);
 
-        System.out.println("Đăng ký thành công: " + " - Email: " + newUser.getEmail());
+        System.out.println("Đăng ký thành công: " + " - Email: " + newCustomer.getEmail());
 
-        // Chuyển hướng về trang đăng ký nhưng thêm ?success để hiển thị thông báo
+        // Chuyển hướng về trang đăng nhập
         redirectAttributes.addFlashAttribute("successMessage", "✅ Đăng ký thành công! Hãy đăng nhập.");
-        return "redirect:/login/user";
+        return "redirect:/login";
     }
 }
