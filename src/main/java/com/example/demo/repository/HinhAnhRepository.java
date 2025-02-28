@@ -15,5 +15,6 @@ public interface HinhAnhRepository extends JpaRepository<HinhAnh, Long> {
     List<HinhAnh> findHinhAnhByQuanJeansAndIdMauSac(@Param("quanJeansId") Long quanJeansId,
                                                     @Param("idMauSac") Long idMauSac);
 
+    List<HinhAnh> findByIdIn(List<Long> ids);
 
 }

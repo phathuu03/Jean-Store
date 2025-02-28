@@ -29,6 +29,9 @@ public class HinhAnh {
 
     private Integer trangThai;
 
+    @Column(length = 255)
+    private String idPublic;
+
     @ManyToOne
     @JoinColumn(name = "ID_QuanJeans")
     private QuanJeans quanJeans;
