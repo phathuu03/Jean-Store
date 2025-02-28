@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.*;
+import com.example.demo.model.CloudinaryUploadResult;
 import com.example.demo.repository.MauSacRepository;
 import com.example.demo.repository.QuanJeansChiTietRepository;
 import com.example.demo.repository.QuanJeansRepository;
@@ -70,15 +71,17 @@ public class QuanJeansChiTietController {
             Long idMauSac = quanJeansChiTiet.getMauSac().getId();
             QuanJeans quanJean = quanJeansChiTiet.getQuanJeans();
 
-            // Sử dụng CloudinaryService mới để tải ảnh lên song song và nhận danh sách URL
-            List<String> uploadedImageUrls = cloudinaryService.uploadMultipleImages(imageFiles);
+            // Tải ảnh lên Cloudinary song song, trả về danh sách CloudinaryUploadResult
+            List<CloudinaryUploadResult> uploadResults = cloudinaryService.uploadMultipleImages(imageFiles);
 
-            // Lưu hình ảnh vào database nếu có ảnh được tải lên
-            if (!uploadedImageUrls.isEmpty()) {
-                uploadedImageUrls.forEach(url -> hinhAnhService.saveImage(url, quanJean, idMauSac));
+            // Lưu hình ảnh vào DB nếu có ảnh được tải lên
+            if (!uploadResults.isEmpty()) {
+                uploadResults.forEach(result ->
+                        hinhAnhService.saveImage(result.getSecureUrl(), result.getPublicId(), quanJean, idMauSac)
+                );
             }
 
-            // Lưu thông tin chi tiết quần jeans vào database
+            // Lưu thông tin chi tiết quần jeans vào DB
             quanJeansChiTietService.addQuanJeansChiTiet(quanJeansChiTiet);
 
             return "redirect:/api/quan-jean/detail/" + quanJeansChiTiet.getQuanJeans().getId();
@@ -87,6 +90,8 @@ public class QuanJeansChiTietController {
             return "error"; // Hiển thị trang lỗi nếu xảy ra vấn đề
         }
     }
+
+
 
 
     // Hiển thị chi tiết quần jeans
@@ -137,35 +142,47 @@ public class QuanJeansChiTietController {
             e.printStackTrace();
         }
 
-        // Nếu có danh sách ảnh bị xóa thì gọi service xóa ảnh trong DB
+        // Nếu có danh sách ảnh bị xóa
         if (deletedImageIds != null && !deletedImageIds.isEmpty()) {
+            // Lấy danh sách hình ảnh cần xóa từ DB
+            List<HinhAnh> imagesToDelete = hinhAnhService.findImagesByIds(deletedImageIds);
+            if (imagesToDelete != null) {
+                for (HinhAnh image : imagesToDelete) {
+                    // Xóa ảnh trên Cloudinary bằng public id (thực hiện bất đồng bộ)
+                    cloudinaryService.deleteImageAsync(image.getIdPublic());
+                }
+            }
+            // Xóa record hình ảnh trong DB
             hinhAnhService.deleteImagesByIds(deletedImageIds);
         }
 
-
-
-        // Cập nhật thông tin sản phẩm chi tiết
+        // Cập nhật thông tin sản phẩm chi tiết (DB)
         quanJeansChiTietService.updateQuanJeansChiTiet(id, quanJeansChiTiet);
+
         try {
             Long idMauSac = quanJeansChiTiet.getMauSac().getId();
             QuanJeans quanJean = quanJeansChiTiet.getQuanJeans();
 
-            // Sử dụng CloudinaryService mới để tải ảnh lên song song và nhận danh sách URL
-            List<String> uploadedImageUrls = cloudinaryService.uploadMultipleImages(imageFiles);
+            // Tải ảnh lên Cloudinary (trả về danh sách CloudinaryUploadResult chứa secureUrl và publicId)
+            List<CloudinaryUploadResult> uploadResults = cloudinaryService.uploadMultipleImages(imageFiles);
 
-            // Lưu hình ảnh vào database nếu có ảnh được tải lên
-            if (!uploadedImageUrls.isEmpty()) {
-                uploadedImageUrls.forEach(url -> hinhAnhService.saveImage(url, quanJean, idMauSac));
+            // Lưu hình ảnh mới vào DB nếu có ảnh được tải lên
+            if (uploadResults != null && !uploadResults.isEmpty()) {
+                for (CloudinaryUploadResult result : uploadResults) {
+                    hinhAnhService.saveImage(result.getSecureUrl(), result.getPublicId(), quanJean, idMauSac);
+                }
             }
 
-            // Lưu thông tin chi tiết quần jeans vào database
+            // Lưu (hoặc cập nhật) thông tin chi tiết quần jeans vào DB
             quanJeansChiTietService.addQuanJeansChiTiet(quanJeansChiTiet);
 
             return "redirect:/api/quan-jean/detail/" + quanJeansChiTiet.getQuanJeans().getId();
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "redirect:/api/quan-jean/detail/" + quanJeansChiTiet.getQuanJeans().getId();
     }
+
 
     // Xóa sản phẩm chi tiết quần jeans
     @GetMapping("/delete/{id}")

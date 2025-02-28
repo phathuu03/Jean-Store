@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.example.demo.model.CloudinaryUploadResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class CloudinaryService {
 
     // Tải lên một file ảnh (ASYNC)
     @Async
-    public CompletableFuture<String> uploadImageAsync(MultipartFile file) {
+    public CompletableFuture<CloudinaryUploadResult> uploadImageAsync(MultipartFile file) {
         try {
             // Kiểm tra kích thước file (giới hạn 10MB)
             if (file.getSize() > 10 * 1024 * 1024) {
@@ -39,23 +40,45 @@ public class CloudinaryService {
             // Upload ảnh lên Cloudinary
             Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
 
-            // Lấy và trả về URL ảnh
-            return CompletableFuture.completedFuture((String) uploadResult.get("secure_url"));
+            // Lấy URL ảnh và public_id
+            String secureUrl = (String) uploadResult.get("secure_url");
+            String publicId = (String) uploadResult.get("public_id");
+
+            // Trả về đối tượng chứa URL và public_id
+            return CompletableFuture.completedFuture(new CloudinaryUploadResult(secureUrl, publicId));
         } catch (IOException e) {
             throw new RuntimeException("Lỗi khi tải ảnh lên Cloudinary: " + file.getOriginalFilename(), e);
         }
     }
 
+
     // Tải lên nhiều file ảnh song song
-    public List<String> uploadMultipleImages(MultipartFile[] files) {
-        List<CompletableFuture<String>> futures = List.of(files).stream()
+    public List<CloudinaryUploadResult> uploadMultipleImages(MultipartFile[] files) {
+        List<CompletableFuture<CloudinaryUploadResult>> futures = List.of(files).stream()
                 .filter(file -> !file.isEmpty()) // Bỏ qua file rỗng
                 .map(this::uploadImageAsync) // Gọi upload song song
                 .collect(Collectors.toList());
 
-        // Đợi tất cả file upload xong và lấy danh sách URL ảnh
+        // Đợi tất cả file upload xong và lấy danh sách kết quả
         return futures.stream()
                 .map(CompletableFuture::join)
                 .collect(Collectors.toList());
     }
+
+    @Async
+    public CompletableFuture<Boolean> deleteImageAsync(String publicId) {
+        if (publicId == null) {
+            System.out.println("Không xóa ảnh trên Cloudinary vì publicId = null");
+            return CompletableFuture.completedFuture(false);
+        }
+        try {
+            Map<String, Object> result = cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
+            boolean success = "ok".equals(result.get("result"));
+            return CompletableFuture.completedFuture(success);
+        } catch (Exception e) {
+            throw new RuntimeException("Lỗi khi xóa ảnh trên Cloudinary với publicId: " + publicId, e);
+        }
+    }
+
+
 }
