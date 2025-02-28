@@ -1,91 +1,110 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <style>
-        .margin-top{
-            margin-top: 100px;
-        }
-
-    </style>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(to bottom, #E3F2FD, #BBDEFB);
+        }
+        .register-container {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            position: relative;
+        }
+        .form-group input, .form-group select {
+            padding-right: 40px;
+        }
+        .form-group .icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: gray;
+        }
+        input:focus::placeholder {
+            color: transparent;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-<header class="p-3 bg-dark text-white mb-5 fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/intro">Jeans Store</a>
-        </div>
-    </nav>
-</header>
 
-<div class="container  mb-3 pt-5 margin-top">
-    <h2 class="text-center">Đăng Ký</h2>
-    <div class="card mt-4">
-        <div class="card-body">
-            <form>
-                <!-- Các trường nhập liệu của bạn ở đây -->
-                <div class="mb-3">
-                    <label for="TENKHACHHANG" class="form-label">Tên Khách Hàng</label>
-                    <input type="text" class="form-control" id="TENKHACHHANG" required>
-                </div>
-                <div class="mb-3">
-                    <label for="TENDANGNHAP" class="form-label">Tên Đăng Nhập</label>
-                    <input type="text" class="form-control" id="TENDANGNHAP" required>
-                </div>
-                <div class="mb-3">
-                    <label for="MATKHAU" class="form-label">Mật Khẩu</label>
-                    <input type="password" class="form-control" id="MATKHAU" required>
-                </div>
-                <div class="mb-3">
-                    <label for="SODIENTHOAI" class="form-label">Số Điện Thoại</label>
-                    <input type="tel" class="form-control" id="SODIENTHOAI" required>
-                </div>
-                <div class="mb-3">
-                    <label for="DIACHI" class="form-label">Địa Chỉ</label>
-                    <input type="text" class="form-control" id="DIACHI" required>
-                </div>
-                <div class="mb-3">
-                    <label for="EMAIL" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="EMAIL" required>
-                </div>
-                <div class="mb-3">
-                    <label for="GIOITINH" class="form-label">Giới Tính</label>
-                    <select class="form-select" id="GIOITINH" required>
-                        <option value="">Chọn...</option>
-                        <option value="Nam">Nam</option>
-                        <option value="Nữ">Nữ</option>
-                        <option value="Khác">Khác</option>
-                    </select>
-                </div>
-                <div class="d-md-flex justify-content-md-center align-items-center mb-3 mt-3">
-                    <button type="submit" class="btn btn-primary mt-3">Đăng Ký</button>
-                </div>
-
-                <div class="d-flex justify-content-center">
-                    <span>Đã có tài khoản? <a href="/login">Đăng nhập</a></span>
-                </div>
-            </form>
-        </div>
-    </div>
+<section class="vh-100 d-flex justify-content-center align-items-center">
     <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-                <span class="text-muted">© 2025 Company, Jeans Store</span>
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="register-container text-center">
+                    <h1 class="text-primary mb-4">Register</h1>
+
+                    <%-- Hiển thị thông báo đăng ký thành công --%>
+                    <c:if test="${not empty successMessage}">
+                        <p class="text-success">${successMessage}</p>
+                    </c:if>
+
+                    <form action="/register" method="POST">
+                        <div class="mb-3 form-group">
+                            <input type="text" name="customerName" class="form-control" placeholder="Customer name" value="${param.customerName}" required>
+                            <i class="bi bi-person icon"></i>
+                            <p class="error-message">${errorTenKhachHang}</p>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <input type="password" name="password" class="form-control" placeholder="Password" required>
+                            <i class="bi bi-lock icon"></i>
+                            <p class="error-message">${errorPassword}</p>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <input type="tel" name="phoneNumber" class="form-control" placeholder="Phone Number" value="${param.phoneNumber}" required>
+                            <i class="bi bi-telephone icon"></i>
+                            <p class="error-message">${errorSoDienThoai}</p>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <input type="text" name="address" class="form-control" placeholder="Address" value="${param.address}" required>
+                            <i class="bi bi-geo-alt icon"></i>
+                            <p class="error-message">${errorDiaChi}</p>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <input type="email" name="email" class="form-control" placeholder="Email" value="${param.email}" required>
+                            <i class="bi bi-envelope icon"></i>
+                            <p class="error-message">${errorEmail}</p>
+                        </div>
+
+                        <div class="mb-3 form-group">
+                            <select name="gender" class="form-select" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male" ${gender == 'Male' ? 'selected' : ''}>Male</option>
+                                <option value="Female" ${gender == 'Female' ? 'selected' : ''}>Female</option>
+                            </select>
+                            <i class="bi bi-gender-ambiguous icon"></i>
+                            <p class="error-message">${errorGioiTinh}</p>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                        <p class="mt-3">Already have an account? <a href="/login" class="text-primary">Login</a></p>
+                    </form>
+                </div>
             </div>
-
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-
-            </ul>
-        </footer>
+        </div>
     </div>
-</div>
+</section>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

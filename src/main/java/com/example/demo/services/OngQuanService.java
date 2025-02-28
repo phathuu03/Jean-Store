@@ -1,8 +1,11 @@
 package com.example.demo.services;
 
+import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.OngQuan;
 import com.example.demo.repository.OngQuanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,10 @@ public class OngQuanService {
 
     public OngQuan saveOngQuan(OngQuan ongQuan) {
         return ongQuanRepository.save(ongQuan);
+    }
+
+    public Page<OngQuan> getAllOngQuan(Pageable pageable) {
+        return ongQuanRepository.findAll(pageable);
     }
 
     public void deleteOngQuan(Long id) {

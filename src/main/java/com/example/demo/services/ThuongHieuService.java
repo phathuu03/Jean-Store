@@ -1,8 +1,11 @@
 package com.example.demo.services;
 
+import com.example.demo.entity.ChatLieu;
 import com.example.demo.entity.ThuongHieu;
 import com.example.demo.repository.ThuongHieuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +25,9 @@ public class ThuongHieuService {
         return thuongHieuRepository.findAllByTrangThai(1);
     }
 
+    public Page<ThuongHieu> getAllThuongHieu(Pageable pageable) {
+        return thuongHieuRepository.findAll(pageable);
+    }
     public void deleteThuongHieu(Long id) {
         ThuongHieu thuongHieu = thuongHieuRepository.findById(id).orElseThrow();
         thuongHieu.setTrangThai(0); // Đổi trạng thái thành không hoạt động

@@ -2,10 +2,12 @@ package com.example.demo.services;
 
 
 import com.example.demo.entity.QuanJeans;
+import com.example.demo.entity.Size;
 import com.example.demo.repository.QuanJeansRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,9 +25,16 @@ public class QuanJeanService {
         return quanJeansRepository.save(quanJeans);
     }
 
-    public void deleteQuanJean(Long id){
-        quanJeansRepository.deleteById(id);
+    public void deleteQuanJean(Long id) {
+        QuanJeans quanJeans = quanJeansRepository.findById(id).get();
+        if (quanJeans != null) {
+            quanJeans.setTrangThai(0);  // Đặt trạng thái thành "Không hoạt động"
+            quanJeans.setNgaySua(LocalDate.now());
+            quanJeansRepository.save(quanJeans);
+        }
     }
+
+
     public Optional<QuanJeans> getQuanJeanById(Long id) {
         return quanJeansRepository.findById(id);
     }
@@ -39,7 +48,7 @@ public class QuanJeanService {
         }
     }
 
-    public List<QuanJeans>searchQuanJean(String nameQuanJean){
+    public List<QuanJeans> searchQuanJean(String nameQuanJean) {
         return quanJeansRepository.findByTenSanPhamContainingIgnoreCase(nameQuanJean);
     }
 
