@@ -56,6 +56,9 @@
                     <a class="nav-link text-white" href="/nhan-vien/hien-thi" target="contentFrame">Quản lý nhân viên</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link text-white" href="/khach-hang" target="contentFrame">Quản lý khách hàng</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" href="/api/quan-jean/quanjeans" target="contentFrame">Quản lý sản phẩm</a>
                 </li>
                 <li class="nav-item">

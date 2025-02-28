@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -49,6 +50,7 @@ public class KhachHangController {
             model.addAttribute("errors", result.getAllErrors());
             return "quanly/khachhang/add-khachhang";
         }
+        khachHang.setNgayTao(new Date());
         khachHangRepository.save(khachHang);
         return "redirect:/khach-hang";
     }

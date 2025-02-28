@@ -43,14 +43,7 @@
                     <label for="gioiTinh" class="form-label">Giới Tính</label>
                     <input type="text" id="gioiTinh" name="gioiTinh" class="form-control" value="${kh.gioiTinh ? 'Nam' : 'Nữ'}" readonly>
                 </div>
-                <div class="col-md-6">
-                    <label for="ngayTao" class="form-label">Ngày Tạo</label>
-                    <input type="date" id="ngayTao" name="ngayTao" class="form-control" value="<fmt:formatDate value='${kh.ngayTao}' pattern='yyyy-MM-dd'/>" readonly>
-                </div>
-                <div class="col-md-6">
-                    <label for="ngaySua" class="form-label">Ngày Sửa</label>
-                    <input type="date" id="ngaySua" name="ngaySua" class="form-control" value="<fmt:formatDate value='${kh.ngaySua}' pattern='yyyy-MM-dd'/>" readonly>
-                </div>
+
                 <div class="col-md-6">
                     <label for="trangThai" class="form-label">Trạng Thái</label>
                     <input type="text" id="trangThai" name="trangThai" class="form-control" value="${kh.trangThai == 0 ? 'Hoạt Động' : 'Ngừng Hoạt Động'}" readonly>
