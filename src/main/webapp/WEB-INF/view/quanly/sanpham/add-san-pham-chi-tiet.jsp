@@ -72,7 +72,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Mô tả:</label>
-                    <textarea name="moTa" class="form-control" rows="3" required></textarea>
+                    <textarea name="moTa" class="form-control" rows="3" ></textarea>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Giá:</label>
