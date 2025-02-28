@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "QuanJeans")
@@ -37,4 +38,5 @@ public class QuanJeans {
     @ManyToOne
     @JoinColumn(name = "ID_ChatLieu")
     private ChatLieu chatLieu;
+
 }
