@@ -22,9 +22,7 @@ public class LoginController {
     private static final String ADMIN_PASSWORD = "admin123";
 
     // Regex kiểm tra email hợp lệ
-    private static final Pattern EMAIL_REGEX = Pattern.compile(
-            "^[A-Za-z0-9+_.-]+@(?:gmail|yahoo|outlook|icloud|hotmail)\\.com$"
-    );
+    private static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$");
 
     @GetMapping("/login")
     public String viewLogin(HttpSession session, Model model) {
