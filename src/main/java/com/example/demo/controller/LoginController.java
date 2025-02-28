@@ -18,7 +18,7 @@ public class LoginController {
     @Autowired
     private KhachHangRepository khachHangRepository;
 
-    private static final String ADMIN_EMAIL = "admin@jeans.com";
+    private static final String ADMIN_EMAIL = "admin@gmail.com";
     private static final String ADMIN_PASSWORD = "admin123";
 
     // Regex kiểm tra email hợp lệ
