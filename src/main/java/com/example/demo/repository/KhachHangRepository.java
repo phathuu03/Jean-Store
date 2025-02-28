@@ -6,4 +6,7 @@ import com.example.demo.entity.KhachHang;
 
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
+    KhachHang findByEmailAndMatKhau(String email, String matKhau);
+    KhachHang findByEmail(String email);
+
 }
