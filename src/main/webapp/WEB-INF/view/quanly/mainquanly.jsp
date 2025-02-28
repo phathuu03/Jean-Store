@@ -17,7 +17,7 @@
             left: 0;
             z-index: 1000;
             padding: 20px 0;
-            background-color: #F0E6D2; /* Màu nhạt hơn */
+            background-color: #B0A1A1; /* Đã tối hơn */
             width: 250px;
             text-align: left;
         }
@@ -30,10 +30,9 @@
         .main-title {
             font-size: 24px;
             font-weight: bold;
-            color: #1F3A5F; /* Màu xanh đậm giống logo */
+            color: #1F3A5F;
             margin-left: 20px;
         }
-        /* Dành cho phần nav-link – sử dụng theo bên main */
         .nav-link {
             color: white !important;
             font-weight: bold;
@@ -77,9 +76,6 @@
             text-decoration: none;
             padding: 5px 0;
         }
-        .dropdown-icon {
-            float: right;
-        }
         .triangle-icon {
             font-size: 10px;
             margin-left: 5px;
@@ -97,23 +93,23 @@
             <ul class="nav flex-column">
                 <li class="nav-item">
                     <a class="nav-link" href="/nhan-vien/hien-thi" target="contentFrame">
-                        <i class="fas fa-user"></i> Quản lý nhân viên
+                        Quản lý nhân viên
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="/khach-hang" target="contentFrame">
-                        <i class="fas fa-user"></i> Quản lý khách hàng
+                        Quản lý khách hàng
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/api/quan-jean/quanjeans" target="contentFrame">
-                        <i class="fas fa-tshirt"></i> Quản lý sản phẩm
+                        Quản lý sản phẩm
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" id="quanlyThuocTinh">
-                        Quản lý thuộc tính <i class="fas fa-chevron-down dropdown-icon"></i> <i class="fas fa-caret-right triangle-icon"></i>
+                        Quản lý thuộc tính <i class="fas fa-caret-right triangle-icon"></i>
                     </a>
                     <div class="submenu" id="thuocTinhSubmenu">
                         <a href="/api/quan-ly/chuyen-muc/chat-lieu" target="contentFrame">Chất liệu</a>
@@ -121,10 +117,9 @@
                         <a href="/api/quan-ly/chuyen-muc/thuong-hieu" target="contentFrame">Thương hiệu</a>
                     </div>
                 </li>
-                <!-- Thêm mục Quản lý trạng thái -->
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" id="quanlyTrangThai">
-                        Quản lý trạng thái <i class="fas fa-chevron-down dropdown-icon"></i> <i class="fas fa-caret-right triangle-icon"></i>
+                        Quản lý trạng thái <i class="fas fa-caret-right triangle-icon"></i>
                     </a>
                     <div class="submenu" id="trangThaiSubmenu">
                         <a href="/api/quan-ly/list-mau-sac" target="contentFrame">Màu sắc</a>
@@ -147,12 +142,10 @@
         let navLinks = document.querySelectorAll(".sidebar .nav-link");
         let quanlyThuocTinh = document.getElementById("quanlyThuocTinh");
         let thuocTinhSubmenu = document.getElementById("thuocTinhSubmenu");
-        let dropdownIcon = quanlyThuocTinh.querySelector(".dropdown-icon");
         let triangleIcon = quanlyThuocTinh.querySelector(".triangle-icon");
 
         let quanlyTrangThai = document.getElementById("quanlyTrangThai");
         let trangThaiSubmenu = document.getElementById("trangThaiSubmenu");
-        let dropdownIconTrangThai = quanlyTrangThai.querySelector(".dropdown-icon");
         let triangleIconTrangThai = quanlyTrangThai.querySelector(".triangle-icon");
 
         navLinks.forEach(function (link) {
@@ -169,14 +162,10 @@
             event.preventDefault();
             if (thuocTinhSubmenu.style.display === "block") {
                 thuocTinhSubmenu.style.display = "none";
-                dropdownIcon.classList.remove("fa-chevron-up");
-                dropdownIcon.classList.add("fa-chevron-down");
                 triangleIcon.classList.remove("fa-caret-down");
                 triangleIcon.classList.add("fa-caret-right");
             } else {
                 thuocTinhSubmenu.style.display = "block";
-                dropdownIcon.classList.remove("fa-chevron-down");
-                dropdownIcon.classList.add("fa-chevron-up");
                 triangleIcon.classList.remove("fa-caret-right");
                 triangleIcon.classList.add("fa-caret-down");
             }
@@ -187,14 +176,10 @@
             event.preventDefault();
             if (trangThaiSubmenu.style.display === "block") {
                 trangThaiSubmenu.style.display = "none";
-                dropdownIconTrangThai.classList.remove("fa-chevron-up");
-                dropdownIconTrangThai.classList.add("fa-chevron-down");
                 triangleIconTrangThai.classList.remove("fa-caret-down");
                 triangleIconTrangThai.classList.add("fa-caret-right");
             } else {
                 trangThaiSubmenu.style.display = "block";
-                dropdownIconTrangThai.classList.remove("fa-chevron-down");
-                dropdownIconTrangThai.classList.add("fa-chevron-up");
                 triangleIconTrangThai.classList.remove("fa-caret-right");
                 triangleIconTrangThai.classList.add("fa-caret-down");
             }

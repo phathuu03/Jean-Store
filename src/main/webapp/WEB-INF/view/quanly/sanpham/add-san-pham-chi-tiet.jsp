@@ -24,6 +24,12 @@
                 reader.readAsDataURL(file);
             }
         }
+
+        // Hàm hiển thị overlay loading khi form submit
+        function showLoading() {
+            document.getElementById("loadingOverlay").style.display = "flex";
+            return true; // Cho phép form submit
+        }
     </script>
     <style>
         .image-preview {
@@ -37,15 +43,33 @@
             overflow-x: auto;
             padding: 5px;
         }
+        /* CSS cho overlay loading */
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
+
+<div id="loadingOverlay">
+    <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
 
 <div class="container mt-4">
     <h2 class="text-info text-center">Thêm Chi Tiết Sản Phẩm</h2>
 
     <div class="card shadow-lg p-4">
-        <form action="${pageContext.request.contextPath}/api/quan-jeans-chi-tiet/add" method="post" enctype="multipart/form-data">
+        <form action="${pageContext.request.contextPath}/api/quan-jeans-chi-tiet/add" method="post" enctype="multipart/form-data" onsubmit="return showLoading();">
             <input type="hidden" name="quanJeans.id" value="${quanJeans.id}">
 
             <h4 class="text-primary">Thông Tin Sản Phẩm</h4>
@@ -72,7 +96,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Mô tả:</label>
-                    <textarea name="moTa" class="form-control" rows="3" ></textarea>
+                    <textarea name="moTa" class="form-control" rows="3"></textarea>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Giá:</label>
@@ -122,7 +146,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Chọn hình ảnh:</label>
-                    <input type="file" name="imageFiles" id="imageFiles" class="form-control" multiple  onchange="previewImages()">
+                    <input type="file" name="imageFiles" id="imageFiles" class="form-control" multiple onchange="previewImages()">
                 </div>
             </div>
             <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>
