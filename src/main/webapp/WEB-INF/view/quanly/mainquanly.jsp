@@ -100,6 +100,12 @@
                         <i class="fas fa-user"></i> Quản lý nhân viên
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/khach-hang" target="contentFrame">
+                        <i class="fas fa-user"></i> Quản lý khách hàng
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/api/quan-jean/quanjeans" target="contentFrame">
                         <i class="fas fa-tshirt"></i> Quản lý sản phẩm
