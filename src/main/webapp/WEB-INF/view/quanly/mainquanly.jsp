@@ -83,6 +83,7 @@
     </style>
 </head>
 <body>
+<% String userRole = (String) session.getAttribute("userRole"); %>  <%-- Lấy role từ session --%>
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2 p-3 sidebar">
@@ -91,45 +92,47 @@
             </div>
             <h3 class="main-title">Main</h3>
             <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="/nhan-vien/hien-thi" target="contentFrame">
-                        Quản lý nhân viên
-                    </a>
-                </li>
+                <% if ("ADMIN".equals(userRole)) { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/nhan-vien/hien-thi" target="contentFrame">
+                           Quản lý nhân viên
+                        </a>
+                    </li>
+                <% } %>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/khach-hang" target="contentFrame">
-                        Quản lý khách hàng
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/quan-jean/quanjeans" target="contentFrame">
-                        Quản lý sản phẩm
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" id="quanlyThuocTinh">
-                        Quản lý thuộc tính <i class="fas fa-caret-right triangle-icon"></i>
-                    </a>
-                    <div class="submenu" id="thuocTinhSubmenu">
-                        <a href="/api/quan-ly/chuyen-muc/chat-lieu" target="contentFrame">Chất liệu</a>
-                        <a href="/api/quan-ly/chuyen-muc/ong-quan" target="contentFrame">Ống quần</a>
-                        <a href="/api/quan-ly/chuyen-muc/thuong-hieu" target="contentFrame">Thương hiệu</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" id="quanlyTrangThai">
-                        Quản lý trạng thái <i class="fas fa-caret-right triangle-icon"></i>
-                    </a>
-                    <div class="submenu" id="trangThaiSubmenu">
-                        <a href="/api/quan-ly/list-mau-sac" target="contentFrame">Màu sắc</a>
-                        <a href="/api/quan-ly/list-kich-thuoc" target="contentFrame">Kích thước</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
-                </li>
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/khach-hang" target="contentFrame">
+                            Quản lý khách hàng
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/api/quan-jean/quanjeans" target="contentFrame">
+                            Quản lý sản phẩm
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#" id="quanlyThuocTinh">
+                           Quản lý thuộc tính <i class="fas fa-caret-right triangle-icon"></i>
+                        </a>
+                        <div class="submenu" id="thuocTinhSubmenu">
+                            <a href="/api/quan-ly/chuyen-muc/chat-lieu" target="contentFrame">Chất liệu</a>
+                            <a href="/api/quan-ly/chuyen-muc/ong-quan" target="contentFrame">Ống quần</a>
+                            <a href="/api/quan-ly/chuyen-muc/thuong-hieu" target="contentFrame">Thương hiệu</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                         <a class="nav-link text-white" href="#" id="quanlyTrangThai">
+                            Quản lý trạng thái <i class="fas fa-caret-right triangle-icon"></i>
+                         </a>
+                         <div class="submenu" id="trangThaiSubmenu">
+                             <a href="/api/quan-ly/list-mau-sac" target="contentFrame">Màu sắc</a>
+                             <a href="/api/quan-ly/list-kich-thuoc" target="contentFrame">Kích thước</a>
+                         </div>
+                    </li>
+                    <li class="nav-item">
+                            <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
+                    </li>
+                </ul>
         </div>
         <div class="col-md-10 main-content">
             <iframe name="contentFrame" src="/nhan-vien/hien-thi" class="content-frame"></iframe>

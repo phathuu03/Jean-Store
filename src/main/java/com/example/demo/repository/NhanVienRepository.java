@@ -10,5 +10,6 @@ import java.util.List;
 public interface NhanVienRepository extends JpaRepository<NhanVien, Long> {
     List<NhanVien> findByTenNhanVienContaining(String tenNhanVien);
     boolean existsByTenDangNhap(String tenDangNhap);
+    NhanVien findByEmail(String email);
 
 }
