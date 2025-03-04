@@ -113,9 +113,7 @@
 
                         <button type="submit" class="btn btn-primary w-100">Sign in</button>
 
-                        <p class="mt-3">Don't have an account? <a href="/register" class="text-primary">Register</a></p>
                     </form>
-
 
                 </div>
             </div>

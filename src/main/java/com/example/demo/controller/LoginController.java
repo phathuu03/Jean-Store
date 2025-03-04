@@ -27,14 +27,19 @@ public class LoginController {
     private static final String ADMIN_PASSWORD = "admin123";
 
     private static final Pattern EMAIL_REGEX = Pattern.compile(
-            "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    );
+
+    // Regex kiểm tra mật khẩu (8-15 ký tự, ít nhất 1 chữ hoa, 1 chữ thường, 1 số, 1 ký tự đặc biệt)
+    private static final Pattern PASSWORD_REGEX = Pattern.compile(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@.#$!%*?&])[A-Za-z\\d@.#$!%*?&]{8,15}$"
     );
 
     @GetMapping("/login")
     public String viewLogin(HttpSession session, Model model) {
         session.invalidate(); // Xóa toàn bộ session
         model.addAttribute("email", ""); // Đảm bảo không hiển thị lại email
-        return "khachang/login/login";
+        return "quanly/login/login";
     }
 
     @PostMapping("/login")
@@ -63,15 +68,9 @@ public class LoginController {
 
         if (hasError) {
             model.addAttribute("email", email);
-            return "khachang/login/login";
+            return "quanly/login/login";
         }
 
-        // 🚫 Chặn khách hàng ngay từ đầu
-        KhachHang khachHang = khachHangRepository.findByEmail(email);
-        if (khachHang != null) {
-            model.addAttribute("errorEmail", "⚠️ Tài khoản khách hàng không được phép đăng nhập!");
-            return "khachang/login/login";
-        }
 
         // ✅ Kiểm tra Admin
         if (ADMIN_EMAIL.equals(email) && ADMIN_PASSWORD.equals(password)) {
@@ -81,7 +80,7 @@ public class LoginController {
         } else if (ADMIN_EMAIL.equals(email)) {
             model.addAttribute("errorPassword", "⚠️ Mật khẩu không đúng!");
             model.addAttribute("email", email);
-            return "khachang/login/login";
+            return "quanly/login/login";
         }
 
         // ✅ Kiểm tra nhân viên
@@ -94,12 +93,12 @@ public class LoginController {
         } else if (nhanVien != null) {
             model.addAttribute("errorPassword", "⚠️ Mật khẩu không đúng!");
             model.addAttribute("email", email);
-            return "khachang/login/login";
+            return "quanly/login/login";
         }
 
         // ✅ Nếu email không tồn tại
         model.addAttribute("errorEmail", "⚠️ Email không tồn tại!");
-        return "khachang/login/login";
+        return "quanly/login/login";
     }
 
 }

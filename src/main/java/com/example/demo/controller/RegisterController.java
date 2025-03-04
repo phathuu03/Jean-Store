@@ -19,15 +19,21 @@ public class RegisterController {
     @Autowired
     private KhachHangRepository khachHangRepository;
 
-    private static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
-    private static final Pattern PHONE_REGEX = Pattern.compile("^0\\d{9,10}$");
-
+    private static final Pattern EMAIL_REGEX = Pattern.compile(
+            "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+    );
+    private static final Pattern PASSWORD_REGEX = Pattern.compile(
+            "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@.#$!%*?&])[A-Za-z\\d@.#$!%*?&]{8,15}$"
+    );
+    private static final Pattern PHONE_REGEX = Pattern.compile(
+            "^(0|\\+84)(3[2-9]|5[2689]|7[0-9]|8[1-9]|9[0-9])\\d{7}$"
+    );
     @GetMapping("/register")
     public String viewRegisterPage(@RequestParam(required = false) String success, Model model) {
         if (success != null) {
             model.addAttribute("successMessage", "✅ Đăng ký thành công! Hãy đăng nhập.");
         }
-        return "khachang/login/register";
+        return "khachhang/register";
     }
 
     @PostMapping("/register")
@@ -51,10 +57,11 @@ public class RegisterController {
         if (password == null || password.trim().isEmpty()) {
             model.addAttribute("errorPassword", "⚠️ Mật khẩu không được để trống!");
             hasError = true;
-        } else if (password.length() < 6) {
-            model.addAttribute("errorPassword", "⚠️ Mật khẩu phải có ít nhất 6 ký tự!");
+        } else if (!PASSWORD_REGEX.matcher(password).matches()) {
+            model.addAttribute("errorPassword", "⚠️ Mật khẩu phải có 8-15 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt (@.#$!%*?&).");
             hasError = true;
         }
+
 
         // Kiểm tra số điện thoại
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
@@ -95,7 +102,7 @@ public class RegisterController {
         }
 
         if (hasError) {
-            return "khachang/login/register";
+            return "quanly/login/register";
         }
 
         // Lưu thông tin khách hàng mới vào database
@@ -115,6 +122,6 @@ public class RegisterController {
 
         // Chuyển hướng về trang đăng nhập
         redirectAttributes.addFlashAttribute("successMessage", "✅ Đăng ký thành công! Hãy đăng nhập.");
-        return "redirect:/login";
+        return "redirect:quanly/login";
     }
 }

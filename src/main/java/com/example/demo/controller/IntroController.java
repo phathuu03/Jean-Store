@@ -9,6 +9,6 @@ public class IntroController {
     @GetMapping("/intro")
     public String pageIntro(){
 
-        return "khachang/login/intro";
+        return "quanly/login/intro";
     }
 }
