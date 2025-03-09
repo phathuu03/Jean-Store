@@ -107,6 +107,12 @@
                         Quản lý sản phẩm
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/api/quan-ly/hoa-don/view-hoa-don" target="contentFrame">
+                        Quản lý hóa đơn
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" id="quanlyThuocTinh">
                         Quản lý thuộc tính <i class="fas fa-caret-right triangle-icon"></i>

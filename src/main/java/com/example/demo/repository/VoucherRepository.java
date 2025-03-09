@@ -20,4 +20,6 @@ public interface VoucherRepository extends JpaRepository<Voucher, Long> {
             @Param("startDate") LocalDate startDate,
             @Param("endDate") LocalDate endDate);
 
+
+
 }
