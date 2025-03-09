@@ -25,6 +25,8 @@ public class HoaDon {
 
     private Integer trangThai;
 
+    private String diaChiGiaoHang;
+
     @ManyToOne
     @JoinColumn(name = "ID_KhachHang")
     private KhachHang khachHang;
