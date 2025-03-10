@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <style>
     th {
         white-space: nowrap;
@@ -29,7 +31,7 @@
                 <td>${hoaDon.diaChiGiaoHang}</td>
                 <td>
                     <c:if test="${hoaDon.ngayThanhToan != null}">
-                        ${hoaDon.ngayThanhToan}
+                        <fmt:formatDate value="${hoaDon.ngayThanhToan}" pattern="dd/MM/yyyy" />
                     </c:if>
                 </td>
                 <td>
