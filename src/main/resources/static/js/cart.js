@@ -101,6 +101,13 @@ app.controller('CartController', function ($scope, $http) {
         $scope.updateTotalPrice();
     };
     $scope.removeFromCart = function (id) {
+
+        let isConfirm = confirm("Bạn có muốn xóa không");
+
+        if (!isConfirm){
+            return;
+        }
+
         $scope.cart = $scope.cart.filter(item => item.idProductDetail !== id);
         sessionStorage.setItem('cart', JSON.stringify($scope.cart));
         $scope.updateTotalPrice();

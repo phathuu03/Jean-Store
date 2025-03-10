@@ -188,7 +188,7 @@
                     <fmt:formatNumber value="${item.tongTien}" type="currency" currencySymbol="đ" minFractionDigits="2"
                                       maxFractionDigits="2"/>
                 </div>
-                <c:if test="${item.trangThai=='Chờ xác nhận'|| item.trangThai=='Chờ giao hàng'}">
+                <c:if test="${item.trangThai=='Chờ xác nhận'}">
                     <button class="btn btn-danger" style="width: 120px" ng-click = "setTTHuy(${item.id})">Hủy</button>
                 </c:if>
                 <c:if test="${item.trangThai=='Đang giao hàng'}">
