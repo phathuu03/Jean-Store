@@ -49,7 +49,7 @@
                 <td>${kh.gioiTinh ? "Nam" : "Nữ"}</td>
                 <td>${kh.ngayTao}</td>
                 <td>${kh.ngaySua}</td>
-                <td>${kh.trangThai == 0 ? "Hoạt Động" : "Ngừng Hoạt Động"}</td>
+                <td>${kh.trangThai == 1 ? "Hoạt Động" : "Ngừng Hoạt Động"}</td>
                 <td>
                     <div style="display: flex; gap: 10px;">
                         <a href="/khach-hang/detail/${kh.id}" class="d-flex justify-content-center align-items-center p-2">

@@ -37,7 +37,7 @@ public class VoucherController {
         model.addAttribute("totalPages", pageVoucher.getTotalPages());
         model.addAttribute("size", size); // Truyền size để cập nhật dropdown
 
-        return "/quanly/voucher/voucher";
+        return "quanly/voucher/voucher";
     }
 
     @GetMapping("/voucher/view-add")
@@ -61,7 +61,7 @@ public class VoucherController {
     @GetMapping("/voucher/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         model.addAttribute("voucher", voucherRepository.findById(id).orElse(null));
-        return "/quanly/voucher/detail-voucher";
+        return "quanly/voucher/detail-voucher";
     }
 
     @GetMapping("/voucher/view-update/{id}")
