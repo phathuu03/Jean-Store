@@ -135,7 +135,7 @@
                 </ul>
         </div>
         <div class="col-md-10 main-content">
-            <iframe name="contentFrame" src="/nhan-vien/hien-thi" class="content-frame"></iframe>
+            <iframe name="contentFrame" src="/khach-hang" class="content-frame"></iframe>
         </div>
     </div>
 </div>
