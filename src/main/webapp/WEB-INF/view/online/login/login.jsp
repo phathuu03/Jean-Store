@@ -104,7 +104,7 @@
                     <i id="eyeIcon" class="fa-solid fa-eye"></i>
                 </button>
             </div>
-            <div style="margin-bottom: 10px"><a class="text-primary" href="/forgot-password" id="fogot"
+            <div style="margin-bottom: 10px"><a class="text-primary" href="/forgot-password" id="forgot"
                     style="text-decoration: none;margin: 10px 10px 20px;color: #dd4b39;font-weight: bold">Quên mật khẩu?</a>
             </div>
 

@@ -21,7 +21,7 @@ public class HinhAnh {
     private String url;
 
     @Column(name = "ID_MauSac")
-    private Integer idMauSac;
+    private Long idMauSac;
 
     private Date ngayTao;
 

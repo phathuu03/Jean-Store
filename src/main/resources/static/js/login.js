@@ -36,6 +36,7 @@ app.controller('LoginController', function ($scope, $http, $location) {
 
                         document.getElementById("btnLogin").disabled = true;
 
+                        document.getElementById("forgot").hidden = true;
                         document.getElementById("eyeIcon").hidden = true
                         document.getElementById("mess").hidden = true
 
