@@ -20,11 +20,13 @@ public interface QuanJeansRepository extends JpaRepository<QuanJeans, Long> {
     Page<QuanJeans> findAllByTrangThai(Pageable pageable);
 
     @Query(value = "select * from QuanJeans where ID_ThuongHieu = :id and TrangThai = 1", nativeQuery = true)
-    Page<QuanJeans> findAllByThuongHieu(@Param("id") Long id,Pageable pageable);
+    Page<QuanJeans> findAllByThuongHieu(@Param("id") Long id, Pageable pageable);
 
     @Query(value = "select * from QuanJeans where ID_ChatLieu = :id and TrangThai = 1", nativeQuery = true)
-    Page<QuanJeans> findAllByChatLieu(@Param("id") Long id,Pageable pageable);
+    Page<QuanJeans> findAllByChatLieu(@Param("id") Long id, Pageable pageable);
 
     @Query(value = "select * from QuanJeans where ID_OngQuan = :id and TrangThai = 1", nativeQuery = true)
-    Page<QuanJeans> findAllByOngQuan(@Param("id") Long id,Pageable pageable);
+    Page<QuanJeans> findAllByOngQuan(@Param("id") Long id, Pageable pageable);
+
+    List<QuanJeans> findByTenSanPhamContainingIgnoreCase(String keyword);
 }

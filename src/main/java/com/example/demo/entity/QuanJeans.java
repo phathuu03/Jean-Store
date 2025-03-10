@@ -2,6 +2,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,9 +22,9 @@ public class QuanJeans {
     @Column(length = 100)
     private String tenSanPham;
 
-    private Date ngayTao;
+    private LocalDate ngayTao = LocalDate.now();
 
-    private Date ngaySua;
+    private LocalDate ngaySua;
 
     private Integer trangThai;
 

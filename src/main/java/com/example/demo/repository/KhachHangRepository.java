@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.entity.KhachHang;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
     @Query(value = "select * from KhachHang where TenDangNhap like :ten", nativeQuery = true)
@@ -32,8 +34,16 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
     @Query(value = "insert into KhachHang values(:name,:username,:password,:sdt,:address,:email,:gender,GETDATE(),null,1)", nativeQuery = true)
     void insertUser(@Param("name") String name, @Param("username") String username, @Param("password") String password, @Param("sdt") String sdt,
                     @Param("address") String address, @Param("email") String email, @Param("gender") Boolean gender);
+
     @Modifying
     @Transactional
-    @Query(value = "update KhachHang set MatKhau = :password where TenDangNhap = :username",nativeQuery = true)
-    void updatePasswordByUsername(@Param("password") String password,@Param("username") String username);
+    @Query(value = "update KhachHang set MatKhau = :password where TenDangNhap = :username", nativeQuery = true)
+    void updatePasswordByUsername(@Param("password") String password, @Param("username") String username);
+
+    KhachHang findByEmailAndMatKhau(String email, String matKhau);
+
+    KhachHang findByEmail(String email);
+
+    List<KhachHang> findByTenKhachHangContaining(String tenKhachHang);
+
 }

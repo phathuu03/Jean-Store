@@ -1,10 +1,10 @@
 package com.example.demo.repository;
 
+import com.example.demo.entity.HinhAnh;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.example.demo.entity.HinhAnh;
 
 import java.util.List;
 
@@ -15,5 +15,11 @@ public interface HinhAnhRepository extends JpaRepository<HinhAnh, Long> {
 
     @Query(value = "select * from HinhAnh where ID_QuanJeans = :id",nativeQuery = true)
     List<HinhAnh> findHinhAnhByIdQuan(@Param("id") Long id);
+
+    @Query("SELECT ha FROM HinhAnh ha WHERE ha.quanJeans.id = :quanJeansId AND ha.idMauSac = :idMauSac")
+    List<HinhAnh> findHinhAnhByQuanJeansAndIdMauSac(@Param("quanJeansId") Long quanJeansId,
+                                                    @Param("idMauSac") Long idMauSac);
+
+    List<HinhAnh> findByIdIn(List<Long> ids);
 
 }
