@@ -2,6 +2,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 @Entity
 @Table(name = "HoaDon")
@@ -17,11 +18,11 @@ public class HoaDon {
 
     private Double tongTien;
 
-    private Date ngayThanhToan;
+    private LocalDate ngayThanhToan;
 
-    private Date ngayTao;
+    private LocalDate ngayTao;
 
-    private Date ngaySua;
+    private LocalDate ngaySua;
 
     private Integer trangThai;
 
