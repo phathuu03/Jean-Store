@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class HoaDon {
 
     private Date ngayThanhToan;
 
-    private Date ngayTao;
+    private Date ngayTao = new Date();
 
     private Date ngaySua;
 

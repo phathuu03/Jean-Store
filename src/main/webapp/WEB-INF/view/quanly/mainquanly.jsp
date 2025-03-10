@@ -134,11 +134,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
+                </li> <li class="nav-item">
+                    <a class="nav-link text-white" href="/thong-ke" target="contentFrame">Thống kê</a>
                 </li>
             </ul>
         </div>
         <div class="col-md-10 main-content">
-            <iframe name="contentFrame" src="/nhan-vien/hien-thi" class="content-frame"></iframe>
+            <iframe name="contentFrame" src="/thong-ke" class="content-frame"></iframe>
         </div>
     </div>
 </div>
