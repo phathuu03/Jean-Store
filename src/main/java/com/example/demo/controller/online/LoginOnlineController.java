@@ -9,4 +9,9 @@ public class LoginOnlineController {
     public String login(){
         return "online/login/login";
     }
+
+    @GetMapping("/online/register")
+    public String register(){
+        return "online/login/register";
+    }
 }

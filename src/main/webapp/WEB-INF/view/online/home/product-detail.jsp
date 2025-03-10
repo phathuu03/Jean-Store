@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <html>
 <head>
     <title>Jeans-Store</title>
@@ -12,10 +14,21 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="${pageContext.request.contextPath}/js/product.js"></script>
-    <%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">--%>
 
 </head>
 <style>
+    .d-flex {
+        display: flex;
+        flex-wrap: wrap; /* Cho phép các nút tự động xuống dòng nếu không đủ chỗ */
+        gap: 10px; /* Khoảng cách giữa các nút */
+    }
+
+    .size-option {
+        min-width: 50px; /* Đặt chiều rộng tối thiểu */
+        text-align: center;
+        padding: 10px 15px;
+    }
+
     .color-option.active {
         background-color: black;
         color: white;
@@ -27,9 +40,10 @@
         color: white;
         border-color: black;
     }
-    #productImageDetail{
-        width: 500px;
-        height: 500px;
+
+    #productImageDetail {
+        width: 400px;
+        height: 400px;
     }
 </style>
 <body style="background-color: aliceblue">
@@ -38,101 +52,90 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <div class="d-flex align-items-center mb-2 mb-lg-0 text-red text-decoration-none"
                  style="color: cornflowerblue">
-                Jeans Store
-            </div>
+                <a class="navbar-brand fw-bold" href="/home">
+                    <i class="bi bi-bag"></i> Jeans Store
+                </a></div>
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="/home" class="nav-link px-2 text-white">Trang chủ</a></li>
-                <li><a href="#" class="nav-link px-2 text-white">Quản lý đơn hàng</a></li>
+                <li><a href="/order-history" class="nav-link px-2 text-white">Quản lý đơn hàng</a></li>
                 <li><a href="/cart/detail" class="nav-link px-2 text-white">Giỏ hàng</a></li>
+                <li><a href="/user/detail" class="nav-link px-2 text-white">Tài khoản</a></li>
             </ul>
 
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-            </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+                <a href="/online/login" type="button" class="btn btn-outline-light me-2">Đăng nhập</a>
             </div>
         </div>
     </div>
 </header>
 
 <div class="content container mt-5">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3 border rounded p-3 bg-light">
-            <h5 class="text-center">Thương Hiệu</h5>
-            <hr>
-            <c:forEach var="item" items="${thuongHieu}">
-                <a href="#" class="product-link d-block text-decoration-none text-dark">${item.tenThuongHieu}</a>
-            </c:forEach>
-        </div>
+    <div class="container my-5">
+        <div class="row" ng-app="myApp" ng-controller="ProductController">
 
-        <!-- Product Details -->
-        <div ng-app="myApp" ng-controller="ProductController" class="col-md-9">
-            <div class="card shadow-sm p-3">
-                <div class="row">
-                    <!-- Product Image -->
-                    <div class="col-md-6 text-center">
-                        <img id="productImageDetail" src="${quanJeans.hinhAnh[0].url} on"
-                             alt="Hình ảnh sản phẩm" class="img-fluid rounded">
-                    </div>
+            <!-- Product Image -->
+            <div class="col-md-6 text-center">
+                <img id="productImageDetail" src="${quanJeans.hinhAnh[0].url}" alt="Hình ảnh sản phẩm"
+                     class="shadow-sm">
+            </div>
 
-                    <!-- Product Info -->
-                    <div class="col-md-6 d-flex flex-column justify-content-center">
-                        <h4 class="fw-bold">${quanJeans.tenSanPham}</h4>
+            <!-- Product Information -->
+            <div class="col-md-6 product-details">
+                <h2 class="fw-bold">${quanJeans.tenSanPham}</h2>
 
-                        <c:forEach var="quanCT" items="${quanJeans.quanJeansChiTiets}" begin="0" end="0">
-                            <label class="product-price text-danger fw-bold fs-5">${quanCT.gia}</label>
-                        </c:forEach>
+                <c:forEach var="quanCT" items="${quanJeans.quanJeansChiTiets}" begin="0" end="0">
+                    <p class="product-price" id="product-price"
+                       style="font-size: 25px;color: #dd4b39;font-weight: bold">
+                        <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="đ"/>
+                    </p>
+                </c:forEach>
 
-                        <div class="mt-4">
-                            <h6 class="fw-bold">Màu sắc:</h6>
-                            <div class="d-flex flex-wrap gap-2">
-                                <c:forEach var="mauSac" items="${mauSac}">
-                                    <button value="${mauSac[1]}" class="color-option btn btn-outline-dark btnMauSac"
-                                            ng-click="changeImage(${mauSac[1]},${quanJeans.id})"
-                                            onclick="selectButtonColor(this)"
-                                           >
-                                            ${mauSac[0]}
-                                    </button>
-                                </c:forEach>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <h6 class="fw-bold">Size:</h6>
-                            <div class="d-flex flex-wrap gap-2">
-                                <c:forEach var="size" items="${size}">
-                                    <button class="size-option btn btn-outline-dark btnSize"
-                                            ng-click="selectButtonSize(${size[0]})"
-                                            onclick="selectButtonSize1(this)">
-                                            ${size[1]}
-                                    </button>
-                                </c:forEach>
-                            </div>
-                        </div>
-                        <div class="mt-4">
-                            <h6 class="fw-bold">Số lượng trong kho:</h6>
-                            <p id="quantityText" class="fs-5 text-danger fw-bold">0</p>
-                        </div>
-                        <div class="mt-4">
-                            <h6 class="fw-bold">Số lượng:</h6>
-                            <div class="input-group" style="width: 120px;">
-                                <button class="btn btn-outline-secondary" type="button" ng-click="decreaseQuantity()">
-                                    −
-                                </button>
-                                <input type="text" class="form-control text-center text-danger fw-bold" id="quantityInput"
-                                       ng-model="quantity" readonly>
-                                <button class="btn btn-outline-secondary" type="button" ng-click="increaseQuantity()">
-                                    +
-                                </button>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary mt-3" ng-click="addToCart()">Thêm vào giỏ hàng</button>
-                    </div>
+                <!-- Màu sắc -->
+                <h6 class="fw-bold mt-4">Màu sắc:</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <c:forEach var="mauSac" items="${mauSac}">
+                        <button value="${mauSac[1]}" class="color-option btn btn-outline-dark"
+                                id="btnColor"
+                                ng-click="changeImage(${mauSac[1]}, ${quanJeans.id})"
+                                onclick="selectButtonColor(this)">
+                                ${mauSac[0]}
+                        </button>
+                    </c:forEach>
                 </div>
+
+                <!-- Size -->
+                <h6 class="fw-bold mt-4">Size:</h6>
+                <div class="d-flex flex-wrap gap-2">
+                    <button class="size-option btn btn-outline-dark"
+                            id="btnSize"
+                            ng-repeat="s in size"
+                            ng-click="selectButtonSize(s[0])"
+                            onclick="selectButtonSize1(this)"
+                            value="{{s[0]}}">
+                        {{s[1]}}
+                    </button>
+                </div>
+
+
+                <!-- Số lượng trong kho -->
+                <h6 class="fw-bold mt-4">Số lượng trong kho:</h6>
+                <p id="quantityText" class="fs-5 text-danger fw-bold">0</p>
+
+                <!-- Số lượng -->
+                <h6 class="fw-bold mt-4">Số lượng:</h6>
+                <div class="input-group" style="width: 120px;">
+                    <button class="btn btn-outline-secondary" type="button" ng-click="decreaseQuantity()">−</button>
+                    <input type="text" class="form-control quantity-input" id="quantityInput" ng-model="quantity"
+                           readonly>
+                    <button class="btn btn-outline-secondary" type="button" ng-click="increaseQuantity()">+</button>
+                </div>
+
+                <!-- Thêm vào giỏ hàng -->
+                <button class="btn btn-primary mt-4 w-100" ng-click="addToCart()">
+                    <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
+                </button>
             </div>
         </div>
     </div>

@@ -1,6 +1,6 @@
 package com.example.demo.controller.online;
 
-import com.example.demo.repository.QuanJeansRepository;
+import com.example.demo.repository.SizeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 
 @Controller
-public class QuanJeansController {
+public class SizeOnlController {
     @Autowired
-    private QuanJeansRepository quanJeansRepository;
+    private SizeRepository sizeRepository;
 
-    @GetMapping("/getNameProduct")
+    @GetMapping("/getNameSize")
     @ResponseBody
-    public ResponseEntity<?> getNameProduct(@RequestParam("idProduct") Long idProduct){
-        String name = quanJeansRepository.getNameProduct(idProduct);
+    public ResponseEntity<?> getNameSize(@RequestParam("idSize") Long idSize){
+        String name = sizeRepository.getNameSize(idSize);
         if (name==null){
             return ResponseEntity.badRequest().body(Map.of("error","Không tìm thấy tên"));
         }
-        return ResponseEntity.ok(Map.of("nameProduct",name));
+        return ResponseEntity.ok(Map.of("nameSize",name));
     }
 }

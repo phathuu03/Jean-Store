@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Map;
 
 @Controller
-public class MauSacController {
+public class MauSacOnlController {
     @Autowired
     private MauSacRepository mauSacRepository;
 

@@ -1,82 +1,53 @@
 package com.example.demo.config;
 
-import com.example.demo.entity.KhachHang;
-import com.example.demo.service.KhachHangService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class ConfigSecurity {
 
-    private final KhachHangService khachHangService;
-
-    public ConfigSecurity(KhachHangService khachHangService) {
-        this.khachHangService = khachHangService;
-    }
-
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+    public UserDetailsService userDetailsService(DataSource dataSource) {
+        JdbcUserDetailsManager userDetailsManager = new JdbcUserDetailsManager(dataSource);
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        List<UserDetails> users = khachHangService.getAllKhachHang().stream()
-                .map(khachHang -> User.builder()
-                        .username(khachHang.getTenDangNhap())
-                        .password(passwordEncoder().encode(khachHang.getMatKhau()))
-                        .roles("KhachHang")
-                        .build()
-                ).collect(Collectors.toList());
+        userDetailsManager.setUsersByUsernameQuery(
+                "SELECT TenDangNhap,CONCAT('{noop}', MatKhau), TrangThai FROM KhachHang WHERE TenDangNhap = ?"
+        );
 
-        return new InMemoryUserDetailsManager(users);
+        userDetailsManager.setAuthoritiesByUsernameQuery(
+                "SELECT TenDangNhap, 'USER' FROM KhachHang WHERE TenDangNhap = ?"
+        );
+
+        return userDetailsManager;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/order/**").authenticated() // Chặn truy cập /cart/
+                        .requestMatchers("/order/**", "/order-history/**", "/user/detail/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(login -> login
-                        .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/cart/detail", true)
-                        .permitAll()
+                        .loginPage("/online/login")
+                        .successHandler(new CustomAuthenticationSuccessHandler())
+                        .usernameParameter("username")
+                        .passwordParameter("password")
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
+                        .logoutSuccessUrl("/online/login")
                         .permitAll()
                 );
-//        http
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/client/**").authenticated()
-//                ).formLogin(login -> login
-//                .loginProcessingUrl("/login")
-//                .defaultSuccessUrl("/client/detail", true)
-//                .permitAll()
-//        ).logout(logout -> logout
-//                .logoutUrl("/logout")
-//                .logoutSuccessUrl("/login?logout")
-//                .permitAll()
-//        );
         return http.build();
     }
 

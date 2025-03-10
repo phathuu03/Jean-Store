@@ -22,7 +22,6 @@ public class SecurityUtil {
         }
 
         Object principal = authentication.getPrincipal();
-        System.out.println("Principal class: " + principal.getClass().getName()); // Debug kiểu dữ liệu
 
         if (principal instanceof UserDetails) {
             UserDetails userDetails = (UserDetails) principal;

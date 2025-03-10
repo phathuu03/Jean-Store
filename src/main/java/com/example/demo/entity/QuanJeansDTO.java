@@ -1,9 +1,10 @@
 package com.example.demo.entity;
+
+import com.example.demo.entity.*;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "QuanJeans")
@@ -13,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class QuanJeans {
+public class QuanJeansDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,11 +39,5 @@ public class QuanJeans {
     @ManyToOne
     @JoinColumn(name = "ID_ChatLieu")
     private ChatLieu chatLieu;
-
-    @OneToMany(mappedBy = "quanJeans", cascade = CascadeType.ALL)
-    private List<HinhAnh> hinhAnh;
-
-    @OneToMany(mappedBy = "quanJeans", cascade = CascadeType.ALL)
-    private List<QuanJeansChiTiet> quanJeansChiTiets;
 
 }

@@ -12,7 +12,7 @@ import java.util.Map;
 @Repository
 public interface MauSacRepository extends JpaRepository<MauSac, Long> {
     @Query(value = "select MauSac.TenMauSac,MauSac.ID from QuanJeansChiTiet join MauSac" +
-            " on QuanJeansChiTiet.ID_MauSac = MauSac.ID where ID_Quan = :id group by MauSac.TenMauSac,MauSac.ID", nativeQuery = true)
+            " on QuanJeansChiTiet.ID_MauSac = MauSac.ID where ID_Quan = :id and QuanJeansChiTiet.TrangThai = 1 group by MauSac.TenMauSac,MauSac.ID", nativeQuery = true)
     List<Object[]> findTenMauSac(@Param("id") Long id);
     @Query(value = "select TenMauSac from MauSac where ID = :idMauSac",nativeQuery = true)
     String getTenMauSac(@Param("idMauSac") Long idMauSac);

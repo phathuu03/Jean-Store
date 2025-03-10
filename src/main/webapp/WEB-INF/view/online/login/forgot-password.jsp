@@ -13,7 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <script src="${pageContext.request.contextPath}/js/login.js"></script>
+    <script src="${pageContext.request.contextPath}/js/forgot-password.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 
@@ -50,26 +50,10 @@
             height: 50px;
             font-size: 16px;
         }
-
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            color: #666;
-        }
-
-        .toggle-password:focus {
-            outline: none;
-        }
     </style>
 </head>
 
-<body ng-app="myApp" ng-controller="LoginController">
+<body ng-app="myApp" ng-controller="ForgotController">
 
 <header class="p-3 bg-dark text-white fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -83,58 +67,27 @@
 
 <section class="d-flex align-items-center justify-content-center vh-100">
     <div class="login-container">
-        <h2 class="text-center mb-4 fw-bold">Đăng Nhập</h2>
-
-        <c:if test="${param.error != null}">
-            <p style="color: red;">Sai tài khoản hoặc mật khẩu!</p>
-        </c:if>
-        <c:if test="${param.logout != null}">
-            <p style="color: green;">Bạn đã đăng xuất thành công!</p>
-        </c:if>
-        <form action="" method="post">
+        <h2 class="text-center mb-4 fw-bold">Quên mật khẩu</h2>
             <div class="form-floating mb-4">
                 <input type="text" id="username" class="form-control" name="username" required/>
                 <label for="username"><i class="bi bi-person"></i> Tên đăng nhập</label>
             </div>
 
             <div class="form-floating mb-4">
-                <input type="password" id="password" class="form-control" name="password" required/>
-                <label for="password"><i class="bi bi-lock"></i> Mật khẩu</label>
-                <button type="button" class="toggle-password" onclick="togglePassword()">
-                    <i id="eyeIcon" class="fa-solid fa-eye"></i>
-                </button>
-            </div>
-            <div style="margin-bottom: 10px"><a class="text-primary" href="/forgot-password" id="fogot"
-                    style="text-decoration: none;margin: 10px 10px 20px;color: #dd4b39;font-weight: bold">Quên mật khẩu?</a>
+                <input type="text" id="email" class="form-control" name="email" required/>
+                <label for="email"></i> Email</label>
             </div>
 
-            <a class="text-primary" href="/online/register" id="mess"
-               style="text-decoration: none;margin: 10px;color: #dd4b39;font-weight: bold">Bạn
-                chưa có tài khoản đăng ký ngay ?</a>
-
-            <button id="btnLogin" class="btn btn-login w-100 fw-bold" style="margin-top: 20px" type="submit">
-                <i class="bi bi-box-arrow-in-right"></i> Đăng nhập
+            <button ng-click="sendEmail()" class="btn btn-login w-100 fw-bold" style="margin-top: 20px" type="submit">
+                <i  class="bi bi-box-arrow-in-right"></i> Gửi
             </button>
             <hr class="my-4">
-        </form>
     </div>
 </section>
-<script>
-    function togglePassword() {
-        var passwordInput = document.getElementById("password");
-        var eyeIcon = document.getElementById("eyeIcon");
+<section class="d-flex align-items-center justify-content-center vh-100">
+    <div class="login-container">
 
-        if (passwordInput.type === "password") {
-            passwordInput.type = "text";
-            eyeIcon.classList.remove("fa-eye");
-            eyeIcon.classList.add("fa-eye-slash");
-        } else {
-            passwordInput.type = "password";
-            eyeIcon.classList.remove("fa-eye-slash");
-            eyeIcon.classList.add("fa-eye"); // Đổi sang icon mắt mở
-        }
-    }
-</script>
-
+    </div>
+</section>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class KhachHangService {
     private KhachHangRepository khachHangRepository;
 
     public List<KhachHang> getAllKhachHang() {
-        List<KhachHang> khachHangs = new ArrayList<>();
+        List<KhachHang> khachHangs;
         khachHangs = khachHangRepository.findAll();
         return khachHangs;
     }

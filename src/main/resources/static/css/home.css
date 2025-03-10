@@ -5,7 +5,22 @@
     padding: 8px;
     transition: 0.3s;
 }
+.navbar {
+    background-color: white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
 
+.nav-link {
+    color: black;
+    font-weight: 500;
+    padding: 10px 15px;
+}
+
+.nav-link.active, .nav-link:hover {
+    color: #d9534f;
+    border-bottom: 2px solid #d9534f;
+}
 .product-link:hover {
     color: blue;
     font-weight: bold;
