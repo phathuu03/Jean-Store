@@ -20,9 +20,9 @@ public class HoaDon {
 
     private LocalDate ngayThanhToan;
 
-    private LocalDate ngayTao;
+    private Date ngayTao = new Date();
 
-    private LocalDate ngaySua;
+    private Date ngaySua;
 
     private Integer trangThai;
 
