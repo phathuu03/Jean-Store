@@ -68,7 +68,6 @@
 
         <!-- Nút điều hướng -->
         <div class="mt-4 text-center">
-            <a href="/api/quan-ly/hoa-don/edit/hoa-don/${hoaDonChiTiet.id}" class="btn btn-warning me-2">Chỉnh sửa</a>
             <a href="/api/quan-ly/hoa-don/view/san-pham-chi-tiet/${hoaDonChiTiet.id}" class="btn btn-primary">Xem chi tiết sản phẩm</a>
             <a href="javascript:window.history.back()" class="btn btn-secondary me-2">Quay lại danh sách</a>
         </div>

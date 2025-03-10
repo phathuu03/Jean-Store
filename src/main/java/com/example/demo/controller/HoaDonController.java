@@ -53,7 +53,7 @@ public class HoaDonController {
     @GetMapping("/view-hoa-don")
     public String getAllHoaDon(Model model){
         model.addAttribute("listHoaDon" , hoaDonService.getAll());
-        return "/quanly/hoadon/hoadon";
+        return "quanly/hoadon/hoadon";
     }
 
     @GetMapping("/view/detail/{id}")
@@ -61,7 +61,7 @@ public class HoaDonController {
         HoaDon hoaDon = hoaDonService.findHoaDonById(id);
         model.addAttribute("hoaDon", hoaDon);
         model.addAttribute("listHdct", hoaDonChiTietService.findAllByid(id));
-        return "/quanly/hoadon/detail";
+        return "quanly/hoadon/detail";
     }
 
     //form edit hóa đơn

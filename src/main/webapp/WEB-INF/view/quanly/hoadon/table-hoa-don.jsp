@@ -33,7 +33,7 @@
                     </c:if>
                 </td>
                 <td>
-                        ${hoaDon.trangThai == 0 ? "Chưa Thanh Toán" : "Đã Thanh Toán"}
+                        ${hoaDon.trangThai}
                 </td>
                 <td>
                     <c:if test="${hoaDon.khachHang != null}">

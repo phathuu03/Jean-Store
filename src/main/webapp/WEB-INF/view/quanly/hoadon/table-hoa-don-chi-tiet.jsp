@@ -34,7 +34,7 @@
                     <fmt:formatDate value="${hdct.ngaySua}" pattern="dd/MM/yyyy" />
                 </td>
                 <td>
-                        ${hdct.trangThai == 0 ? "Chưa Thanh Toán" : "Đã Thanh Toán"}
+                        ${hdct.trangThai}
                 </td>
                 <td>
                     <!-- Giữ lại nút Detail (có thể bổ sung thêm hành động nếu cần) -->
