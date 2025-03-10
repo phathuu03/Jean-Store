@@ -18,7 +18,7 @@ public class HoaDon {
 
     private Double tongTien;
 
-    private LocalDate ngayThanhToan;
+    private Date ngayThanhToan;
 
     private Date ngayTao = new Date();
 

@@ -69,7 +69,7 @@
 
         <!-- Nút điều hướng -->
         <div class="mt-4 text-center">
-            <a href="/api/quan-ly/hoa-don/edit/hoa-don/${hoaDon.id}" class="btn btn-warning me-2">Chỉnh sửa</a>
+<%--            <a href="/api/quan-ly/hoa-don/edit/hoa-don/${hoaDon.id}" class="btn btn-warning me-2">Chỉnh sửa</a>--%>
             <a href="/api/quan-ly/hoa-don/view-hoa-don" class="btn btn-secondary">Quay lại danh sách</a>
         </div>
     </div>
