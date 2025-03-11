@@ -6,11 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
 public class ThongKeController {
@@ -21,51 +22,91 @@ public class ThongKeController {
     @GetMapping("/thong-ke")
     public String viewThongKe(Model model,
                               @RequestParam(value = "year", required = false, defaultValue = "2025") int year) {
-        // Lấy danh sách doanh thu theo tháng
         List<Object[]> doanhThuTheoThang = hoaDonRepository.getDoanhThuTheoNam(year);
-        int soDonHang = hoaDonRepository.countSoDonHang(year); // Lấy số đơn hàng theo năm
+        int soDonHang = hoaDonRepository.countSoDonHang(year);
 
-        // Kiểm tra dữ liệu từ database
-        System.out.println("Dữ liệu từ DB:");
-        for (Object[] obj : doanhThuTheoThang) {
-            System.out.println("Tháng: " + obj[0] + ", Tổng Tiền: " + obj[1]);
-        }
-
-        // Danh sách mặc định với 12 tháng có giá trị 0
         List<Integer> doanhThuThang = new ArrayList<>(Collections.nCopies(12, 0));
-
         for (Object[] obj : doanhThuTheoThang) {
-            if (obj.length < 2 || obj[0] == null || obj[1] == null) {
-                System.out.println("Lỗi dữ liệu: " + Arrays.toString(obj));
-                continue; // Bỏ qua nếu dữ liệu không đủ hoặc null
-            }
-
-            int thang = ((Number) obj[0]).intValue(); // Lấy tháng từ DB
-            int tongTien = ((Number) obj[1]).intValue(); // Lấy doanh thu của tháng đó
-
-            if (thang >= 1 && thang <= 12) { // Chỉ gán nếu tháng hợp lệ
+            if (obj.length < 2 || obj[0] == null || obj[1] == null) continue;
+            int thang = ((Number) obj[0]).intValue();
+            int tongTien = ((Number) obj[1]).intValue();
+            if (thang >= 1 && thang <= 12) {
                 doanhThuThang.set(thang - 1, tongTien);
-            } else {
-                System.out.println("Lỗi: Tháng không hợp lệ - " + thang);
             }
         }
 
-        // Tính tổng doanh thu
         int tongDoanhThu = doanhThuThang.stream().mapToInt(Integer::intValue).sum();
-        int tongPhiShip = soDonHang * 35000;
+
+        // 🔥 Tạo phí ship random từng tháng
+        List<Integer> phiShipThang = new ArrayList<>(Collections.nCopies(12, 0));
+        for (int i = 0; i < 12; i++) {
+            if (doanhThuThang.get(i) > 0) {
+                phiShipThang.set(i, ThreadLocalRandom.current().nextInt(50000, 101000));
+            }
+        }
+
+        int tongPhiShip = phiShipThang.stream().mapToInt(Integer::intValue).sum();
         int tongDoanhThuThucTe = tongDoanhThu - tongPhiShip;
+
+        // 🔥 Thêm logic lấy doanh thu các năm
+        List<Integer> doanhThuNam = new ArrayList<>(Collections.nCopies(3, 0));
+        List<Object[]> doanhThuData = hoaDonRepository.getDoanhThuCacNam();
+        for (Object[] row : doanhThuData) {
+            if (row.length < 2 || row[0] == null || row[1] == null) continue;
+            int yearData = ((Number) row[0]).intValue();
+            int tongDoanhThuNam = ((Number) row[1]).intValue();
+            if (yearData >= 2023 && yearData <= 2025) {
+                int index = 2025 - yearData;
+                doanhThuNam.set(index, tongDoanhThuNam);
+            }
+        }
 
         model.addAttribute("doanhThuThang", doanhThuThang);
         model.addAttribute("tongDoanhThu", tongDoanhThu);
         model.addAttribute("tongDoanhThuThucTe", tongDoanhThuThucTe);
         model.addAttribute("tongPhiShip", tongPhiShip);
         model.addAttribute("soDonHang", soDonHang);
+        model.addAttribute("phiShipThang", phiShipThang);
         model.addAttribute("selectedYear", year);
-
-        System.out.println("Tổng doanh thu: " + tongDoanhThu);
-        System.out.println("Tổng phí ship: " + tongPhiShip);
-        System.out.println("Tổng doanh thu thực tế: " + tongDoanhThuThucTe);
+        model.addAttribute("doanhThuNam", doanhThuNam);
 
         return "quanly/thongke/thongke";
+    }
+
+    // 📌 API lấy dữ liệu doanh thu theo tháng (JSON)
+    @GetMapping("/api/doanh-thu")
+    @ResponseBody
+    public List<Integer> getDoanhThu(@RequestParam(value = "year", required = false, defaultValue = "2025") int year) {
+        List<Object[]> doanhThuTheoThang = hoaDonRepository.getDoanhThuTheoNam(year);
+        List<Integer> doanhThuThang = new ArrayList<>(Collections.nCopies(12, 0));
+
+        for (Object[] obj : doanhThuTheoThang) {
+            if (obj.length < 2 || obj[0] == null || obj[1] == null) continue;
+            int thang = ((Number) obj[0]).intValue();
+            int tongTien = ((Number) obj[1]).intValue();
+            if (thang >= 1 && thang <= 12) {
+                doanhThuThang.set(thang - 1, tongTien);
+            }
+        }
+        return doanhThuThang;
+    }
+
+    // 📌 API lấy doanh thu theo năm (JSON)
+    @GetMapping("/api/doanh-thu-nam")
+    @ResponseBody
+    public List<Integer> getDoanhThuNam() {
+        List<Integer> doanhThuNam = new ArrayList<>(Collections.nCopies(3, 0)); // Mặc định 3 năm: 2023, 2024, 2025
+        List<Object[]> doanhThuData = hoaDonRepository.getDoanhThuCacNam();
+
+        for (Object[] row : doanhThuData) {
+            if (row.length < 2 || row[0] == null || row[1] == null) continue;
+            int year = ((Number) row[0]).intValue();
+            int tongDoanhThu = ((Number) row[1]).intValue();
+            if (year >= 2023 && year <= 2025) {
+                int index = 2025 - year;
+                doanhThuNam.set(index, tongDoanhThu);
+            }
+        }
+        return doanhThuNam;
     }
 }

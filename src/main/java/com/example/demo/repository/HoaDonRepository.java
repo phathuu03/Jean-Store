@@ -11,12 +11,20 @@ import java.util.List;
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
-    // Thống kê doanh thu theo tháng trong năm
+    // Thống kê doanh thu theo từng tháng trong năm (DÙNG CHO BIỂU ĐỒ DOANH THU THÁNG)
     @Query("SELECT MONTH(h.ngayThanhToan), SUM(h.tongTien) " +
             "FROM HoaDon h WHERE YEAR(h.ngayThanhToan) = :nam " +
             "AND h.trangThai = 1 " +
             "GROUP BY MONTH(h.ngayThanhToan) ORDER BY MONTH(h.ngayThanhToan)")
     List<Object[]> getDoanhThuTheoNam(@Param("nam") int nam);
+
+    // Thống kê doanh thu các năm (DÙNG CHO BIỂU ĐỒ DOANH THU NĂM)
+    @Query("SELECT YEAR(h.ngayThanhToan), SUM(h.tongTien) " +
+            "FROM HoaDon h WHERE h.trangThai = 1 " +
+            "GROUP BY YEAR(h.ngayThanhToan) ORDER BY YEAR(h.ngayThanhToan)")
+    List<Object[]> getDoanhThuCacNam();
+
+
 
     // Thống kê doanh thu theo ngày trong tháng
     @Query("SELECT DAY(h.ngayThanhToan), SUM(h.tongTien) " +
@@ -25,15 +33,6 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
             "AND h.trangThai = 1 " +
             "GROUP BY DAY(h.ngayThanhToan) ORDER BY DAY(h.ngayThanhToan)")
     List<Object[]> getDoanhThuTheoThang(@Param("nam") int nam, @Param("thang") int thang);
-
-    // Thống kê doanh thu theo khoảng thời gian
-    @Query(value = "SELECT CONVERT(DATE, h.ngayThanhToan), SUM(h.tongTien) " +
-            "FROM HoaDon h WHERE h.ngayThanhToan BETWEEN :startDate AND :endDate " +
-            "AND h.trangThai = 1 " +
-            "GROUP BY CONVERT(DATE, h.ngayThanhToan) " +
-            "ORDER BY CONVERT(DATE, h.ngayThanhToan)", nativeQuery = true)
-    List<Object[]> getDoanhThuTheoKhoangThoiGian(@Param("startDate") String startDate,
-                                                 @Param("endDate") String endDate);
 
     // Tính tổng doanh thu
     @Query("SELECT SUM(h.tongTien) FROM HoaDon h WHERE h.trangThai = 1")
