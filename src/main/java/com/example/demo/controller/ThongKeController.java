@@ -23,7 +23,7 @@ public class ThongKeController {
     public String viewThongKe(Model model,
                               @RequestParam(value = "year", required = false, defaultValue = "2025") int year) {
         List<Object[]> doanhThuTheoThang = hoaDonRepository.getDoanhThuTheoNam(year);
-        int soDonHang = hoaDonRepository.countSoDonHang(year);
+        int soDonHang = hoaDonRepository.countTatCaDonHangThanhToan();
 
         List<Integer> doanhThuThang = new ArrayList<>(Collections.nCopies(12, 0));
         for (Object[] obj : doanhThuTheoThang) {
@@ -35,7 +35,7 @@ public class ThongKeController {
             }
         }
 
-        int tongDoanhThu = doanhThuThang.stream().mapToInt(Integer::intValue).sum();
+        int tongDoanhThu = hoaDonRepository.tinhTongDoanhThu();
 
         // 🔥 Tạo phí ship random từng tháng
         List<Integer> phiShipThang = new ArrayList<>(Collections.nCopies(12, 0));

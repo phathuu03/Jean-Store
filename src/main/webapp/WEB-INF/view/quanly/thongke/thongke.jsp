@@ -26,7 +26,7 @@
 <div class="container mt-4">
     <h1 class="text-info">Quản Lý Thống Kê </h1><br>
     <div class="row mb-4">
-        <div class="col-md-3"><div class="card gradient-orange text-center p-4"><h3 id="soDonHang">${soDonHang}</h3><p>Số Đơn Hàng</p></div></div>
+        <div class="col-md-3"><div class="card gradient-orange text-center p-4"><h3 id="soDonHang">${soDonHang}</h3><p>Đơn Hàng</p></div></div>
         <div class="col-md-3"><div class="card gradient-green text-center p-4"><h3 id="tongDoanhThu">${tongDoanhThu} đ</h3><p>Tổng Doanh Thu</p></div></div>
         <div class="col-md-3"><div class="card gradient-blue text-center p-4"><h3 id="doanhThuThucTe">${tongDoanhThuThucTe} đ</h3><p>Doanh Thu Thực Tế</p></div></div>
     </div>

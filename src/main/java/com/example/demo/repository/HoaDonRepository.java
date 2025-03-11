@@ -11,22 +11,20 @@ import java.util.List;
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
-    // Thống kê doanh thu theo từng tháng trong năm (DÙNG CHO BIỂU ĐỒ DOANH THU THÁNG)
+    // 🔹 Thống kê doanh thu theo tháng trong năm
     @Query("SELECT MONTH(h.ngayThanhToan), SUM(h.tongTien) " +
             "FROM HoaDon h WHERE YEAR(h.ngayThanhToan) = :nam " +
             "AND h.trangThai = 1 " +
             "GROUP BY MONTH(h.ngayThanhToan) ORDER BY MONTH(h.ngayThanhToan)")
     List<Object[]> getDoanhThuTheoNam(@Param("nam") int nam);
 
-    // Thống kê doanh thu các năm (DÙNG CHO BIỂU ĐỒ DOANH THU NĂM)
+    // 🔹 Thống kê doanh thu theo năm
     @Query("SELECT YEAR(h.ngayThanhToan), SUM(h.tongTien) " +
             "FROM HoaDon h WHERE h.trangThai = 1 " +
             "GROUP BY YEAR(h.ngayThanhToan) ORDER BY YEAR(h.ngayThanhToan)")
     List<Object[]> getDoanhThuCacNam();
 
-
-
-    // Thống kê doanh thu theo ngày trong tháng
+    // 🔹 Thống kê doanh thu theo ngày trong tháng
     @Query("SELECT DAY(h.ngayThanhToan), SUM(h.tongTien) " +
             "FROM HoaDon h WHERE YEAR(h.ngayThanhToan) = :nam " +
             "AND MONTH(h.ngayThanhToan) = :thang " +
@@ -34,12 +32,12 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
             "GROUP BY DAY(h.ngayThanhToan) ORDER BY DAY(h.ngayThanhToan)")
     List<Object[]> getDoanhThuTheoThang(@Param("nam") int nam, @Param("thang") int thang);
 
-    // Tính tổng doanh thu
+    // 🔹 Tính tổng doanh thu (chỉ tính đơn đã thanh toán)
     @Query("SELECT SUM(h.tongTien) FROM HoaDon h WHERE h.trangThai = 1")
     Integer tinhTongDoanhThu();
 
-    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE YEAR(hd.ngayTao) = :year")
-    int countSoDonHang(@Param("year") int year);
-
+    // 🔹 Đếm tất cả đơn hàng đã thanh toán
+    @Query("SELECT COUNT(hd) FROM HoaDon hd WHERE hd.trangThai = 1")
+    int countTatCaDonHangThanhToan();
 
 }
