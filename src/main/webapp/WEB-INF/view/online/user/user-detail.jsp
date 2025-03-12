@@ -43,26 +43,29 @@
 <body style="background-color: aliceblue">
 <header class="p-3 bg-dark text-white">
     <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <div class="d-flex align-items-center mb-2 mb-lg-0 text-red text-decoration-none"
-                 style="color: cornflowerblue">
-                <a class="navbar-brand fw-bold" href="/home">
-                    <i class="bi bi-bag"></i> Jeans Store
-                </a>
-            </div>
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="/home">
+                <i class="bi bi-bag me-2"></i> Jeans Store
+            </a>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/home" class="nav-link px-2 text-white">Trang chủ</a></li>
-                <li><a href="/order-history" class="nav-link px-2 text-white">Quản lý đơn hàng</a></li>
-                <li><a href="/cart/detail" class="nav-link px-2 text-white">Giỏ hàng</a></li>
-                <li><a href="/user/detail" class="nav-link px-2 text-white">Tài khoản</a></li>
+            <!-- Menu -->
+            <ul class="nav col-lg-auto mb-2 mb-lg-0">
+                <li><a href="/home" class="nav-link px-3 text-white">Trang chủ</a></li>
+                <li><a href="/order-history" class="nav-link px-3 text-white">Quản lý đơn hàng</a></li>
+                <li><a href="/cart/detail" class="nav-link px-3 text-white">Giỏ hàng</a></li>
+                <li><a href="/user/detail" class="nav-link px-3 text-white">Tài khoản</a></li>
             </ul>
-            <div class="text-end">
-                <a href="/online/login" type="button" class="btn btn-outline-light me-2">Đăng nhập</a>
+
+            <!-- Đăng nhập / Chào mừng -->
+            <div class="d-flex align-items-center">
+                <a href="/online/login" id="btnLogin" class="btn btn-outline-light me-3">Đăng nhập</a>
+                <p id="textWelcome" class="mb-0 fw-bold text-light" style="display: none;"></p>
             </div>
         </div>
     </div>
 </header>
+
 <body ng-app="myApp" ng-controller="UserController">
 <div class="profile-container">
     <h4 class="text-center">Tài Khoản Của Tôi</h4>
@@ -73,7 +76,8 @@
     <div class="mb-3">
         <label class="form-label">Mật khẩu</label>
         <input type="password" class="form-control" id="password" value="${user.matKhau}" disabled>
-        <a href="#" data-bs-toggle="modal" data-bs-target="#changePasswordModal" class="text-danger smal">Thay đổi mật khẩu</a>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#changePasswordModal" class="text-danger smal">Thay đổi mật
+            khẩu</a>
     </div>
     <div class="mb-3">
         <label class="form-label">Tên</label>
@@ -96,9 +100,9 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Địa chỉ nhận hàng</label>
-        <input type="text" id="address" class="form-control" value="${user.diaChi}" required>
-        <p class="text-danger" ng-if="checkError.address">{{mes.address}}</p>
-
+        <input type="text" id="address" class="form-control"
+               value="${user.diaChi},${ user.phuongXa},${ user.quanHuyen}, ${ user.tinhTP}" required disabled>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#changeAddress" class="text-danger smal">Thay đổi địa chỉ</a>
     </div>
 
     <button ng-click="updateUser()" type="submit" class="btn btn-primary w-100"
@@ -137,6 +141,70 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="changeAddress" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalTitleAdress">Thay Đổi Địa Chỉ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <h6 class="text-center mb-3">Chọn địa chỉ giao hàng</h6>
+                    <form>
+                        <!-- Tỉnh / Thành phố -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Phường / Xã</label>
+                            <select id="province" name="province" class="form-select"
+                                    ng-model="selectedProvince"
+                                    ng-options="item.ProvinceID as item.ProvinceName for item in provinces"
+                                    ng-change="onProvinceChange(selectedProvince)">
+                                <option value="">Chọn tỉnh</option>
+                            </select>
+                        </div>
+
+                        <!-- Quận / Huyện -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Phường / Xã</label>
+                            <select id="districts" name="districts" class="form-select"
+                                    ng-model="selectedDistricts"
+                                    ng-options="item.DistrictID as item.DistrictName for item in districts"
+                                    ng-change="onDistrictsChange(selectedDistricts)">
+                                <option value="">Chọn huyện</option>
+                            </select>
+                        </div>
+
+                        <!-- Phường / Xã -->
+                        <!-- Quận / Huyện -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Phường / Xã</label>
+                            <select id="wards" name="wards" class="form-select"
+                                    ng-model="selectedWards"
+                                    ng-options="item.WardCode as item.WardName for item in wards">
+                                <option value="">Chọn huyện</option>
+                            </select>
+                        </div>
+                        <!-- Địa chỉ cụ thể -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ cụ thể</label>
+                            <input type="text" class="form-control" id="addressDetail"
+                                   placeholder="Nhập số nhà, tên đường..." required>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-primary" ng-click="changeAddress()">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 </div>
 </body>

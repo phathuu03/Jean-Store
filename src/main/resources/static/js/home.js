@@ -30,7 +30,7 @@ app.controller('HomeController', function ($scope, $http) {
                             $scope.user = response.data.khachHang;
                             document.getElementById("btnLogin").style.display = "none";
                             document.getElementById("textWelcome").style.display = "block";
-                            document.getElementById("textWelcome").innerText = "Welcome:" + $scope.user.tenDangNhap;
+                            document.getElementById("textWelcome").innerText = "Welcome : " + $scope.user.tenDangNhap;
                             console.log("Thông tin user:", $scope.user);
                         } else {
                             console.warn("Không tìm thấy khách hàng với ID:", idUser);
