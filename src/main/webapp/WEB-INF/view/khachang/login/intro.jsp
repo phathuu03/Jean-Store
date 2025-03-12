@@ -1,9 +1,8 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Jeans-Store</title>
+    <title>Jeans Store</title>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
             crossorigin="anonymous"></script>
@@ -13,49 +12,124 @@
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/home.css">
+<style>
+    footer {
+        background-color: #C4A484; /* Màu be nhạt */
+        padding: 20px;
+    }
+
+    footer a {
+        transition: color 0.3s ease, font-weight 0.3s ease;
+    }
+
+    footer a:hover {
+        color: #0056b3; /* Màu xanh đậm hơn */
+        font-weight: bold;
+    }
+
+    footer .bi {
+        transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    footer .bi:hover {
+        transform: scale(1.2);
+        color: #0056b3;
+    }
+</style>
+
 </head>
 <body style="background-color: aliceblue">
-<header class="p-3 bg-dark text-white">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/intro">Jeans Store</a>
+<header class="p-3 bg-dark text-white shadow">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark container">
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a href="/login" class="btn btn-outline-light me-2">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-warning" href="/register">Sign-up</a>
-                    </li>
-                </ul>
-            </div>
+        <a class="navbar-brand d-flex align-items-center" href="/intro">
+             Jeans Store
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="/login" class="btn btn-outline-light">Login</a>
+                </li>
+            </ul>
         </div>
     </nav>
-
 </header>
-<div class="banner">
-    <img src="${pageContext.request.contextPath}/image/bannerJeans.png" class="img-fluid w-100 h-90" style="margin-top: 20px;">
+
+<div class="banner text-center">
+    <img src="https://file.hstatic.net/200000962346/file/banner_jeans_store.jpg" class="img-fluid rounded shadow">
 </div>
-<div ng-app="myApp" class="content" style="margin-top: 50px;margin-left: 100px">
-    <div class="container" style="margin: 40px;">
 
+<div ng-app="myApp" class="content container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h2 class="fw-bold">Chào mừng đến với Jeans Store</h2>
+            <p class="text-muted">Khám phá bộ sưu tập quần jeans phong cách dành cho bạn!</p>
+        </div>
     </div>
+</div>
 
+<footer class="bg-light text-dark py-5">
     <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-                </a>
-                <span class="text-muted">© 2025 Company, Jeans Store</span>
+        <div class="row">
+            <div class="col-md-3">
+                <h6 class="fw-bold">Mua sắm</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark text-decoration-none">Giao hàng</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Thanh toán</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Trả hàng</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Tìm cửa hàng</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Magazine</a></li>
+                </ul>
             </div>
 
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <div class="col-md-3">
+                <h6 class="fw-bold">Thông tin doanh nghiệp</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark text-decoration-none">Cơ hội nghề nghiệp</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Giới thiệu về Jeans Store</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Thời trang bền vững</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Báo chí</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Quan hệ với nhà đầu tư</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Quản trị doanh nghiệp</a></li>
+                </ul>
+            </div>
 
-            </ul>
-        </footer>
+            <div class="col-md-3">
+                <h6 class="fw-bold">Trợ giúp</h6>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-dark text-decoration-none">Dịch vụ khách hàng</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Tài khoản của tôi</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Điều khoản & điều kiện</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Pháp lý & bảo mật</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Liên hệ</a></li>
+                    <li><a href="#" class="text-dark text-decoration-none">Chính sách bảo mật thanh toán</a></li>
+                </ul>
+            </div>
+
+            <div class="col-md-3">
+                <h6 class="fw-bold">Tham gia ngay</h6>
+                <p>Trở thành thành viên của Jeans Store để nhận ưu đãi 10% cho lần mua tiếp theo!</p>
+                <a href="#" class="fw-bold text-decoration-none text-primary">Đọc thêm →</a>
+            </div>
+        </div>
+
+        <div class="text-center my-4">
+            <a href="#" class="mx-2 text-dark"><i class="bi bi-instagram"></i></a>
+            <a href="#" class="mx-2 text-dark"><i class="bi bi-tiktok"></i></a>
+            <a href="#" class="mx-2 text-dark"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="mx-2 text-dark"><i class="bi bi-youtube"></i></a>
+            <a href="#" class="mx-2 text-dark"><i class="bi bi-pinterest"></i></a>
+        </div>
+
+        <div class="text-center">
+            <p class="mt-2 text-muted">&copy; 2025 Jeans Store. All rights reserved.</p>
+        </div>
     </div>
-</div>
+</footer>
+
 </body>
 </html>

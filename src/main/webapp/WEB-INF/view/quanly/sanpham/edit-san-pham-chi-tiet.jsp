@@ -29,7 +29,6 @@
 
         // Danh sách chứa ID các hình ảnh sẽ xóa khi người dùng lưu thay đổi
         var deletedImageList = [];
-
         function deleteImage(imageId) {
             if (confirm("Bạn có chắc muốn xóa hình ảnh này không?")) {
                 deletedImageList.push(imageId);
@@ -38,6 +37,12 @@
                 // Xóa container chứa hình ảnh đó khỏi giao diện
                 document.getElementById('image-' + imageId).remove();
             }
+        }
+
+        // Hàm hiển thị overlay loading khi form submit
+        function showLoading() {
+            document.getElementById("loadingOverlay").style.display = "flex";
+            return true; // Cho phép form submit tiếp tục
         }
     </script>
     <style>
@@ -66,14 +71,34 @@
             font-size: 14px;
             cursor: pointer;
         }
+        /* CSS cho overlay loading */
+        #loadingOverlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
+
+<!-- Overlay loading -->
+<div id="loadingOverlay">
+    <div class="spinner-border text-light" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+
 <div class="container mt-4">
     <h2 class="text-info text-center">Chỉnh Sửa Chi Tiết Sản Phẩm</h2>
     <div class="card shadow-lg p-4">
         <form action="${pageContext.request.contextPath}/api/quan-jeans-chi-tiet/update/${quanJeansChiTiet.id}"
-              method="post" enctype="multipart/form-data">
+              method="post" enctype="multipart/form-data" onsubmit="return showLoading();">
             <!-- Thông tin liên quan đến sản phẩm cha -->
             <input type="hidden" name="quanJeans.id" value="${quanJeansChiTiet.quanJeans.id}">
             <!-- Input ẩn để lưu danh sách ID hình ảnh sẽ xóa -->
@@ -105,7 +130,7 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Mô tả:</label>
-                    <textarea name="moTa" class="form-control" rows="3" required>${quanJeansChiTiet.moTa}</textarea>
+                    <textarea name="moTa" class="form-control" rows="3">${quanJeansChiTiet.moTa}</textarea>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label fw-bold">Giá:</label>

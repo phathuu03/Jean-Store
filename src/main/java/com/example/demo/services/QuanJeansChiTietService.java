@@ -23,6 +23,7 @@ public class QuanJeansChiTietService {
         return repository.findAll();
     }
 
+
     // Lấy sản phẩm chi tiết theo ID
     public Optional<QuanJeansChiTiet> getQuanJeansChiTietById(Long id) {
         return repository.findById(id);

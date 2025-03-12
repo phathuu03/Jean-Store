@@ -1,9 +1,12 @@
 package com.example.demo.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
+
 @Entity
 @Table(name = "HoaDon")
 @Data
@@ -11,6 +14,7 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class HoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +22,16 @@ public class HoaDon {
 
     private Double tongTien;
 
-    private LocalDate ngayThanhToan;
+    private String diaChiGiaoHang;
 
-    private LocalDate ngayTao;
+    private Date ngayThanhToan;
 
-    private LocalDate ngaySua;
+    private Date ngayTao = new Date();
+
+    private Date ngaySua;
 
     private Integer trangThai;
+
 
     @ManyToOne
     @JoinColumn(name = "ID_KhachHang")
@@ -41,4 +48,26 @@ public class HoaDon {
     @ManyToOne
     @JoinColumn(name = "ID_PTTT")
     private PTTT pttt;
+
+    @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
+    private List<HoaDonChiTiet> hoaDonChiTiets;
+
+    public String getTrangThai() {
+        if (trangThai == 0) {
+            return "Chờ xác nhận";
+        }
+        if (trangThai == 1) {
+            return "Chờ giao hàng";
+        }
+        if (trangThai == 2) {
+            return "Đang giao hàng";
+        }
+        if (trangThai == 3) {
+            return "Hoàn thành";
+        }
+        if (trangThai == 4) {
+            return "Đã hủy";
+        }
+        return null;
+    }
 }

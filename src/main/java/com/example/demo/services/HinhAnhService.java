@@ -16,14 +16,19 @@ public class HinhAnhService {
     private HinhAnhRepository hinhAnhRepository;
 
     // Phương thức để lưu hình ảnh vào cơ sở dữ liệu
-    public HinhAnh saveImage(String imageUrl, QuanJeans quanJeans, Long idMauSac) {
+    public HinhAnh saveImage(String imageUrl, String publicId, QuanJeans quanJeans, Long idMauSac) {
         HinhAnh hinhAnh = new HinhAnh();
         hinhAnh.setQuanJeans(quanJeans);
         hinhAnh.setUrl(imageUrl);
+        hinhAnh.setIdPublic(publicId); // Lưu public_id từ Cloudinary
         hinhAnh.setNgayTao(new Date());
         hinhAnh.setTrangThai(1);  // Trạng thái mặc định là 1 (hoạt động)
         hinhAnh.setIdMauSac(idMauSac);
         return hinhAnhRepository.save(hinhAnh);
+    }
+
+    public List<HinhAnh> findImagesByIds(List<Long> ids) {
+        return hinhAnhRepository.findByIdIn(ids);
     }
 
     public List<HinhAnh> getHaByQuanJensAndMauSac(Long idQuanJean, Long idMauSac) {

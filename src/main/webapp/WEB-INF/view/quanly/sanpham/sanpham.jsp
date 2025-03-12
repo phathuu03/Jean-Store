@@ -93,10 +93,10 @@
             <a class="nav-link active" data-bs-toggle="tab" href="#all">Tất cả sản phẩm</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#available">Còn hàng</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#available">Hoạt động</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#outofstock">Hết hàng</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#outofstock">Không hoạt động</a>
         </li>
     </ul>
 
@@ -106,12 +106,12 @@
         </div>
         <div class="tab-pane fade" id="available">
             <jsp:include page="table.jsp">
-                <jsp:param name="filter" value="0"/>
+                <jsp:param name="filter" value="1"/>
             </jsp:include>
         </div>
         <div class="tab-pane fade" id="outofstock">
             <jsp:include page="table.jsp">
-                <jsp:param name="filter" value="1"/>
+                <jsp:param name="filter" value="0"/>
             </jsp:include>
         </div>
     </div>
