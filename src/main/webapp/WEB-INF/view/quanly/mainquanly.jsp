@@ -96,7 +96,6 @@
                         Quản lý nhân viên
                     </a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="/khach-hang" target="contentFrame">
                         Quản lý khách hàng
@@ -107,12 +106,7 @@
                         Quản lý sản phẩm
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/api/quan-ly/hoa-don/view-hoa-don" target="contentFrame">
-                        Quản lý hóa đơn
-                    </a>
-                </li>
+                <!-- Gộp quản lý biến thể vào quản lý thuộc tính -->
                 <li class="nav-item">
                     <a class="nav-link text-white" href="#" id="quanlyThuocTinh">
                         Quản lý thuộc tính <i class="fas fa-caret-right triangle-icon"></i>
@@ -121,20 +115,19 @@
                         <a href="/api/quan-ly/chuyen-muc/chat-lieu" target="contentFrame">Chất liệu</a>
                         <a href="/api/quan-ly/chuyen-muc/ong-quan" target="contentFrame">Ống quần</a>
                         <a href="/api/quan-ly/chuyen-muc/thuong-hieu" target="contentFrame">Thương hiệu</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="#" id="quanlyTrangThai">
-                        Quản lý trạng thái <i class="fas fa-caret-right triangle-icon"></i>
-                    </a>
-                    <div class="submenu" id="trangThaiSubmenu">
                         <a href="/api/quan-ly/list-mau-sac" target="contentFrame">Màu sắc</a>
                         <a href="/api/quan-ly/list-kich-thuoc" target="contentFrame">Kích thước</a>
                     </div>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="/api/quan-ly/hoa-don/view-hoa-don" target="contentFrame">
+                        Quản lý hóa đơn
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
-                </li> <li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a class="nav-link text-white" href="/thong-ke" target="contentFrame">Thống kê</a>
                 </li>
             </ul>
@@ -152,10 +145,6 @@
         let thuocTinhSubmenu = document.getElementById("thuocTinhSubmenu");
         let triangleIcon = quanlyThuocTinh.querySelector(".triangle-icon");
 
-        let quanlyTrangThai = document.getElementById("quanlyTrangThai");
-        let trangThaiSubmenu = document.getElementById("trangThaiSubmenu");
-        let triangleIconTrangThai = quanlyTrangThai.querySelector(".triangle-icon");
-
         navLinks.forEach(function (link) {
             link.addEventListener("click", function () {
                 navLinks.forEach(function (item) {
@@ -165,7 +154,7 @@
             });
         });
 
-        // Toggle "Quản lý thuộc tính" submenu
+        // Toggle submenu "Quản lý thuộc tính"
         quanlyThuocTinh.addEventListener("click", function (event) {
             event.preventDefault();
             if (thuocTinhSubmenu.style.display === "block") {
@@ -176,20 +165,6 @@
                 thuocTinhSubmenu.style.display = "block";
                 triangleIcon.classList.remove("fa-caret-right");
                 triangleIcon.classList.add("fa-caret-down");
-            }
-        });
-
-        // Toggle "Quản lý trạng thái" submenu
-        quanlyTrangThai.addEventListener("click", function (event) {
-            event.preventDefault();
-            if (trangThaiSubmenu.style.display === "block") {
-                trangThaiSubmenu.style.display = "none";
-                triangleIconTrangThai.classList.remove("fa-caret-down");
-                triangleIconTrangThai.classList.add("fa-caret-right");
-            } else {
-                trangThaiSubmenu.style.display = "block";
-                triangleIconTrangThai.classList.remove("fa-caret-right");
-                triangleIconTrangThai.classList.add("fa-caret-down");
             }
         });
     });

@@ -11,9 +11,6 @@
         <th>Tên sản phẩm</th>
         <th>Số Lượng</th>
         <th>Đơn Giá</th>
-        <th>Tổng Tiền</th>
-        <th>Ngày Tạo</th>
-        <th>Ngày Sửa</th>
         <th>Trạng Thái</th>
         <th>Hành động</th>
     </tr>
@@ -27,15 +24,6 @@
                 <td>${hdct.soLuong}</td>
                 <td>${hdct.donGia}</td>
                 <td>${hdct.tongTien}</td>
-                <td>
-                    <fmt:formatDate value="${hdct.ngayTao}" pattern="dd/MM/yyyy" />
-                </td>
-                <td>
-                    <fmt:formatDate value="${hdct.ngaySua}" pattern="dd/MM/yyyy" />
-                </td>
-                <td>
-                        ${hdct.trangThai}
-                </td>
                 <td>
                     <!-- Giữ lại nút Detail (có thể bổ sung thêm hành động nếu cần) -->
                     <a href="/api/quan-ly/hoa-don/view/hoa-don-chi-tiet/${hdct.id}" class="btn btn-info btn-sm">
