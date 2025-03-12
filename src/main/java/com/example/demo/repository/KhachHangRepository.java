@@ -20,20 +20,24 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update KhachHang set NgaySua = GETDATE(),GioiTinh = :gender, TenKhachHang = :tenKhachHang, DiaChi = :diaChi,Email = :email where ID = :id", nativeQuery = true)
-    void updateKhachHang(@Param("gender") boolean gender, @Param("tenKhachHang") String tenKhachHang, @Param("diaChi") String diaChi, @Param("email") String email, @Param("id") Long id);
+    @Query(value = "update KhachHang set NgaySua = GETDATE(),GioiTinh = :gender, TenKhachHang = :tenKhachHang,Email = :email where ID = :id", nativeQuery = true)
+    void updateKhachHang(@Param("gender") boolean gender, @Param("tenKhachHang") String tenKhachHang, @Param("email") String email, @Param("id") Long id);
 
     @Modifying
     @Transactional
     @Query(value = "update KhachHang set MatKhau = :password,NgaySua = GETDATE() where ID = :id", nativeQuery = true)
     void updatePassword(@Param("password") String password, @Param("id") Long id);
 
+    @Modifying
+    @Transactional
+    @Query(value = "update KhachHang set NgaySua = GETDATE(),Tinh_TP = :provinces,Quan_Huyen=:districts,Phuong_Xa=:wards,DiaChiCuThe= :address where ID = :id", nativeQuery = true)
+    void updateAddress(@Param("provinces") String provinces, @Param("districts") String districts, @Param("wards") String wards, @Param("address") String address, @Param("id") Long id);
 
     @Modifying
     @Transactional
-    @Query(value = "insert into KhachHang values(:name,:username,:password,:sdt,:address,:email,:gender,GETDATE(),null,1)", nativeQuery = true)
+    @Query(value = "insert into KhachHang values(:name,:username,:password,:sdt,:email,:gender,GETDATE(),null,1,null,null,null,null)", nativeQuery = true)
     void insertUser(@Param("name") String name, @Param("username") String username, @Param("password") String password, @Param("sdt") String sdt,
-                    @Param("address") String address, @Param("email") String email, @Param("gender") Boolean gender);
+                    @Param("email") String email, @Param("gender") Boolean gender);
 
     @Modifying
     @Transactional

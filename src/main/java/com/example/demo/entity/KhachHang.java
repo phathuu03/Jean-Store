@@ -28,12 +28,21 @@ public class KhachHang {
     @Column(length = 50, nullable = false)
     private String matKhau;
 
+    @Column(name = "Tinh_TP")
+    private String tinhTP;
+
+    @Column(name = "Quan_Huyen")
+    private String quanHuyen;
+
+    @Column(name = "Phuong_Xa")
+    private String phuongXa;
+
+    @Column(name = "DiaChiCuThe")
+    private String diaChi;
+
     @Pattern(regexp = "^(0[0-9]{9}|\\+84[0-9]{9})$", message = "Số điện thoại không hợp lệ")
     @Column(unique = true, nullable = false)
     private String soDienThoai;
-
-    @Column(length = 125)
-    private String diaChi;
 
     @Email(message = "Email không hợp lệ")
     @Column(unique = true, nullable = false)

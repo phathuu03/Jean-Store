@@ -39,6 +39,7 @@ app.controller('OrderController', function ($scope, $http) {
                 .then(function (response) {
                     if (response.data.khachHang) {
                         $scope.user = response.data.khachHang;
+                        $scope.setButtonLogin($scope.idUser);
                         console.log("Thông tin user:", $scope.user);
                     } else {
                         console.warn("Không tìm thấy khách hàng với ID:", idUser);
@@ -50,6 +51,29 @@ app.controller('OrderController', function ($scope, $http) {
         });
     };
     $scope.getUser();
+
+
+    $scope.setButtonLogin = function (idUser) {
+        if (idUser != null) {
+
+            const urlGetUser = `http://localhost:8080/user?id=${idUser}`;
+            $http.get(urlGetUser)
+                .then(function (response) {
+                    if (response.data.khachHang) {
+                        $scope.user = response.data.khachHang;
+                        document.getElementById("btnLogin").style.display = "none";
+                        document.getElementById("textWelcome").style.display = "block";
+                        document.getElementById("textWelcome").innerText = "Welcome : " + $scope.user.tenDangNhap;
+                        console.log("Thông tin user:", $scope.user);
+                    } else {
+                        console.warn("Không tìm thấy khách hàng với ID:", idUser);
+                    }
+                })
+                .catch(function (error) {
+                    console.error("Lỗi khi lấy thông tin user:", error);
+                });
+        }
+    }
     $scope.voucher = null;
     $scope.getVoucher = function () {
         const url = `http://localhost:8080/order?dieuKien=${$scope.sumPriceCart}`;
@@ -88,34 +112,26 @@ app.controller('OrderController', function ($scope, $http) {
     }
     $scope.idHoaDon = null;
     $scope.checkout = function () {
-        if ($scope.idPTTT==null){
+        if ($scope.idPTTT == null) {
             alert("Vui lòng chọn phương thức thanh toán !")
             return;
         }
+        $scope.diaChi = document.getElementById("address").innerText
         if ($scope.idPTTT == 1) {
             if ($scope.idVoucher == null) {
-                var urlInsert = `http://localhost:8080/insert-bill/isnull?sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
+                var urlInsert = `http://localhost:8080/insert-bill/isnull?sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
             } else {
                 var urlInsert = `http://localhost:8080/insert-bill?sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
             }
             $http.post(urlInsert).then(function (response) {
                     if (response.status == 200) {
                         $scope.idHoaDon = response.data
-                        const urlUpdateVoucher = `http://localhost:8080/update-quantity/voucher?id=${$scope.idVoucher}`;
-                        $http.put(urlUpdateVoucher).then(function (response) {
-                            
-                        })
                     }
                     $scope.cart.forEach(
                         item => {
                             const url = `http://localhost:8080/insert-billDetail?quantity=${item.quantity}&price=${item.price}&sumMoney=${item.quantity * item.price}&idHoaDon=${$scope.idHoaDon}&idQuanCT=${item.idProductDetail}`;
                             $http.post(url).then(function (response) {
-                                    if (response.status == 200) {
-                                        const urlUpdate = `http://localhost:8080/update-quantity?id=${item.idProductDetail}&quantity=${item.quantity}`;
-                                        $http.put(urlUpdate).then(function (response) {
 
-                                        })
-                                    }
                                 }
                             )
                         }
@@ -129,11 +145,11 @@ app.controller('OrderController', function ($scope, $http) {
                 const urlDeleteCard = `http://localhost:8080/delete/cart?id=${$scope.idUser}`;
 
                 $http.delete(urlDeleteCard).then(function (response) {
-                    if (response.status==200){
+                    if (response.status == 200) {
                         console.log("deleteCard Ok")
                     }
                 }).catch(function (error) {
-                    console.error("error delete :",error)
+                    console.error("error delete :", error)
                 })
             }).catch(function (error) {
                 console.error("Lỗi : ", error)

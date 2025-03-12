@@ -108,7 +108,6 @@ public class HoaDonController {
         model.addAttribute("quanJeansChiTiet", quanJeansChiTiet);
         model.addAttribute("listMauSac", mauSacRepository.findAllByTrangThai(1));
         model.addAttribute("listSize", sizeRepository.findAllByTrangThai(1));
-
         List<HinhAnh> has = hinhAnhService.getHaByQuanJensAndMauSac(quanJeansChiTiet.getQuanJeans().getId(), quanJeansChiTiet.getMauSac().getId());
         model.addAttribute("listHinhAnh", has);
         return "quanly/hoadon/view-san-pham-chi-tiet";

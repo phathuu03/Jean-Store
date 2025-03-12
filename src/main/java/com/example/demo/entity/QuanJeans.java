@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class QuanJeans {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,11 +38,5 @@ public class QuanJeans {
     @ManyToOne
     @JoinColumn(name = "ID_ChatLieu")
     private ChatLieu chatLieu;
-
-    @OneToMany(mappedBy = "quanJeans", cascade = CascadeType.ALL)
-    private List<HinhAnh> hinhAnh;
-
-    @OneToMany(mappedBy = "quanJeans", cascade = CascadeType.ALL)
-    private List<QuanJeansChiTiet> quanJeansChiTiets;
 
 }
