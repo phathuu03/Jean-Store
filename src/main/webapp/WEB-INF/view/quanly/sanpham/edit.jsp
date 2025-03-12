@@ -74,7 +74,9 @@
             </div>
             <div class="mt-4 text-center">
                 <button type="submit" class="btn btn-primary">Cập nhật</button>
-                <a href="/api/quan-jean/quanjeans" class="btn btn-secondary">Hủy</a>
+                <a href="javascript:window.history.back()" class="btn btn-secondary me-2">
+                   hủy
+                </a>
             </div>
         </form>
     </div>

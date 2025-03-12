@@ -5,8 +5,6 @@
     <tr>
         <th>ID</th>
         <th>Tên Sản Phẩm</th>
-        <th>Ngày Tạo</th>
-        <th>Ngày Sửa</th>
         <th>Trạng Thái</th>
         <th>Thương hiệu</th>
         <th>Chất Liệu</th>
@@ -20,8 +18,6 @@
             <tr>
                 <td>${quanJeans.id}</td>
                 <td>${quanJeans.tenSanPham}</td>
-                <td>${quanJeans.ngayTao}</td>
-                <td>${quanJeans.ngaySua}</td>
                 <td>${quanJeans.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</td>
                 <td>${quanJeans.thuongHieu.tenThuongHieu}</td>
                 <td>${quanJeans.chatLieu.tenChatLieu}</td>
@@ -36,8 +32,8 @@
                         <i class="bi bi-pencil-square"></i> Chỉnh sửa
                     </a>
                     <!-- Nút xóa -->
-                    <a href="delete/${quanJeans.id}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
-                        <i class="bi bi-trash"></i> Xóa
+                    <a href="delete/${quanJeans.id}" class="btn btn-warning btn-sm">
+                        <i class="bi bi-trash"></i> Thay đổi trạng thái
                     </a>
                 </td>
             </tr>

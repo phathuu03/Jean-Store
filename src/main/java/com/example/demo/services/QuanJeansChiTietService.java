@@ -50,11 +50,16 @@ public class QuanJeansChiTietService {
 
     // Xóa sản phẩm chi tiết
     public void deleteQuanJeansChiTiet(Long id) {
-       QuanJeansChiTiet quanJeansChiTiet = repository.findById(id).get();
-       if (quanJeansChiTiet!=null){
-           quanJeansChiTiet.setTrangThai(0);
-           repository.save(quanJeansChiTiet);
-       }
+        QuanJeansChiTiet quanJeansChiTiet = repository.findById(id).get();
+        if (quanJeansChiTiet != null) {
+            if (quanJeansChiTiet.getTrangThai() == 0) {
+                quanJeansChiTiet.setTrangThai(1);
+            } else {
+                quanJeansChiTiet.setTrangThai(0);
+            }
+
+            repository.save(quanJeansChiTiet);
+        }
     }
 
 

@@ -28,7 +28,12 @@ public class QuanJeanService {
     public void deleteQuanJean(Long id) {
         QuanJeans quanJeans = quanJeansRepository.findById(id).get();
         if (quanJeans != null) {
-            quanJeans.setTrangThai(0);  // Đặt trạng thái thành "Không hoạt động"
+            if(quanJeans.getTrangThai() == 0){
+                quanJeans.setTrangThai(1);
+            }else {
+                quanJeans.setTrangThai(0);
+            }
+             // Đặt trạng thái thành "Không hoạt động"
             quanJeans.setNgaySua(LocalDate.now());
             quanJeansRepository.save(quanJeans);
         }

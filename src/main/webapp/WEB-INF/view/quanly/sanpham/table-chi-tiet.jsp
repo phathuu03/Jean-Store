@@ -24,7 +24,7 @@
                 <td>${chiTiet.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</td>
                 <td>
                     <a href="/api/quan-jeans-chi-tiet/edit/${chiTiet.id}" class="btn btn-primary btn-sm">Chỉnh sửa</a>
-                    <a href="/api/quan-jeans-chi-tiet/delete/${chiTiet.id}" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
+                    <a href="/api/quan-jeans-chi-tiet/delete/${chiTiet.id}" class="btn btn-warning btn-sm">Thay đổi trạng thái</a>
                 </td>
             </tr>
         </c:if>
