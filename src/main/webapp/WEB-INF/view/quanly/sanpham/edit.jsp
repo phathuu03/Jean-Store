@@ -38,13 +38,14 @@
                         <label class="form-label">Trạng thái:</label>
                         <div class="d-flex gap-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="trangThai" value="0" ${quanJeans.trangThai == 0 ? 'checked' : ''}>
-                                <label class="form-check-label">Không hoạt động</label>
-                            </div>
-                            <div class="form-check">
                                 <input class="form-check-input" type="radio" name="trangThai" value="1" ${quanJeans.trangThai == 1 ? 'checked' : ''}>
                                 <label class="form-check-label">Hoạt động</label>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="trangThai" value="0" ${quanJeans.trangThai == 0 ? 'checked' : ''}>
+                                <label class="form-check-label">Không hoạt động</label>
+                            </div>
+
                         </div>
                     </div>
                 </div>

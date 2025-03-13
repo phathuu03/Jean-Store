@@ -21,10 +21,10 @@
                 <h4 class="text-primary">Thông tin sản phẩm</h4>
                 <ul class="list-group">
                     <li class="list-group-item"><strong>ID:</strong> ${quanJeans.id}</li>
+                    <li class="list-group-item"><strong>Mã sản phẩm:</strong> ${quanJeans.maSanPham}</li>
                     <li class="list-group-item"><strong>Tên sản phẩm:</strong> ${quanJeans.tenSanPham}</li>
                     <li class="list-group-item"><strong>Ngày tạo:</strong> ${quanJeans.ngayTao}</li>
                     <li class="list-group-item"><strong>Ngày sửa:</strong> ${quanJeans.ngaySua}</li>
-                    <li class="list-group-item"><strong>Trạng thái:</strong> ${quanJeans.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</li>
                 </ul>
             </div>
 
@@ -34,6 +34,8 @@
                     <li class="list-group-item"><strong>Thương hiệu:</strong> ${quanJeans.thuongHieu.tenThuongHieu}</li>
                     <li class="list-group-item"><strong>Chất liệu:</strong> ${quanJeans.chatLieu.tenChatLieu}</li>
                     <li class="list-group-item"><strong>Ống quần:</strong> ${quanJeans.ongQuan.tenOngQuan}</li>
+                    <li class="list-group-item"><strong>Trạng thái:</strong> ${quanJeans.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</li>
+
                 </ul>
             </div>
         </div>
@@ -42,7 +44,6 @@
         <div class="mt-4 text-center">
             <a href="/api/quan-jeans-chi-tiet/add-san-pham-chi-tiet/${quanJeans.id}" class="btn btn-success me-2">Thêm sản phẩm chi tiết</a>
             <a href="/api/quan-jean/edit/${quanJeans.id}" class="btn btn-warning me-2">Chỉnh sửa</a>
-            <a href="/api/quan-jean/delete/${quanJeans.id}" class="btn btn-danger me-2" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</a>
             <a href="/api/quan-jean/quanjeans" class="btn btn-secondary">Quay lại danh sách</a>
         </div>
     </div>

@@ -20,9 +20,19 @@ public class HoaDon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "MaHoaDon", insertable = false, updatable = false)
+    private String maHoaDon;
+
+    private Float phiShip;
+
+    private Float giamGia;
+
+    private Float thanhTien;
+
     private Double tongTien;
 
     private String diaChiGiaoHang;
+
 
     private Date ngayThanhToan;
 
@@ -52,6 +62,8 @@ public class HoaDon {
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
     private List<HoaDonChiTiet> hoaDonChiTiets;
 
+
+
     public String getTrangThai() {
         if (trangThai == 0) {
             return "Chờ xác nhận";
@@ -69,5 +81,9 @@ public class HoaDon {
             return "Đã hủy";
         }
         return null;
+    }
+
+    public Integer getPublicTrangThai (){
+        return trangThai;
     }
 }

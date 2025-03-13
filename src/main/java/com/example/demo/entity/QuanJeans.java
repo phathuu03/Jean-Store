@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -18,9 +19,12 @@ public class QuanJeans {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @NotBlank(message = "Tên sản phẩm không được để trống")
     @Column(length = 100)
     private String tenSanPham;
+
+    @Column(name = "MaSanPham", insertable = false, updatable = false)
+    private String maSanPham;
 
     private LocalDate ngayTao = LocalDate.now();
 

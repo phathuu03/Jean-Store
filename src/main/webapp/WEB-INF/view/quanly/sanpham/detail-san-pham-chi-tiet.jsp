@@ -140,7 +140,6 @@
                 <div class="d-flex flex-wrap">
                     <c:forEach var="hinhAnh" items="${listHinhAnh}">
                         <div class="image-container" id="image-${hinhAnh.id}">
-                            <!-- Nút xóa đã được disable -->
                             <img src="${hinhAnh.url}" class="img-thumbnail image-preview" alt="Hình ảnh sản phẩm">
                         </div>
                     </c:forEach>
@@ -149,15 +148,16 @@
                 <div class="d-flex align-items-center">
                     <span class="fw-bold me-2">Trạng thái:</span>
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="trangThai" id="trangThai0" value="0"
-                               <c:if test="${quanJeansChiTiet.trangThai == 0}">checked</c:if> disabled>
-                        <label class="form-check-label" for="trangThai0">Không hoạt động</label>
-                    </div>
-                    <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="trangThai" id="trangThai1" value="1"
                                <c:if test="${quanJeansChiTiet.trangThai == 1}">checked</c:if> disabled>
                         <label class="form-check-label" for="trangThai1">Hoạt động</label>
                     </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="trangThai" id="trangThai0" value="0"
+                               <c:if test="${quanJeansChiTiet.trangThai == 0}">checked</c:if> disabled>
+                        <label class="form-check-label" for="trangThai0">Không hoạt động</label>
+                    </div>
+
                 </div>
             </div>
 

@@ -36,6 +36,7 @@ public class QuanJeansController {
 
     @GetMapping("/quanjeans")
     public String hienThiQuan(Model model) {
+        model.addAttribute("quanJeans", new QuanJeans());
         model.addAttribute("listQuanJean", quanJeansService.getAllQuanJean());
         model.addAttribute("listOngQuan", ongQuanService.getAllActiveOngQuan());
         model.addAttribute("listChatLieu", chatLieuService.getAllActiveChatLieu());
@@ -44,7 +45,18 @@ public class QuanJeansController {
     }
 
     @PostMapping("/new-quan-jean")
-    public String saveQuanJean(@ModelAttribute QuanJeans quanJeans) {
+    public String saveQuanJean(@Valid @ModelAttribute QuanJeans quanJeans,
+                               BindingResult bindingResult,
+                               Model model
+                               ) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("listQuanJean", quanJeansService.getAllQuanJean());
+            model.addAttribute("listOngQuan", ongQuanService.getAllActiveOngQuan());
+            model.addAttribute("listChatLieu", chatLieuService.getAllActiveChatLieu());
+            model.addAttribute("listThuongHieu", thuongHieuService.getAllActiveThuongHieu());
+
+            return "quanly/sanpham/sanpham";
+        }
         QuanJeans savedQuanJeans = quanJeansService.saveQuanJean(quanJeans);
         return "redirect:/api/quan-jean/quanjeans";  // Quay lại trang danh sách sản phẩm
     }

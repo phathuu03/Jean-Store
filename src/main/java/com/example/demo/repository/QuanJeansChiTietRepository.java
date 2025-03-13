@@ -31,4 +31,7 @@ public interface QuanJeansChiTietRepository extends JpaRepository<QuanJeansChiTi
 
     @Query("select q from QuanJeansChiTiet q where q.quanJeans.id = :quanJeansId")
     List<QuanJeansChiTiet> findQuanJeansChiTietsById(@Param("quanJeansId") Long quanJeansId);
+
+    boolean existsByQuanJeansIdAndMauSacIdAndSizeId(Long quanJeansId, Long mauSacId, Long sizeId);
+
 }

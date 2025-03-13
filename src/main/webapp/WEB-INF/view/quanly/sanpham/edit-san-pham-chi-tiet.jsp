@@ -142,23 +142,26 @@
             <div class="row mb-3">
                 <div class="col-md-4">
                     <label class="form-label fw-bold">Màu sắc:</label>
-                    <select name="mauSac.id" class="form-select" required>
+                    <select name="mauSac.id" class="form-select" disabled>
                         <c:forEach var="mauSac" items="${listMauSac}">
-                            <option value="${mauSac.id}" <c:if test="${mauSac.id == quanJeansChiTiet.mauSac.id}">selected</c:if>>
+                            <option value="${mauSac.id}" <c:if test="${mauSac.id == quanJeansChiTiet.mauSac.id}" >selected</c:if>>
                                     ${mauSac.tenMauSac}
                             </option>
                         </c:forEach>
                     </select>
+                    <input type="hidden" name="mauSac.id" value="${quanJeansChiTiet.mauSac.id}">
+
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-bold">Kích thước:</label>
-                    <select name="size.id" class="form-select" required>
+                    <select name="size.id" class="form-select" disabled>
                         <c:forEach var="size" items="${listSize}">
                             <option value="${size.id}" <c:if test="${size.id == quanJeansChiTiet.size.id}">selected</c:if>>
                                     ${size.tenSize}
                             </option>
                         </c:forEach>
                     </select>
+                    <input type="hidden" name="size.id" value="${quanJeansChiTiet.size.id}">
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-bold">Số lượng:</label>
@@ -180,15 +183,17 @@
                 <!-- Cụm trạng thái: hiển thị label và 2 radio button trên cùng 1 dòng -->
                 <div class="d-flex align-items-center">
                     <span class="fw-bold me-2">Trạng thái:</span>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="trangThai" id="trangThai0" value="0"
-                               <c:if test="${quanJeansChiTiet.trangThai == 0}">checked</c:if>>
-                        <label class="form-check-label" for="trangThai0">Không hoạt động</label>
-                    </div>
+
                     <div class="form-check form-check-inline">
                         <input class="form-check-input" type="radio" name="trangThai" id="trangThai1" value="1"
                                <c:if test="${quanJeansChiTiet.trangThai == 1}">checked</c:if>>
                         <label class="form-check-label" for="trangThai1">Hoạt động</label>
+                    </div>
+
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="trangThai" id="trangThai0" value="0"
+                               <c:if test="${quanJeansChiTiet.trangThai == 0}">checked</c:if>>
+                        <label class="form-check-label" for="trangThai0">Không hoạt động</label>
                     </div>
                 </div>
             </div>

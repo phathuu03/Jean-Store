@@ -152,6 +152,10 @@
             <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>
 
             <div class="mt-4 text-center">
+                <!-- Hiển thị lỗi nếu có -->
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger">${error}</div>
+                </c:if>
                 <button type="submit" class="btn btn-primary">Lưu Chi Tiết</button>
                 <a href="${pageContext.request.contextPath}/api/quan-jean/detail/${quanJeans.id}" class="btn btn-secondary">Hủy</a>
             </div>

@@ -62,5 +62,9 @@ public class QuanJeansChiTietService {
         }
     }
 
+    public boolean existsQuanJeansChiTiet(Long quanJeansId, Long mauSacId, Long sizeId) {
+        return repository.existsByQuanJeansIdAndMauSacIdAndSizeId(quanJeansId, mauSacId, sizeId);
+    }
+
 
 }

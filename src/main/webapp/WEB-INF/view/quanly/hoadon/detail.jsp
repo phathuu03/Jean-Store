@@ -21,21 +21,48 @@
             <div class="col-md-6">
                 <h4 class="text-primary">Thông tin Hóa Đơn</h4>
                 <ul class="list-group">
-                    <li class="list-group-item"><strong>ID:</strong> ${hoaDon.id}</li>
-                    <li class="list-group-item"><strong>Tổng Tiền:</strong> ${hoaDon.tongTien}</li>
-                    <li class="list-group-item"><strong>Địa Chỉ Giao Hàng:</strong> ${hoaDon.diaChiGiaoHang}</li>
-                    <li class="list-group-item"><strong>Ngày Thanh Toán:</strong>
-                        <c:if test="${hoaDon.ngayThanhToan != null}">
-                            <fmt:formatDate value="${hoaDon.ngayThanhToan}" pattern="dd/MM/yyyy" />
-                        </c:if>
+                    <li class="list-group-item"><strong>ID: </strong> ${hoaDon.id}</li>
+                    <li class="list-group-item"><strong>Mã hóa đơn: </strong> ${hoaDon.maHoaDon}</li>
+                    <li class="list-group-item">
+                        <strong>Tổng Tiền: </strong>
+                        <fmt:formatNumber value="${hoaDon.tongTien}" type="currency" currencySymbol="₫" groupingUsed="true" />
                     </li>
-                    <li class="list-group-item"><strong>Ngày Tạo:</strong>
-                        <fmt:formatDate value="${hoaDon.ngayTao}" pattern="dd/MM/yyyy" />
+                    <li class="list-group-item">
+                        <strong>Tiền ship: </strong>
+                        <fmt:formatNumber value="${hoaDon.phiShip}" type="currency" currencySymbol="₫" groupingUsed="true" />
                     </li>
-                    <li class="list-group-item"><strong>Ngày Sửa:</strong>
-                        <fmt:formatDate value="${hoaDon.ngaySua}" pattern="dd/MM/yyyy" />
+                    <li class="list-group-item">
+                        <strong>Giảm giá: </strong>
+                        <c:choose>
+                            <c:when test="${not empty hoaDon.giamGia}">
+                                <fmt:formatNumber value="${hoaDon.giamGia}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                            </c:when>
+                            <c:otherwise>
+                                0 ₫
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Thành tiền: </strong>
+                        <fmt:formatNumber value="${hoaDon.thanhTien}" type="currency" currencySymbol="₫" groupingUsed="true" />
+                    </li>
+
+
+                    <li class="list-group-item"><strong>Voucher: </strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.voucher != null}">
+                                ${hoaDon.voucher.tenVoucher}
+                            </c:when>
+                            <c:otherwise>
+                                Không dùng voucher
+                            </c:otherwise>
+                        </c:choose>
+
                     </li>
                     <li class="list-group-item"><strong>Trạng Thái:</strong> ${hoaDon.trangThai}</li>
+
+
+
                 </ul>
             </div>
 
@@ -44,24 +71,71 @@
                 <h4 class="text-success">Thông tin bổ sung</h4>
                 <ul class="list-group">
                     <li class="list-group-item"><strong>Khách Hàng:</strong>
-                        <c:if test="${hoaDon.khachHang != null}">
-                            ${hoaDon.khachHang.tenKhachHang}
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${hoaDon.khachHang != null}">
+                                ${hoaDon.khachHang.tenKhachHang}
+                            </c:when>
+                            <c:otherwise>
+                                Không có thông tin khách hàng
+                            </c:otherwise>
+                        </c:choose>
+
                     </li>
                     <li class="list-group-item"><strong>Nhân Viên:</strong>
-                        <c:if test="${hoaDon.nhanVien != null}">
-                            ${hoaDon.nhanVien.tenNhanVien}
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${hoaDon.nhanVien != null}">
+                                ${hoaDon.nhanVien.tenNhanVien}
+                            </c:when>
+                            <c:otherwise>
+                                Không có thông tin nhân viên
+                            </c:otherwise>
+                        </c:choose>
+
                     </li>
-                    <li class="list-group-item"><strong>Voucher:</strong>
-                        <c:if test="${hoaDon.voucher != null}">
-                            ${hoaDon.voucher.tenVoucher}
-                        </c:if>
-                    </li>
+
                     <li class="list-group-item"><strong>Phương Thức Thanh Toán:</strong>
-                        <c:if test="${hoaDon.pttt != null}">
-                            ${hoaDon.pttt.tenPTTT}
-                        </c:if>
+                        <c:choose>
+                            <c:when test="${hoaDon.pttt != null}">
+                                ${hoaDon.pttt.tenPTTT}
+                            </c:when>
+                            <c:otherwise>
+                                Không có thông tin PTTT
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="list-group-item"><strong>Địa Chỉ Giao Hàng:</strong> ${hoaDon.diaChiGiaoHang}</li>
+                    <li class="list-group-item"><strong>Ngày Thanh Toán:</strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.ngayThanhToan != null}">
+                                <fmt:formatDate value="${hoaDon.ngayThanhToan}" pattern="dd/MM/yyyy" />
+                            </c:when>
+                            <c:otherwise>
+                                Chưa thanh toán
+                            </c:otherwise>
+                        </c:choose>
+
+                    </li>
+                    <li class="list-group-item"><strong>Ngày Tạo:</strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.ngayTao != null}">
+                                <fmt:formatDate value="${hoaDon.ngayTao}" pattern="dd/MM/yyyy" />
+                            </c:when>
+                            <c:otherwise>
+                                Không có ngày tạo
+                            </c:otherwise>
+                        </c:choose>
+
+                    </li>
+                    <li class="list-group-item"><strong>Ngày Sửa:</strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.ngaySua != null}">
+                                <fmt:formatDate value="${hoaDon.ngaySua}" pattern="dd/MM/yyyy" />
+                            </c:when>
+                            <c:otherwise>
+                                Chưa cập nhật
+                            </c:otherwise>
+                        </c:choose>
+
                     </li>
                 </ul>
             </div>
@@ -75,34 +149,12 @@
 
     <!-- Bootstrap Tabs cho danh sách Chi Tiết Hóa Đơn -->
     <h4 class="text-center mt-4 text-info">Danh sách Chi Tiết Hóa Đơn</h4>
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#all">Tất cả</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#paid">Đã Thanh Toán</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#unpaid">Chưa Thanh Toán</a>
-        </li>
-    </ul>
 
-    <div class="tab-content mt-3">
+
+    <div class="mt-3">
         <!-- Tất cả Chi Tiết Hóa Đơn -->
-        <div class="tab-pane fade show active" id="all">
+        <div class="fade show active" id="all">
             <jsp:include page="table-hoa-don-chi-tiet.jsp" />
-        </div>
-        <!-- Chi Tiết Hóa Đơn Đã Thanh Toán -->
-        <div class="tab-pane fade" id="paid">
-            <jsp:include page="table-hoa-don-chi-tiet.jsp">
-                <jsp:param name="filter" value="1"/>
-            </jsp:include>
-        </div>
-        <!-- Chi Tiết Hóa Đơn Chưa Thanh Toán -->
-        <div class="tab-pane fade" id="unpaid">
-            <jsp:include page="table-hoa-don-chi-tiet.jsp">
-                <jsp:param name="filter" value="0"/>
-            </jsp:include>
         </div>
     </div>
 </div>

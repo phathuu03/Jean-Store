@@ -8,6 +8,7 @@
     <thead class="table-dark">
     <tr>
         <th>ID</th>
+        <th>Mã sản phẩm</th>
         <th>Tên sản phẩm</th>
         <th>Số Lượng</th>
         <th>Đơn Giá</th>
@@ -20,6 +21,7 @@
         <c:if test="${empty param.filter || hdct.trangThai == param.filter}">
             <tr>
                 <td>${hdct.id}</td>
+                <td>${hdct.quanJeansChiTiet.quanJeans.maSanPham}</td>
                 <td>${hdct.quanJeansChiTiet.quanJeans.tenSanPham}</td>
                 <td>${hdct.soLuong}</td>
                 <td>${hdct.donGia}</td>

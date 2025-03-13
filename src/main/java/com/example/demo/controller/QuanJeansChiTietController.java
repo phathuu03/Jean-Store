@@ -67,9 +67,28 @@ public class QuanJeansChiTietController {
     public String addQuanJeansChiTiet(@ModelAttribute QuanJeansChiTiet quanJeansChiTiet,
                                       @RequestParam("imageFiles") MultipartFile[] imageFiles,
                                       Model model) {
+
+        Long quanJeansId = quanJeansChiTiet.getQuanJeans().getId();
+        Long mauSacId = quanJeansChiTiet.getMauSac().getId();
+        Long sizeId = quanJeansChiTiet.getSize().getId();
+
+        if (quanJeansChiTietService.existsQuanJeansChiTiet(quanJeansId, mauSacId, sizeId)) {
+            // Nếu đã tồn tại, thêm thông báo lỗi vào model
+            QuanJeans quanJeans = quanJeansRepository.findById(quanJeansId)
+                    .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy sản phẩm với ID: " + quanJeansId));
+
+            List<MauSac> listMauSac = mauSacRepository.findAllByTrangThai(1);
+            List<Size> listSize = sizeRepository.findAllByTrangThai(1);
+            model.addAttribute("error", "Chi tiết sản phẩm với màu sắc và size này đã tồn tại!");
+            model.addAttribute("quanJeans", quanJeans);
+            model.addAttribute("listMauSac", listMauSac);
+            model.addAttribute("listSize", listSize);
+            return "quanly/sanpham/add-san-pham-chi-tiet"; // Tên view chứa form thêm chi tiết sản phẩm
+        }
         try {
             Long idMauSac = quanJeansChiTiet.getMauSac().getId();
             QuanJeans quanJean = quanJeansChiTiet.getQuanJeans();
+
 
             // Tải ảnh lên Cloudinary song song, trả về danh sách CloudinaryUploadResult
             List<CloudinaryUploadResult> uploadResults = cloudinaryService.uploadMultipleImages(imageFiles);
