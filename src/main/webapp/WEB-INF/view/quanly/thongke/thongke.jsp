@@ -48,39 +48,39 @@
 document.addEventListener("DOMContentLoaded", function () {
     const labelsThang = ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"];
 
-    var doanhThuThang = [[${doanhThuThang}]]?.flat(2) || [];
+    // Lấy dữ liệu từ Thymeleaf và xử lý
+    let doanhThuThang = [[${doanhThuThang}]]?.flat(2).map(Number) || [];
+    let phiShipThang = [[${phiShipThang}]]?.flat(2).map(Number) || [];
+    let giamGiaThang = [[${giamGiaThang}]]?.flat(2).map(Number) || [];
 
-    // 🔥 Đảm bảo dữ liệu không bị null hoặc undefined
-    doanhThuThang = doanhThuThang ? doanhThuThang.flat().map(Number) : [];
+    // Đảm bảo đủ 12 tháng với giá trị mặc định là 0
+    doanhThuThang = Array.from({ length: 12 }, (_, i) => doanhThuThang[i] || 0);
+    phiShipThang = Array.from({ length: 12 }, (_, i) => phiShipThang[i] || 0);
+    giamGiaThang = Array.from({ length: 12 }, (_, i) => giamGiaThang[i] || 0);
 
-    // 🔥 Điền tự động 0 vào các tháng thiếu
-    while (doanhThuThang.length < 12) {
-        doanhThuThang.push(0);
-    }
+    // Tính doanh thu thực tế: Tổng tiền - (Phí ship + Giảm giá)
+    const doanhThuThucTeThang = doanhThuThang.map((tien, index) => {
+        const phiShip = phiShipThang[index] || 0;
+        const giamGia = giamGiaThang[index] || 0;
+        return Math.max(tien - phiShip - giamGia, 0);
+    });
 
-    var tongDoanhThu = doanhThuThang.reduce((a, b) => a + b, 0);
-    var tongPhiShip = Number([[${tongPhiShip}]] || 0);
-    var soDonHang = Number([[${soDonHang}]] || 1);
-
-    // 🔥 Chỉ tính doanh thu thực tế cho tháng có doanh thu
-    var doanhThuThucTeThang = doanhThuThang.map(tien => (tien > 0 ? tien - (tongPhiShip / soDonHang) : 0));
-
-    // 🔥 Phí ship cho từng tháng chỉ áp dụng khi có doanh thu
-    var phiShipThang = [[${phiShipThang}]]?.flat(2).map(Number) || [];
-
-    var maxYThang = Math.max(...doanhThuThang, ...doanhThuThucTeThang, ...phiShipThang, 1_000_000) * 1.2;
+    // Xác định trục y tối đa
+    const maxYThang = Math.max(...doanhThuThang, ...doanhThuThucTeThang, ...phiShipThang, ...giamGiaThang, 1_000_000) * 1.2;
 
     console.log("🚀 doanhThuThang:", doanhThuThang);
-    console.log("✅ maxYThang:", maxYThang);
-    console.log("🚀 Phí ship từ Thymeleaf:", [[${phiShipThang}]]);
+    console.log("✅ doanhThuThucTeThang:", doanhThuThucTeThang);
+    console.log("🚀 Phí ship từ Thymeleaf:", phiShipThang);
+    console.log("🔥 Giảm giá từ Thymeleaf:", giamGiaThang);
 
-    function createChart(canvasId, labels, totalRevenue, actualRevenue, shippingFee, maxY) {
+    // Hàm vẽ biểu đồ
+    function createChart(canvasId, labels, totalRevenue, actualRevenue, shippingFee, discountFee, maxY) {
         const canvas = document.getElementById(canvasId);
         if (!canvas) return;
 
-        if (Chart.getChart(canvasId)) {
-            Chart.getChart(canvasId).destroy();
-        }
+        // Xóa biểu đồ cũ nếu có
+        const oldChart = Chart.getChart(canvasId);
+        if (oldChart) oldChart.destroy();
 
         const ctx = canvas.getContext('2d');
         return new Chart(ctx, {
@@ -90,9 +90,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 datasets: [
                     { label: 'Tổng Doanh Thu', data: totalRevenue, borderColor: 'green', borderDash: [5, 5], fill: false },
                     { label: 'Doanh Thu Thực Tế', data: actualRevenue, borderColor: 'blue', borderDash: [5, 5], fill: false },
-                    { label: 'Phí Ship', data: shippingFee, borderColor: 'orange', borderDash: [5, 5], fill: false }
+                    { label: 'Phí Ship', data: shippingFee, borderColor: 'orange', borderDash: [5, 5], fill: false },
+                    { label: 'Giảm Giá', data: discountFee, borderColor: 'red', borderDash: [5, 5], fill: false }
                 ]
-
             },
             options: {
                 responsive: true,
@@ -109,9 +109,11 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    createChart('chartMonth', labelsThang, doanhThuThang, doanhThuThucTeThang, phiShipThang, maxYThang);
+    // Vẽ biểu đồ với dữ liệu đã xử lý
+    createChart('chartMonth', labelsThang, doanhThuThang, doanhThuThucTeThang, phiShipThang, giamGiaThang, maxYThang);
 });
 </script>
+
 
 
 <script th:inline="javascript">

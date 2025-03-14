@@ -1,9 +1,10 @@
 package com.example.demo.entity;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.util.Date;
+
 @Entity
 @Table(name = "HoaDon")
 @Data
@@ -16,7 +17,20 @@ public class HoaDon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Thêm mã hóa đơn tự động từ SQL
+    @Column(name = "MaHoaDon", insertable = false, updatable = false)
+    private String maHoaDon;
+
     private Double tongTien;
+
+    private Double phiShip;
+
+    private Double giamGia;
+
+    private Double thanhTien;
+
+    @Column(name = "DiaChiGiaoHang", length = 225)
+    private String diaChiGiaoHang;
 
     private LocalDate ngayThanhToan;
 
