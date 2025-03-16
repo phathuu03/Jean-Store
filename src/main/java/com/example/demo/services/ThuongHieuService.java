@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,6 +20,8 @@ public class ThuongHieuService {
         return thuongHieuRepository.findAll();
     }
     public ThuongHieu saveThuongHieu(ThuongHieu thuongHieu) {
+
+        thuongHieu.setNgayTao(new Date());
         return thuongHieuRepository.save(thuongHieu);
     }
     public List<ThuongHieu> getAllActiveThuongHieu() {
@@ -30,8 +33,15 @@ public class ThuongHieuService {
     }
     public void deleteThuongHieu(Long id) {
         ThuongHieu thuongHieu = thuongHieuRepository.findById(id).orElseThrow();
-        thuongHieu.setTrangThai(0); // Đổi trạng thái thành không hoạt động
-        thuongHieuRepository.save(thuongHieu);
+        if(thuongHieu.getTrangThai() == 0){
+            thuongHieu.setNgaySua(new Date());
+            thuongHieu.setTrangThai(1); // Đổi trạng thái thành không hoạt động
+            thuongHieuRepository.save(thuongHieu);
+        }else {
+            thuongHieu.setNgaySua(new Date());
+            thuongHieu.setTrangThai(0); // Đổi trạng thái thành không hoạt động
+            thuongHieuRepository.save(thuongHieu);
+        }
     }
     // Lấy Thương Hiệu theo ID
     public ThuongHieu getThuongHieuById(Long id) {

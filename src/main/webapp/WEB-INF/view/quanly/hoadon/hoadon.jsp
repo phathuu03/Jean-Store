@@ -13,7 +13,26 @@
     <style>
         body {
             background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
+
+        .container {
+            flex: 1;
+        }
+
+        .pagination-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            z-index: 100;
+        }
+
         h2 {
             margin-top: 20px;
         }
@@ -25,7 +44,7 @@
 
     <!-- Phần Tìm kiếm -->
     <div class="d-flex align-items-center justify-content-between mb-3">
-        <form action="/api/hoadon/hoadon-search" class="d-flex">
+        <form action="/api/quan-ly/hoa-don/view-hoa-don" class="d-flex">
             <input type="text" name="search" class="form-control form-control-sm" placeholder="Nhập từ khóa..." value="${param.search}">
             <button class="btn btn-primary btn-sm ms-2" type="submit">
                 <i class="bi bi-search"></i> Tìm kiếm
@@ -93,6 +112,35 @@
         </div>
     </div>
 </div>
+
+<!-- Phân trang cố định -->
+<div class="pagination-container d-flex justify-content-center mt-4">
+    <!-- Trang đầu -->
+    <c:if test="${currentPage > 0}">
+        <a href="/api/quan-ly/hoa-don/view-hoa-don?page=0&size=5&search=${search}" class="btn btn-outline-primary me-2">Trang đầu</a>
+    </c:if>
+
+    <!-- Trang trước -->
+    <c:if test="${currentPage > 0}">
+        <a href="/api/quan-ly/hoa-don/view-hoa-don?page=${currentPage - 1}&size=5&search=${search}" class="btn btn-outline-primary me-2">Trang trước</a>
+    </c:if>
+
+    <!-- Trang hiện tại -->
+    <span class="btn btn-outline-secondary me-2">Trang ${currentPage + 1} / ${totalPages}</span>
+
+    <!-- Trang tiếp theo -->
+    <c:if test="${currentPage < totalPages - 1}">
+        <a href="/api/quan-ly/hoa-don/view-hoa-don?page=${currentPage + 1}&size=5&search=${search}" class="btn btn-outline-primary me-2">Trang tiếp theo</a>
+    </c:if>
+
+    <!-- Trang cuối -->
+    <c:if test="${currentPage < totalPages - 1}">
+        <a href="/api/quan-ly/hoa-don/view-hoa-don?page=${totalPages - 1}&size=5&search=${search}" class="btn btn-outline-primary">Trang cuối</a>
+    </c:if>
+</div>
+
+
+
 
 <!-- Bootstrap JS Bundle (bao gồm Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

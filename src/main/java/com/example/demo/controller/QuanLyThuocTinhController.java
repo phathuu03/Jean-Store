@@ -31,19 +31,21 @@ public class QuanLyThuocTinhController {
     @GetMapping("/chuyen-muc/chat-lieu")
     public String quanLyChuyenMucChatLieu(Model model,
                                           @RequestParam(defaultValue = "0") int page,
-                                          @RequestParam(defaultValue = "10") int size) {
+                                          @RequestParam(defaultValue = "5") int size
+                                          ) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ChatLieu> pageChatLieu = chatLieuService.getAllChatLieu(pageable);
-
         model.addAttribute("listChatLieu", pageChatLieu.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", pageChatLieu.getTotalPages());
         return "quanly/thuoctinh/chat-lieu";
     }
+
+
     @GetMapping("/chuyen-muc/ong-quan")
     public String quanLyChuyenMucOngQuan(Model model,
                                          @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "10") int size) {
+                                         @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<OngQuan> pageOngQuan = ongQuanService.getAllOngQuan(pageable);
 
@@ -56,7 +58,7 @@ public class QuanLyThuocTinhController {
     @GetMapping("/chuyen-muc/thuong-hieu")
     public String quanLyChuyenMucThuongHieu(Model model,
                                             @RequestParam(defaultValue = "0") int page,
-                                            @RequestParam(defaultValue = "10") int size) {
+                                            @RequestParam(defaultValue = "5") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ThuongHieu> pageThuongHieu = thuongHieuService.getAllThuongHieu(pageable);
 
@@ -74,9 +76,28 @@ public class QuanLyThuocTinhController {
 
     // Thêm mới ChatLieu
     @PostMapping("/new-chat-lieu")
-    public String saveChatLieu(@ModelAttribute ChatLieu chatLieu) {
+    public String saveChatLieu(@ModelAttribute ChatLieu chatLieu,
+                               @RequestParam(defaultValue = "0") int page,
+                               @RequestParam(defaultValue = "5") int size,
+                               Model model) {
+        // Kiểm tra tên chất liệu đã tồn tại
+        if(chatLieuService.exitsChatLieu(chatLieu.getTenChatLieu())){
+            model.addAttribute("error", "Tên chất liệu này đã tồn tại!");
+
+            // Truyền lại danh sách chất liệu đã phân trang
+            Pageable pageable = PageRequest.of(page, size);
+            Page<ChatLieu> chatLieuPage = chatLieuService.getAllChatLieu(pageable);
+
+            model.addAttribute("listChatLieu", chatLieuPage.getContent());
+            model.addAttribute("currentPage", page);
+            model.addAttribute("totalPages", chatLieuPage.getTotalPages());
+
+            return "redirect:/api/quan-ly/chuyen-muc/chat-lieu" ; // Trả về trang quản lý chất liệu với thông báo lỗi
+        }
+
+        // Lưu chất liệu nếu không có lỗi
         chatLieuService.saveChatLieu(chatLieu);
-        return "redirect:/api/quan-ly/chuyen-muc/chat-lieu";
+        return "redirect:/api/quan-ly/chuyen-muc/chat-lieu";  // Redirect đến trang danh sách chất liệu
     }
 
     // Xóa ChatLieu (chuyển trạng thái thành không hoạt động)

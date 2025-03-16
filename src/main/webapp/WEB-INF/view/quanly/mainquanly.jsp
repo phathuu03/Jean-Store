@@ -124,6 +124,12 @@
                         Quản lý hóa đơn
                     </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/quanly/don-hang" target="contentFrame">
+                        Quản lý trạng thái đơn hàng
+                    </a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
                 </li>

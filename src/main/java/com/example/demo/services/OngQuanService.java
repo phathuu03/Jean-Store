@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,11 +20,14 @@ public class OngQuanService {
     public List<OngQuan> getAllOngQuan() {
         return ongQuanRepository.findAll();
     }
-    public List<OngQuan> getAllActiveOngQuan(){
+
+    public List<OngQuan> getAllActiveOngQuan() {
         return ongQuanRepository.findAllByTrangThai(1);
     }
 
     public OngQuan saveOngQuan(OngQuan ongQuan) {
+
+        ongQuan.setNgayTao(new Date());
         return ongQuanRepository.save(ongQuan);
     }
 
@@ -33,8 +37,15 @@ public class OngQuanService {
 
     public void deleteOngQuan(Long id) {
         OngQuan ongQuan = ongQuanRepository.findById(id).orElseThrow();
-        ongQuan.setTrangThai(0); // Đổi trạng thái thành không hoạt động
-        ongQuanRepository.save(ongQuan);
+        if (ongQuan.getTrangThai() == 0) {
+            ongQuan.setNgaySua(new Date());
+            ongQuan.setTrangThai(1); // Đổi trạng thái thành không hoạt động
+            ongQuanRepository.save(ongQuan);
+        } else {
+            ongQuan.setNgaySua(new Date());
+            ongQuan.setTrangThai(0); // Đổi trạng thái thành không hoạt động
+            ongQuanRepository.save(ongQuan);
+        }
     }
 
     // Lấy Loại Ống Quần theo ID

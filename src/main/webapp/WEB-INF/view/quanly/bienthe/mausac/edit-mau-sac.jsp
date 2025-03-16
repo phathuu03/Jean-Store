@@ -25,7 +25,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <a href="/api/quan-ly/list-mau-sac" class="btn btn-secondary">Quay lại</a>
+        <a href="javascript:window.history.back()" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

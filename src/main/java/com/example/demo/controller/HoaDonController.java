@@ -8,6 +8,9 @@ import com.example.demo.services.HoaDonService;
 import com.example.demo.services.QuanJeansChiTietService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -51,8 +54,27 @@ public class HoaDonController {
     private HinhAnhService hinhAnhService;
 
     @GetMapping("/view-hoa-don")
-    public String getAllHoaDon(Model model){
-        model.addAttribute("listHoaDon" , hoaDonService.getAll());
+    public String quanLyTrangThaiDonHang(Model model,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "5") int size,
+                                         @RequestParam(defaultValue = "") String search) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Nếu có tìm kiếm
+        Page<HoaDon> hoaDons;
+        if (!search.isEmpty()) {
+            hoaDons = hoaDonService.searchHoaDon(search, pageable);  // Lấy kết quả tìm kiếm với phân trang
+        } else {
+            hoaDons = hoaDonService.getAllHoaDon(pageable);  // Lấy tất cả hóa đơn với phân trang
+        }
+
+        // Thêm thông tin vào model
+        model.addAttribute("listHoaDon", hoaDons.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", hoaDons.getTotalPages());
+        model.addAttribute("search", search);  // Thêm search vào model để duy trì tìm kiếm trên các trang phân trang
+
         return "quanly/hoadon/hoadon";
     }
 
@@ -112,6 +134,13 @@ public class HoaDonController {
         model.addAttribute("listHinhAnh", has);
         return "quanly/hoadon/view-san-pham-chi-tiet";
     }
+
+//    @GetMapping("/hoadon-search")
+//    public String searchHoaDond(@RequestParam("search") String search , Model model){
+//        model.addAttribute("listHoaDon" , hoaDonService.searchHoaDon(search));
+//        return "quanly/hoadon/hoadon";
+//    }
+
 
 
 

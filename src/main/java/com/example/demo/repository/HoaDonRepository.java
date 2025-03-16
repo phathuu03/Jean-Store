@@ -1,5 +1,7 @@
 package com.example.demo.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -13,6 +15,7 @@ import java.util.List;
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
+    Page<HoaDon> findByTrangThai(int trangThai, Pageable pageable);
     // 🔹 Thống kê doanh thu theo tháng trong năm
     @Query("SELECT MONTH(h.ngayThanhToan), SUM(h.tongTien) " +
             "FROM HoaDon h WHERE YEAR(h.ngayThanhToan) = :nam " +
@@ -76,4 +79,9 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Transactional
     @Query(value = "update HoaDon set TrangThai = 3 where ID = :id",nativeQuery = true)
     void updateTrangThaiHoanThanh(@Param("id") Long id);
+
+    // Tìm kiếm theo mã hóa đơn hoặc địa chỉ giao hàng với phân trang
+    @Query("SELECT h FROM HoaDon h WHERE h.maHoaDon LIKE %:search% OR h.diaChiGiaoHang LIKE %:search%")
+    Page<HoaDon> searchHoaDon(@Param("search") String search, Pageable pageable);
+
 }
