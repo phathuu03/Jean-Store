@@ -29,4 +29,6 @@ public interface QuanJeansRepository extends JpaRepository<QuanJeans, Long> {
     Page<QuanJeans> findAllByOngQuan(@Param("id") Long id, Pageable pageable);
 
     List<QuanJeans> findByTenSanPhamContainingIgnoreCase(String keyword);
+
+    Page<QuanJeans> findByTenSanPhamContainingIgnoreCase(String search, Pageable pageable);
 }

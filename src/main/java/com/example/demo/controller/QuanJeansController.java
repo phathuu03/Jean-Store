@@ -5,6 +5,9 @@ import com.example.demo.entity.QuanJeans;
 import com.example.demo.services.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,30 +36,47 @@ public class QuanJeansController {
     private QuanJeansChiTietService quanJeansChiTietService;
 
 
-
     @GetMapping("/quanjeans")
-    public String hienThiQuan(Model model) {
+    public String hienThiQuan(@RequestParam(defaultValue = "0") int page,
+                              @RequestParam(defaultValue = "5") int size,
+                              @RequestParam(defaultValue = "") String search, // Dùng cho tìm kiếm
+                              Model model) {
+        // Tạo Pageable cho phân trang
+        Pageable pageable = PageRequest.of(page, size);
+
+
+        Page<QuanJeans> quanJeans;
+
+        if(!search.isEmpty()){
+            quanJeans = quanJeansService.getAllQuanJean(search, pageable);
+        }else {
+            quanJeans = quanJeansService.getAllQuanJean( pageable);
+        }
+
+        // Truyền vào model các dữ liệu liên quan đến phân trang và dữ liệu khác
         model.addAttribute("quanJeans", new QuanJeans());
-        model.addAttribute("listQuanJean", quanJeansService.getAllQuanJean());
+        model.addAttribute("listQuanJean", quanJeans.getContent()); // Dữ liệu của trang hiện tại
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", quanJeans.getTotalPages());
+        model.addAttribute("search", search);  // Truyền tham số search để giữ lại khi chuyển trang
+
+        // Truyền thêm các dữ liệu khác (Không thay đổi)
         model.addAttribute("listOngQuan", ongQuanService.getAllActiveOngQuan());
         model.addAttribute("listChatLieu", chatLieuService.getAllActiveChatLieu());
         model.addAttribute("listThuongHieu", thuongHieuService.getAllActiveThuongHieu());
+
         return "quanly/sanpham/sanpham";
     }
+
+
+
 
     @PostMapping("/new-quan-jean")
     public String saveQuanJean(@Valid @ModelAttribute QuanJeans quanJeans,
                                BindingResult bindingResult,
                                Model model
-                               ) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("listQuanJean", quanJeansService.getAllQuanJean());
-            model.addAttribute("listOngQuan", ongQuanService.getAllActiveOngQuan());
-            model.addAttribute("listChatLieu", chatLieuService.getAllActiveChatLieu());
-            model.addAttribute("listThuongHieu", thuongHieuService.getAllActiveThuongHieu());
+    ) {
 
-            return "quanly/sanpham/sanpham";
-        }
         QuanJeans savedQuanJeans = quanJeansService.saveQuanJean(quanJeans);
         return "redirect:/api/quan-jean/quanjeans";  // Quay lại trang danh sách sản phẩm
     }
@@ -112,17 +132,5 @@ public class QuanJeansController {
     }
 
     // Tìm kiếm quần jeans
-    @GetMapping("/quanjeans-search")
-    public String searchQuanJeans(@RequestParam(value = "search", required = false) String search, Model model) {
-        if (search != null && !search.isEmpty()) {
-            model.addAttribute("listQuanJean", quanJeansService.searchQuanJean(search));  // Tìm kiếm sản phẩm theo từ khóa
-        } else {
-            model.addAttribute("listQuanJean", quanJeansService.getAllQuanJean());  // Hiển thị tất cả sản phẩm
-        }
 
-        model.addAttribute("listOngQuan", ongQuanService.getAllOngQuan());
-        model.addAttribute("listChatLieu", chatLieuService.getAllChatLieu());
-        model.addAttribute("listThuongHieu", thuongHieuService.getAllThuongHieu());
-        return "quanly/sanpham/sanpham";  // Quay lại trang danh sách sản phẩm
-    }
 }

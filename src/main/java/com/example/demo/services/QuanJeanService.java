@@ -5,6 +5,8 @@ import com.example.demo.entity.QuanJeans;
 import com.example.demo.entity.Size;
 import com.example.demo.repository.QuanJeansRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +18,19 @@ public class QuanJeanService {
 
     @Autowired
     private QuanJeansRepository quanJeansRepository;
+
+    public Page<QuanJeans> getAllQuanJean(Pageable pageable) {
+        return quanJeansRepository.findAll(pageable);
+    }
+    public Page<QuanJeans> getAllQuanJean(String search, Pageable pageable) {
+        if (search == null || search.isEmpty()) {
+            // Nếu không có từ khóa tìm kiếm, trả về tất cả các sản phẩm
+            return quanJeansRepository.findAll(pageable);
+        } else {
+            // Nếu có từ khóa tìm kiếm, tìm kiếm theo tên sản phẩm
+            return quanJeansRepository.findByTenSanPhamContainingIgnoreCase(search, pageable);
+        }
+    }
 
     public List<QuanJeans> getAllQuanJean() {
         return quanJeansRepository.findAll();
