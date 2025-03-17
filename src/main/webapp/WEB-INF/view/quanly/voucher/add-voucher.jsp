@@ -35,12 +35,8 @@
             </div>
 
             <div class="col-md-6 mb-3">
-                <label for="phanTramGiamGia" class="form-label">Điều Kiện Áp Dụng</label>
-                <select id="dieuKienApDung" name="dieuKienApDung" class="form-select" required>
-                    <option value="" disabled selected>Chọn điều kiện áp dụng</option>
-                    <option value="500000">Áp dụng cho đơn hàng từ 500k</option>
-                    <option value="100000">Áp dụng cho khách hàng mới</option>
-                </select>
+                <label for="dieuKienApDung" class="form-label">Điều Kiện Áp Dụng</label>
+                <input type="text" id="dieuKienApDung" name="dieuKienApDung" class="form-control" placeholder="Nhập điều kiện áp dụng" required>
             </div>
         </div>
 
@@ -58,6 +54,7 @@
                 <label for="ngayKetThuc" class="form-label">Ngày Kết Thúc</label>
                 <input type="date" id="ngayKetThuc" name="ngayKetThuc" class="form-control" required>
             </div>
+
         <button type="submit" class="btn btn-success">ADD</button>
         <a href="/voucher/hien-thi" class="btn btn-secondary">Quay Lại</a>
     </form>

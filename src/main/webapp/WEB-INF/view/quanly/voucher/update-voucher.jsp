@@ -37,11 +37,7 @@
 
             <div class="col-md-6 mb-3">
                 <label for="dieuKienApDung" class="form-label">Điều Kiện Áp Dụng</label>
-                <select id="dieuKienApDung" name="dieuKienApDung" class="form-select" required>
-                    <option value="0" ${voucher.dieuKienApDung == 0 ? 'selected' : ''}>Không giới hạn</option>
-                    <option value="500000" ${voucher.dieuKienApDung == 500000 ? 'selected' : ''}>Áp dụng cho đơn hàng từ 500k</option>
-                    <option value="1" ${voucher.dieuKienApDung == 1 ? 'selected' : ''}>Áp dụng cho khách hàng mới</option>
-                </select>
+                <input type="number" id="dieuKienApDung" name="dieuKienApDung" class="form-control" placeholder="Nhập điều kiện áp dụng" required>
             </div>
         </div>
 
@@ -56,10 +52,19 @@
                 <input type="date" id="ngayBatDau" name="ngayBatDau" class="form-control" value="${voucher.ngayBatDau}" required>
             </div>
         </div>
+        <div class="row">
             <div class="col-md-6 mb-3">
                 <label for="ngayKetThuc" class="form-label">Ngày Kết Thúc</label>
                 <input type="date" id="ngayKetThuc" name="ngayKetThuc" class="form-control" value="${voucher.ngayKetThuc}" required>
             </div>
+            <div class="col-md-6 mb-3">
+                <label for="trangThai" class="form-label">Trạng Thái</label>
+                <select id="trangThai" name="trangThai" class="form-control" required>
+                    <option value="1" th:selected="${voucher.trangThai == 1}">Đang Diễn Ra</option>
+                    <option value="0" th:selected="${voucher.trangThai == 0}">Đã Kết Thúc</option>
+                </select>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">Update</button>
         <a href="/voucher/hien-thi" class="btn btn-secondary">Quay Lại
 

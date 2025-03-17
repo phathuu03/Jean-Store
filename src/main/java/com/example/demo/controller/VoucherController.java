@@ -7,15 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.Date;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -24,21 +21,32 @@ public class VoucherController {
     @Autowired
     private VoucherRepository voucherRepository;
 
-    @GetMapping("/voucher/hien-thi")
-    public String hienThiVoucher(@RequestParam(value = "page", defaultValue = "0") int page,
-                                 @RequestParam(value = "size", defaultValue = "5") int size,
-                                 Model model) {
-        // Lấy danh sách voucher từ database
+    @GetMapping("voucher/hien-thi")
+    public String hienThiVoucher(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "6") int size,
+            @RequestParam(required = false) String keyword,
+            Model model) {
+
         Pageable pageable = PageRequest.of(page, size);
-        Page<Voucher> pageVoucher = voucherRepository.findAll(pageable);
 
-        model.addAttribute("listVoucher", pageVoucher.getContent()); // Danh sách theo phân trang
+        Page<Voucher> voucherPage;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            voucherPage = voucherRepository.findByTenVoucherContainingIgnoreCase(keyword, pageable);
+        } else {
+            voucherPage = voucherRepository.findAll(pageable);
+        }
+
+        model.addAttribute("listVoucher", voucherPage.getContent());
         model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", pageVoucher.getTotalPages());
-        model.addAttribute("size", size); // Truyền size để cập nhật dropdown
+        model.addAttribute("totalPages", voucherPage.getTotalPages());
+        model.addAttribute("size", size);
+        model.addAttribute("keyword", keyword);
 
-        return "/quanly/voucher/voucher";
+        return "quanly/voucher/voucher";
     }
+
 
     @GetMapping("/voucher/view-add")
     public String viewAdd() {
@@ -50,13 +58,17 @@ public class VoucherController {
         if (result.hasErrors()) {
             return "quanly/voucher/add-voucher";
         }
-        // Kiểm tra nếu khách hàng mới thì cập nhật đúng giá trị mới
-        if (voucher.getDieuKienApDung() == 1) {
-            voucher.setDieuKienApDung(100000.0); // Sửa lại đúng giá trị
+
+        // Kiểm tra nếu trạng thái chưa set gì thì mặc định là "Đang diễn ra"
+        if (voucher.getTrangThai() == null) {
+            voucher.setTrangThai(1); // 1 = Đang diễn ra
         }
+        // Lưu đúng giá trị người dùng nhập
         voucherRepository.save(voucher);
-        return "redirect:quanly/voucher/hien-thi";
+        return "redirect:/voucher/hien-thi";
     }
+
+
 
     @GetMapping("/voucher/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
@@ -75,36 +87,60 @@ public class VoucherController {
     }
 
     @PostMapping("/voucher/update/{id}")
-    public String updateVoucher(@PathVariable("id") Long id, @ModelAttribute("voucher") @Valid Voucher voucher, BindingResult result) {
+    public String updateVoucher(
+            @PathVariable("id") Long id,
+            @ModelAttribute("voucher") @Valid Voucher voucher,
+            BindingResult result,
+            Model model) {
+
         if (result.hasErrors()) {
             return "quanly/voucher/update-voucher";
         }
 
         if (voucherRepository.existsById(id)) {
             voucher.setId(id); // Đảm bảo ID không bị thay đổi
-            if (voucher.getDieuKienApDung() == 1) {
-                voucher.setDieuKienApDung(100000.0);
+
+            // Kiểm tra và xử lý điều kiện áp dụng không hợp lệ
+            if (voucher.getDieuKienApDung() < 0) {
+                model.addAttribute("error", "Điều kiện áp dụng không thể nhỏ hơn 0!");
+                return "quanly/voucher/update-voucher"; // Quay lại trang update và hiện lỗi
             }
+
             voucherRepository.save(voucher);
         }
-
         return "redirect:/voucher/hien-thi";
     }
 
-//    //tim kiem dang ngao:))
-//    @GetMapping("/voucher/tim-kiem-ajax")
-//    @ResponseBody
-//    public List<Voucher> searchVoucherAjax(
-//            @RequestParam(required = false) String keyword,
-//            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String startDate,
-//            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) String endDate) {
-//
-//        LocalDate start = (startDate != null && !startDate.isEmpty()) ? LocalDate.parse(startDate) : null;
-//        LocalDate end = (endDate != null && !endDate.isEmpty()) ? LocalDate.parse(endDate) : null;
-//
-//        return voucherRepository.findBySearchConditions(
-//                keyword != null ? keyword : "", start, end);
-//    }
+
+
+    @GetMapping("/voucher/search")
+    public String searchVoucher(
+            @RequestParam(value = "keyword", required = false) String keyword,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "6") int size,
+            Model model) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Voucher> pageVoucher;
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            pageVoucher = voucherRepository.findAll(pageable);
+        } else {
+            pageVoucher = voucherRepository.findByTenVoucherContainingIgnoreCase(keyword, pageable);
+        }
+
+        // Đảm bảo luôn có listVoucher, kể cả khi trống
+        model.addAttribute("listVoucher", pageVoucher.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", pageVoucher.getTotalPages());
+        model.addAttribute("size", size);
+        model.addAttribute("keyword", keyword);
+
+        return "quanly/voucher/voucher";
+    }
+
+
+
 
 
 }

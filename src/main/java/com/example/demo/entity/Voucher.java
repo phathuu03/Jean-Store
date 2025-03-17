@@ -28,7 +28,7 @@ public class Voucher {
 
     private Double giamGiaToiDa;
 
-    @Column(length = 100) // Điều kiện áp dụng dạng text (hoặc dùng Enum nếu cần)
+    @Column(length = 100)
     private Double dieuKienApDung;
 
     @Temporal(TemporalType.DATE)
