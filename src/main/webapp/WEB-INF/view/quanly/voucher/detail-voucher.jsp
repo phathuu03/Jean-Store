@@ -54,7 +54,7 @@
             <div class="col-md-6">
                 <label for="trangThai" class="form-label">Trạng Thái</label>
                 <input type="text" id="trangThai" name="trangThai" class="form-control"
-                       value="${voucher.trangThai == 1 ? 'Kích Hoạt' : 'Ngừng Hoạt Động'}" readonly>
+                       value="${voucher.trangThai == 1 ? 'Đang Diễn Ra' : 'Đã kết thúc'}" readonly>
             </div>
         </div>
 
