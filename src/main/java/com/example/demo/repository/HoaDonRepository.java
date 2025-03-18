@@ -51,19 +51,6 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
 
     @Query(value = "insert into HoaDon OUTPUT INSERTED.ID values " +
-            "(:sumMoney,:ship,:discount,:money,:address,null,GETDATE(),null,0,:idUser,null,:idVoucher,:idPTTT)", nativeQuery = true)
-    Long saveHoaDon(@Param("sumMoney") Double sumMoney,
-                    @Param("ship") Double ship,
-                    @Param("discount") Double discount,
-                    @Param("money") Double money,
-                    @Param("address") String address,
-                    @Param("idUser") Long idUser,
-                    @Param("idVoucher") Long idVoucher,
-                    @Param("idPTTT") Long idPTTT
-    );
-
-
-    @Query(value = "insert into HoaDon OUTPUT INSERTED.ID values " +
             "(:sumMoney,:ship,:discount,:money,:address,null,GETDATE(),null,0,:idUser,null,null,:idPTTT)", nativeQuery = true)
     Long saveHoaDonIsNullVoucher(@Param("sumMoney") Double sumMoney,
                                  @Param("ship") Double ship,
@@ -74,18 +61,10 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
                                  @Param("idPTTT") Long idPTTT
     );
 
-    @Query(value = "select * from HoaDon where ID_KhachHang =:id", nativeQuery = true)
-    List<HoaDon> getHoaDonByIdKhachHang(@Param("id") Long id);
-
-
-    @Query(value = "select * from HoaDon where ID_KhachHang =:id and trangThai = :status", nativeQuery = true)
-    List<HoaDon> getHoaDonByIdKhachHangaAndTrangThai(@Param("id") Long id, @Param("status") Integer status);
-
     @Modifying
     @Transactional
     @Query(value = "update HoaDon set TrangThai = 4 where ID = :id", nativeQuery = true)
     void updateTrangThaiDaHuy(@Param("id") Long id);
-
 
     @Modifying
     @Transactional
