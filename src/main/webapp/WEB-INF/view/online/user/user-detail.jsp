@@ -135,7 +135,6 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                     <button type="button" class="btn btn-primary" ng-click="changePassword()">Xác nhận</button>
                 </div>
             </div>
@@ -156,7 +155,7 @@
                     <form>
                         <!-- Tỉnh / Thành phố -->
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Phường / Xã</label>
+                            <label class="form-label fw-bold">Tỉnh / TP</label>
                             <select id="province" name="province" class="form-select"
                                     ng-model="selectedProvince"
                                     ng-options="item.ProvinceID as item.ProvinceName for item in provinces"
@@ -167,7 +166,7 @@
 
                         <!-- Quận / Huyện -->
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Phường / Xã</label>
+                            <label class="form-label fw-bold">Quận / Huyện</label>
                             <select id="districts" name="districts" class="form-select"
                                     ng-model="selectedDistricts"
                                     ng-options="item.DistrictID as item.DistrictName for item in districts"
@@ -197,7 +196,6 @@
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                     <button type="button" class="btn btn-primary" ng-click="changeAddress()">Xác nhận</button>
                 </div>
             </div>

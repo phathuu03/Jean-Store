@@ -30,7 +30,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update KhachHang set NgaySua = GETDATE(),Tinh_TP = :provinces,Quan_Huyen=:districts,Phuong_Xa=:wards,DiaChiCuThe= :address where ID = :id", nativeQuery = true)
+    @Query(value = "update KhachHang set NgaySua = GETDATE(),TinhTP = :provinces,QuanHuyen=:districts,PhuongXa=:wards,DiaChiChiTiet= :address where ID = :id", nativeQuery = true)
     void updateAddress(@Param("provinces") String provinces, @Param("districts") String districts, @Param("wards") String wards, @Param("address") String address, @Param("id") Long id);
 
     @Modifying

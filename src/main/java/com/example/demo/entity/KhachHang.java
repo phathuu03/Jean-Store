@@ -28,16 +28,16 @@ public class KhachHang {
     @Column(length = 50, nullable = false)
     private String matKhau;
 
-    @Column(name = "Tinh_TP")
+    @Column(name = "TinhTP")
     private String tinhTP;
 
-    @Column(name = "Quan_Huyen")
+    @Column(name = "QuanHuyen")
     private String quanHuyen;
 
-    @Column(name = "Phuong_Xa")
+    @Column(name = "PhuongXa")
     private String phuongXa;
 
-    @Column(name = "DiaChiCuThe")
+    @Column(name = "DiaChiChiTiet")
     private String diaChi;
 
     @Pattern(regexp = "^(0[0-9]{9}|\\+84[0-9]{9})$", message = "Số điện thoại không hợp lệ")

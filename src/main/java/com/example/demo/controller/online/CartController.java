@@ -103,7 +103,7 @@ public class CartController {
     @ResponseBody
     public ResponseEntity<?> updateQuantityOnclick(@RequestParam("idProductDetail") Long idProductDetail, @RequestParam("quantity") Integer quantity, @RequestParam("idKhachHang") Long idKhachHang) {
         gioHangChiTietRepository.updateSoLuongOnClickCart(quantity,idProductDetail,idKhachHang);
-        return ResponseEntity.ok("Cập nhật số lượng thành công");
+        return ResponseEntity.ok(Map.of("mes","Cập nhật số lượng thành công"));
     }
 
 }

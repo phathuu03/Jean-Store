@@ -183,14 +183,29 @@
                     </div>
                 </div>
             </c:forEach>
+            <p class="order-price" style="margin-top: 20px">
+                Tổng tiền:
+                <fmt:formatNumber value="${item.tongTien}" type="currency" currencySymbol="đ"
+                                  minFractionDigits="2" maxFractionDigits="2"/>
+            </p>
+            <p class="order-price">
+                Phí ship:
+                <fmt:formatNumber value="${item.phiShip}" type="currency" currencySymbol="đ"
+                                  minFractionDigits="2" maxFractionDigits="2"/>
+            </p>
+            <p class="order-price">
+                Giảm giá:
+                <fmt:formatNumber value="${item.giamGia}" type="currency" currencySymbol="đ"
+                                  minFractionDigits="2" maxFractionDigits="2"/>
+            </p>
             <div class="order-footer">
-                <div>
+                <div style="font-weight: bold;font-size: 20px">
                     Thành tiền:
-                    <fmt:formatNumber value="${item.tongTien}" type="currency" currencySymbol="đ" minFractionDigits="2"
+                    <fmt:formatNumber value="${item.thanhTien}" type="currency" currencySymbol="đ" minFractionDigits="2"
                                       maxFractionDigits="2"/>
                 </div>
                 <c:if test="${item.trangThai=='Chờ xác nhận'}">
-                    <button class="btn btn-danger" style="width: 120px" ng-click = "setTTHuy(${item.id})">Hủy</button>
+                    <button class="btn btn-danger" style="width: 120px" ng-click="setTTHuy(${item.id})">Hủy</button>
                 </c:if>
                 <c:if test="${item.trangThai=='Đang giao hàng'}">
                     <button class="btn btn-primary" ng-click="setTTHoanThanh(${item.id})">Đã nhận được hàng</button>

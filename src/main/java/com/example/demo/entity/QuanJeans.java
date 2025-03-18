@@ -19,6 +19,8 @@ public class QuanJeans {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String maSanPham;
+
     @Column(length = 100)
     private String tenSanPham;
 

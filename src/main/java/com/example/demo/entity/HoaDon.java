@@ -19,7 +19,15 @@ public class HoaDon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String maHoaDon;
+
     private Double tongTien;
+
+    private Double phiShip;
+
+    private Double giamGia;
+
+    private Double thanhTien;
 
     private String diaChiGiaoHang;
 

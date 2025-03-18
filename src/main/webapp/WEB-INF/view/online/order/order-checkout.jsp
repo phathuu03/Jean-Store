@@ -45,7 +45,7 @@
     <h4 class="fw-bold text-primary">🚚 Địa chỉ giao hàng</h4>
     <div class="border rounded p-3 bg-white shadow-sm">
         <p class="mb-1"><strong class="text-dark">{{user.tenKhachHang}}</strong> - {{user.soDienThoai}}</p>
-        <p class="text-muted mb-1">{{user.diaChi +" - "+ user.phuongXa +" - "+ user.quanHuyen +" - "+ user.tinhTP}}</p>
+        <p class="text-muted mb-1" id="address">{{user.diaChi +" - "+ user.phuongXa +" - "+ user.quanHuyen +" - "+ user.tinhTP}}</p>
     </div>
 
     <div class="border rounded p-3 bg-white shadow-sm" style="margin-top: 30px">
@@ -83,16 +83,17 @@
     <div class="border rounded p-3 bg-white shadow-sm">
         <p>🛍️ Tạm tính ({{cart.length}} sản phẩm) <span
                 class="float-end text-muted">{{sumPriceCart | currency:"đ "}}</span></p>
-        <p>🚚 Phí vận chuyển <span class="float-end text-success">Miễn phí</span></p>
+        <p>🚚 Phí vận chuyển <span class="float-end text-success" id="ship">+ {{ship | currency:"đ "}}</span></p>
         <hr>
         <p>💲 Giảm giá <span class="float-end text-success"> - {{moneyIsReduced | currency:"đ "}}</span></p>
         <hr>
-        <p><strong>💳 Tổng cộng:</strong> <span class="float-end text-danger fs-4 fw-bold">{{moneyAfterDiscount | currency:"đ "}}</span>
+        <p><strong>💳 Tổng cộng:</strong> <span
+                class="float-end text-danger fs-4 fw-bold">{{moneySum | currency:"đ "}}</span>
         </p>
         <h5 class="mt-3 text-primary">💰 Chọn phương thức thanh toán</h5>
         <select class="form-select" ng-model="selectedPaymentMethod" ng-change="onPaymentMethodChange()">
             <c:forEach var="item" items="${pttt}">
-            <option value="${item.id}">${item.tenPTTT}</option>
+                <option value="${item.id}">${item.tenPTTT}</option>
             </c:forEach>
         </select>
         <a class="btn btn-success w-100 mt-3" ng-click="checkout()">🛍️ Đặt hàng ngay</a>
@@ -115,5 +116,6 @@
     </footer>
 </div>
 </div>
+
 </body>
 </html>

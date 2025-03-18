@@ -93,6 +93,10 @@
                         <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="đ"/>
                     </p>
                 </c:forEach>
+                <h6 class="fw-bold mt-4">Chi Tiết:</h6>
+                <p>Thương hiệu : ${quanJeans.thuongHieu.tenThuongHieu}</p>
+                <p>Chất liệu : ${quanJeans.chatLieu.tenChatLieu}</p>
+                <p>Ống quần : ${quanJeans.ongQuan.tenOngQuan}</p>
 
                 <!-- Màu sắc -->
                 <h6 class="fw-bold mt-4">Màu sắc:</h6>
