@@ -52,4 +52,26 @@ public class HoaDonService {
        return  false;
 
     }
+
+    public Boolean huyDonHang(Long idHoaDon)  {
+       HoaDon hd = findHoaDonById(idHoaDon);
+       if(hd!= null){
+           hd.setTrangThai(4);
+           updateHoaDon(hd);
+           return true;
+       }
+       return  false;
+
+    }
+
+    public Boolean xnvc(Long idHoaDon)  {
+       HoaDon hd = findHoaDonById(idHoaDon);
+       if(hd!= null){
+           hd.setTrangThai(2);
+           updateHoaDon(hd);
+           return true;
+       }
+       return  false;
+
+    }
 }

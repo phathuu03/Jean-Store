@@ -74,9 +74,25 @@ public class QuanLyDonHangController {
     @PostMapping("/xac-nhan-don-hang")
     public String xacNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
         hoaDonService.xacNhanTrangThai(hoaDonId);
-
-
         return "redirect:/view/detai-trang-thai/" + hoaDonId;
     }
+
+    @PostMapping("/huy-don-hang")
+    public String huyNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
+        hoaDonService.huyDonHang(hoaDonId);
+        return "redirect:/view/detai-trang-thai/" + hoaDonId;
+    }
+
+    @PostMapping("/xac-nhan-vc-nhan-don-hang")
+    public String xnvcNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
+        hoaDonService.xnvc(hoaDonId);
+        return "redirect:/view/detai-trang-thai/" + hoaDonId;
+    }
+
+
+
+
+
+
 
 }
