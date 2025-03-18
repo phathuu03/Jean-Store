@@ -40,14 +40,13 @@ public class UserOnlController {
     @PutMapping("/update")
     public ResponseEntity<?> updateUser(@RequestParam("gender") Boolean gender,
                                         @RequestParam("name") String name,
-                                        @RequestParam("email") String email,
-                                        @RequestParam("address") String address
+                                        @RequestParam("email") String email
     ) {
         KhachHang khachHang = securityUtil.getCurrentKhachHang();
         if (khachHang == null) {
             return ResponseEntity.ok("Khach Hang is null");
         }
-        khachHangRepository.updateKhachHang(gender, name, address, email, khachHang.getId());
+        khachHangRepository.updateKhachHang(gender, name, email, khachHang.getId());
         return ResponseEntity.ok(Map.of("alert", "Cập nhật thành công"));
     }
 
@@ -62,13 +61,12 @@ public class UserOnlController {
         return ResponseEntity.ok(Map.of("mes", "Cập nhật thành công"));
     }
 
-    @PostMapping("/insert")
+    @GetMapping("/insert")
     public ResponseEntity<?> insertUser(
             @RequestParam("name") String name,
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             @RequestParam("sdt") String sdt,
-            @RequestParam("address") String address,
             @RequestParam("email") String email,
             @RequestParam("gender") Boolean gender
     ) {
@@ -83,9 +81,24 @@ public class UserOnlController {
         if (checkUsername) {
             return ResponseEntity.ok(Map.of("check", 10000));
         } else {
-            khachHangRepository.insertUser(name, username, password, sdt, address, email, gender);
+            khachHangRepository.insertUser(name, username, password, sdt, email, gender);
             return ResponseEntity.ok(Map.of("check", 5000));
         }
+    }
+
+    @GetMapping("/update/address")
+    public ResponseEntity<?> updateAddress(@RequestParam("provinces") String provinces,
+                                           @RequestParam("districts") String districts,
+                                           @RequestParam("wards") String wards,
+                                           @RequestParam("address") String address
+
+    ) {
+        KhachHang khachHang = securityUtil.getCurrentKhachHang();
+        if (khachHang == null) {
+            return ResponseEntity.ok(Map.of("mes", "ID Khach Hang is null"));
+        }
+        khachHangRepository.updateAddress(provinces, districts, wards, address, khachHang.getId());
+        return ResponseEntity.ok(Map.of("mes", "OK"));
     }
 
 }

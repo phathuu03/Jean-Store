@@ -92,7 +92,8 @@
 <div ng-app="myApp" ng-controller="HomeController" class="content" style="margin-top: 50px;margin-left: 100px">
     <div class="search-container d-flex justify-content-center mt-3">
         <form action="/onl-search" method="GET" class="search-form d-flex">
-            <input class="form-control search-input" type="text" name="query" placeholder="Tìm kiếm sản phẩm..." aria-label="Search">
+            <input class="form-control search-input" type="text" name="query" placeholder="Tìm kiếm sản phẩm..."
+                   aria-label="Search">
             <button class="btn search-btn" type="submit">
                 <i class="bi bi-search"></i>
             </button>
@@ -120,58 +121,9 @@
             </div>
             <!-- Danh sách hình ảnh sản phẩm -->
             <div class="col-md-9">
-                <div class="row row-cols-1 row-cols-md-4 g-4">
-                    <c:forEach var="item1" items="${quanJeans}">
-                        <div class="col">
-                            <div class="card h-100 product-card shadow-sm">
-                                <div class="d-flex justify-content-center align-items-center p-3 bg-light"
-                                     style="height: 200px;">
-                                    <c:forEach var="hinhAnh" items="${item1.hinhAnh}" begin="0" end="0">
-                                        <img src="${hinhAnh.url}" alt="Hình ảnh sản phẩm" class="img-fluid product-img">
-                                    </c:forEach>
-                                </div>
-                                <div class="card-body text-center">
-                                    <c:forEach var="quanCT" items="${item1.quanJeansChiTiets}" begin="0" end="0">
-                                        <p class="text-danger fw-bold">
-                                            <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="đ"/>
-                                        </p>
-                                    </c:forEach>
-                                    <a href="/home/product-detail?id=${item1.id}"
-                                       class="text-dark fw-semibold text-decoration-none d-block">
-                                            ${item1.tenSanPham}
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </c:forEach>
+                <div class="row row-cols-1 row-cols-md-4 g-4" style="margin-top: 200px;margin-left: 500px;font-weight: bold">
+                    Không tìm thấy sản phẩm nào.
                 </div>
-                <nav aria-label="Page navigation" style="margin-top: 20px">
-                    <ul class="pagination justify-content-center">
-                        <!-- Nút "Trước" -->
-                        <c:if test="${currentPage > 0}">
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${currentPage - 1}&size=12"
-                                   style="color: black;font-weight: bold">« Trước</a>
-                            </li>
-                        </c:if>
-
-                        <!-- Danh sách số trang -->
-                        <c:forEach var="i" begin="0" end="${totalPages - 1}">
-                            <li class="page-item ${i == currentPage ? 'active' : ''}">
-                                <a class="page-link" href="?page=${i}&size=12"
-                                   style="color: black;font-weight: bold">${i + 1}</a>
-                            </li>
-                        </c:forEach>
-
-                        <!-- Nút "Tiếp" -->
-                        <c:if test="${currentPage + 1 < totalPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="?page=${currentPage + 1}&size=12"
-                                   style="color: black;font-weight: bold">Tiếp »</a>
-                            </li>
-                        </c:if>
-                    </ul>
-                </nav>
             </div>
 
         </div>
@@ -193,6 +145,7 @@
             </footer>
         </div>
     </div>
+</div>
 </body>
 <script>
 

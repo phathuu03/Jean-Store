@@ -59,6 +59,7 @@ app.controller('CartController', function ($scope, $http) {
                 if (response.data.id) {
                     $scope.idUser = response.data.id;
                     $scope.init($scope.idUser);
+                    $scope.setButtonLogin($scope.idUser);
                     console.log("ID User:", $scope.idUser);
                 } else {
                     throw new Error("Không tìm thấy ID User");
@@ -68,7 +69,30 @@ app.controller('CartController', function ($scope, $http) {
                 console.error("Lỗi khi lấy ID user:", error);
             });
     };
-    $scope.getUser();
+    $scope.getUser()
+
+
+    $scope.setButtonLogin = function (idUser) {
+        if (idUser != null) {
+
+            const urlGetUser = `http://localhost:8080/user?id=${idUser}`;
+            $http.get(urlGetUser)
+                .then(function (response) {
+                    if (response.data.khachHang) {
+                        $scope.user = response.data.khachHang;
+                        document.getElementById("btnLogin").style.display = "none";
+                        document.getElementById("textWelcome").style.display = "block";
+                        document.getElementById("textWelcome").innerText = "Welcome : " + $scope.user.tenDangNhap;
+                        console.log("Thông tin user:", $scope.user);
+                    } else {
+                        console.warn("Không tìm thấy khách hàng với ID:", idUser);
+                    }
+                })
+                .catch(function (error) {
+                    console.error("Lỗi khi lấy thông tin user:", error);
+                });
+        }
+    }
 
     $scope.updateQuantityOnclick = function (idProductDetail, idUser, quantity) {
         if ($scope.idUser != null) {
@@ -104,7 +128,7 @@ app.controller('CartController', function ($scope, $http) {
 
         let isConfirm = confirm("Bạn có muốn xóa không");
 
-        if (!isConfirm){
+        if (!isConfirm) {
             return;
         }
 

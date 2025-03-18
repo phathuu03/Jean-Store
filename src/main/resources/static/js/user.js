@@ -51,7 +51,7 @@ app.controller('UserController', function ($scope, $http) {
                 $scope.check.passwordConfirm = true
                 return;
             }
-            if (!checkRegex){
+            if (!checkRegex) {
                 $scope.mes.passwordNew = "Mật khẩu phải chứa ít nhất một chữ in hoa,một chữ in thường, một chữ số và một ký tự đặc biệt.(Độ dài 8 - 15 ký tự.)";
                 $scope.check.passwordNew = true;
                 return;
@@ -83,7 +83,6 @@ app.controller('UserController', function ($scope, $http) {
         $scope.check = false
 
         $scope.updateUser = function () {
-
 
 
             $scope.name1 = document.getElementById("name").value
@@ -152,7 +151,7 @@ app.controller('UserController', function ($scope, $http) {
                 $scope.checkError.email = true
                 return;
             }
-            const url = `http://localhost:8080/user/update?gender=${$scope.gender1}&email=${$scope.email1}&name=${$scope.name1}&address=${$scope.address1}`;
+            const url = `http://localhost:8080/user/update?gender=${$scope.gender1}&email=${$scope.email1}&name=${$scope.name1}`;
             $http.put(url).then(function (response) {
                 if (response.status == 200) {
                     console.log(response.data.alert)
@@ -167,5 +166,110 @@ app.controller('UserController', function ($scope, $http) {
             console.log($scope.address)
             console.log($scope.gender)
         }
+
+        $scope.getUser = function () {
+            const urlGetIdUser = `http://localhost:8080/user/id`;
+            $http.get(urlGetIdUser)
+                .then(function (response) {
+                    if (response.data.id) {
+                        $scope.idUser = response.data.id;
+                        $scope.setButtonLogin($scope.idUser);
+                        console.log("ID User:", $scope.idUser);
+                    } else {
+                        throw new Error("Không tìm thấy ID User");
+                    }
+                })
+                .catch(function (error) {
+                    console.error("Lỗi khi lấy ID user:", error);
+                });
+        };
+        $scope.getUser()
+
+
+        $scope.setButtonLogin = function (idUser) {
+            if (idUser != null) {
+
+                const urlGetUser = `http://localhost:8080/user?id=${idUser}`;
+                $http.get(urlGetUser)
+                    .then(function (response) {
+                        if (response.data.khachHang) {
+                            $scope.user = response.data.khachHang;
+                            document.getElementById("btnLogin").style.display = "none";
+                            document.getElementById("textWelcome").style.display = "block";
+                            document.getElementById("textWelcome").innerText = "Welcome : " + $scope.user.tenDangNhap;
+                            console.log("Thông tin user:", $scope.user);
+                        } else {
+                            console.warn("Không tìm thấy khách hàng với ID:", idUser);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error("Lỗi khi lấy thông tin user:", error);
+                    });
+            }
+        }
+        $scope.provinces = [];
+        $scope.districts = [];
+        $scope.wards = [];
+
+        $scope.getProvinces = function () {
+            const urlProvinces = `http://localhost:8080/public/provinces`;
+            $http.get(urlProvinces).then(function (response) {
+                if (response.data) {
+                    $scope.provinces = response.data.data;
+                    console.log("Provinces loaded:", response.data);
+                }
+            });
+        };
+
+        $scope.onProvinceChange = function (provinceID) {
+            $scope.districts = []; // Xóa dữ liệu quận/huyện khi chọn tỉnh mới
+            $scope.wards = []; // Xóa dữ liệu phường/xã
+
+            const url = `http://localhost:8080/public/districts?province_id=${provinceID}`;
+            $http.get(url).then(function (response) {
+                if (response.data) {
+                    $scope.districts = response.data.data;
+                    console.log("Districts loaded:", response.data);
+                }
+            });
+        };
+
+        $scope.onDistrictsChange = function (districtID) {
+            $scope.wards = []; // Xóa dữ liệu phường/xã khi chọn quận/huyện mới
+
+            const url = `http://localhost:8080/public/wards?district_id=${districtID}`;
+            $http.get(url).then(function (response) {
+                if (response.data) {
+                    $scope.wards = response.data.data;
+                    console.log("Wards loaded:", response.data);
+                }
+            });
+        };
+
+        $scope.changeAddress = function () {
+            let addressDetail = document.getElementById("addressDetail").value;
+
+            let selectedProvince = $scope.provinces.find(p => p.ProvinceID == $scope.selectedProvince);
+            let selectedDistrict = $scope.districts.find(d => d.DistrictID == $scope.selectedDistricts);
+            let selectedWard = $scope.wards.find(w => w.WardCode == $scope.selectedWards);
+
+
+            if (!selectedDistrict || !selectedDistrict || !selectedWard || !addressDetail) {
+                alert("Vui lòng điền đầy đủ thông tin")
+                return
+            }
+
+            const url = `http://localhost:8080/user/update/address?address=${addressDetail}&provinces=${selectedProvince.ProvinceName}&districts=${selectedDistrict.DistrictName}&wards=${selectedWard.WardName}`
+            $http.get(url).then(function (response) {
+                if (response.data.mes === "OK") {
+                    console.log("Cập nhật địa chỉ thành công:", response.data.mes);
+                    alert("Thay đổi thành công địa chỉ")
+                    location.reload()
+                }
+            });
+        };
+
+
+        $scope.getProvinces();
     }
 )

@@ -132,6 +132,8 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="/voucher/hien-thi" target="contentFrame">Voucher</a>
+                </li> <li class="nav-item">
+                    <a class="nav-link text-white" href="/thong-ke" target="contentFrame">Thống kê</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-white" href="/thong-ke" target="contentFrame">Thống kê</a>

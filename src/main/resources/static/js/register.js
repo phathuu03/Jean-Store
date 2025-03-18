@@ -1,11 +1,10 @@
 var app = angular.module('myApp', []);
 
-app.controller('RegisterController', function ($scope, $http,$location) {
+app.controller('RegisterController', function ($scope, $http, $location) {
 
     $scope.registerUser = function () {
         $scope.name = document.getElementById("name").value
         $scope.email = document.getElementById("email").value
-        $scope.address = document.getElementById("address").value
         $scope.password = document.getElementById("password").value
         $scope.username = document.getElementById("username").value
         $scope.sdt = document.getElementById("sdt").value
@@ -52,7 +51,7 @@ app.controller('RegisterController', function ($scope, $http,$location) {
             $scope.check.name = true
             return;
         }
-        if ($scope.name.length<5||$scope.name.length>15){
+        if ($scope.name.length < 5 || $scope.name.length > 15) {
             $scope.mes.name = "Tên đăng nhập phải lớn hơn 5 ký tự và nhỏ hơn 15 ký tự";
             $scope.check.name = true
             return;
@@ -76,12 +75,6 @@ app.controller('RegisterController', function ($scope, $http,$location) {
         if ($scope.sdt == null || $scope.sdt == "") {
             $scope.mes.sdt = "Không được để trống";
             $scope.check.sdt = true
-            return;
-        }
-
-        if ($scope.address == null || $scope.address == "") {
-            $scope.mes.address = "Không được để trống";
-            $scope.check.address = true
             return;
         }
 
@@ -114,12 +107,11 @@ app.controller('RegisterController', function ($scope, $http,$location) {
         }
 
 
-        const url = `http://localhost:8080/user/insert?name=${$scope.name}&username=${$scope.username}&password=${$scope.password}&sdt=${$scope.sdt}
-        &email=${$scope.email}&address=${$scope.address}&gender=${$scope.gender}`;
+        const url = `http://localhost:8080/user/insert?name=${$scope.name}&username=${$scope.username}&password=${$scope.password}&sdt=${$scope.sdt}&email=${$scope.email}&gender=${$scope.gender}`;
 
-        $http.post(url).then(function (response) {
+        $http.get(url).then(function (response) {
             console.log(response.data.check)
-            if (response.data.check == 10000){
+            if (response.data.check == 10000) {
                 $scope.mes.username = "Tài khoản đã tồn tại";
                 $scope.check.username = true
                 return;

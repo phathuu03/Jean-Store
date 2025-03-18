@@ -35,5 +35,4 @@ public class HinhAnh {
     @ManyToOne
     @JoinColumn(name = "ID_QuanJeans")
     private QuanJeans quanJeans;
-
 }

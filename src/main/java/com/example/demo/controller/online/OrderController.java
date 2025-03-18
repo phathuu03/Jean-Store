@@ -53,7 +53,7 @@ public class OrderController {
     public String orderDetailByStatus(@RequestParam("status") Integer status, Model model
     ) {
         Long id = securityUtil.getCurrentKhachHang().getId();
-        List<HoaDon> hoaDon = hoaDonRepository.getHoaDonByIdKhachHangaAndTrangThai(id,status);
+        List<HoaDon> hoaDon = hoaDonRepository.getHoaDonByIdKhachHangaAndTrangThai(id, status);
         Collections.reverse(hoaDon);
         model.addAttribute("hd", hoaDon);
         return "online/order/order-detail";
@@ -70,23 +70,29 @@ public class OrderController {
     @ResponseBody
     public ResponseEntity<?> insertBill(
             @RequestParam("sumMoney") Double sumMoney,
+            @RequestParam("ship") Double ship,
+            @RequestParam("discount") Double discount,
+            @RequestParam("money") Double money,
             @RequestParam("address") String address,
             @RequestParam("idUser") Long idUser,
             @RequestParam("idVoucher") Long idVoucher,
             @RequestParam("idPTTT") Long idPTTT
     ) {
-        return ResponseEntity.ok(hoaDonRepository.saveHoaDon(sumMoney, address, idUser, idVoucher, idPTTT));
+        return ResponseEntity.ok(hoaDonRepository.saveHoaDon(sumMoney, ship, discount, money, address, idUser, idVoucher, idPTTT));
     }
 
     @PostMapping("/insert-bill/isnull")
     @ResponseBody
     public ResponseEntity<?> insertBillIsNull(
             @RequestParam("sumMoney") Double sumMoney,
+            @RequestParam("ship") Double ship,
+            @RequestParam("discount") Double discount,
+            @RequestParam("money") Double money,
             @RequestParam("address") String address,
             @RequestParam("idUser") Long idUser,
             @RequestParam("idPTTT") Long idPTTT
     ) {
-        return ResponseEntity.ok(hoaDonRepository.saveHoaDonIsNullVoucher(sumMoney, address, idUser, idPTTT));
+        return ResponseEntity.ok(hoaDonRepository.saveHoaDonIsNullVoucher(sumMoney, ship, discount, money, address, idUser, idPTTT));
     }
 
     @PostMapping("/insert-billDetail")
@@ -103,13 +109,13 @@ public class OrderController {
 
     @PutMapping("/update/tt-huy")
     @ResponseBody
-    public void updateTTHuy(@RequestParam("id") Long id){
+    public void updateTTHuy(@RequestParam("id") Long id) {
         hoaDonRepository.updateTrangThaiDaHuy(id);
     }
 
     @PutMapping("/update/tt-hoanthanh")
     @ResponseBody
-    public void updateTTHoanThang(@RequestParam("id") Long id){
+    public void updateTTHoanThang(@RequestParam("id") Long id) {
         hoaDonRepository.updateTrangThaiHoanThanh(id);
     }
 }

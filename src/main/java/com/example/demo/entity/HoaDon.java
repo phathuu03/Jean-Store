@@ -23,16 +23,15 @@ public class HoaDon {
     @Column(name = "MaHoaDon", insertable = false, updatable = false)
     private String maHoaDon;
 
-    private Float phiShip;
-
-    private Float giamGia;
-
-    private Float thanhTien;
-
     private Double tongTien;
 
-    private String diaChiGiaoHang;
+    private Double phiShip;
 
+    private Double giamGia;
+
+    private Double thanhTien;
+
+    private String diaChiGiaoHang;
 
     private Date ngayThanhToan;
 
@@ -61,8 +60,6 @@ public class HoaDon {
 
     @OneToMany(mappedBy = "hoaDon", cascade = CascadeType.ALL)
     private List<HoaDonChiTiet> hoaDonChiTiets;
-
-
 
     public String getTrangThai() {
         if (trangThai == 0) {

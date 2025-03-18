@@ -46,11 +46,11 @@ public class CartController {
     @ResponseBody
     public ResponseEntity<?> getImageByColor(@RequestParam("colorId") Long colorId, @RequestParam("productId") Long productId) {
 
-        String imageUrl = hinhAnhRepository.findImageByColorAndProduct(colorId, productId);
+        List<String> imageUrl = hinhAnhRepository.findImageByColorAndProduct(colorId, productId);
         if (imageUrl == null) {
             return ResponseEntity.badRequest().body(Map.of("error", "Không tìm thấy ảnh cho màu này."));
         }
-        return ResponseEntity.ok(Map.of("imageUrl", imageUrl));
+        return ResponseEntity.ok(Map.of("imageUrl", imageUrl.get(0)));
     }
 
     @PostMapping("/cart/insert")
@@ -103,7 +103,7 @@ public class CartController {
     @ResponseBody
     public ResponseEntity<?> updateQuantityOnclick(@RequestParam("idProductDetail") Long idProductDetail, @RequestParam("quantity") Integer quantity, @RequestParam("idKhachHang") Long idKhachHang) {
         gioHangChiTietRepository.updateSoLuongOnClickCart(quantity,idProductDetail,idKhachHang);
-        return ResponseEntity.ok("Cập nhật số lượng thành công");
+        return ResponseEntity.ok(Map.of("mes","Cập nhật số lượng thành công"));
     }
 
 }

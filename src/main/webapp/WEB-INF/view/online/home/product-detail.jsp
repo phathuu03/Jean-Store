@@ -47,29 +47,31 @@
     }
 </style>
 <body style="background-color: aliceblue">
-<header class="p-3 bg-dark textwhite">
+<header class="p-3 bg-dark text-white">
     <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <div class="d-flex align-items-center mb-2 mb-lg-0 text-red text-decoration-none"
-                 style="color: cornflowerblue">
-                <a class="navbar-brand fw-bold" href="/home">
-                    <i class="bi bi-bag"></i> Jeans Store
-                </a></div>
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <!-- Logo -->
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="/home">
+                <i class="bi bi-bag me-2"></i> Jeans Store
+            </a>
 
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="/home" class="nav-link px-2 text-white">Trang chủ</a></li>
-                <li><a href="/order-history" class="nav-link px-2 text-white">Quản lý đơn hàng</a></li>
-                <li><a href="/cart/detail" class="nav-link px-2 text-white">Giỏ hàng</a></li>
-                <li><a href="/user/detail" class="nav-link px-2 text-white">Tài khoản</a></li>
+            <!-- Menu -->
+            <ul class="nav col-lg-auto mb-2 mb-lg-0">
+                <li><a href="/home" class="nav-link px-3 text-white">Trang chủ</a></li>
+                <li><a href="/order-history" class="nav-link px-3 text-white">Quản lý đơn hàng</a></li>
+                <li><a href="/cart/detail" class="nav-link px-3 text-white">Giỏ hàng</a></li>
+                <li><a href="/user/detail" class="nav-link px-3 text-white">Tài khoản</a></li>
             </ul>
 
-
-            <div class="text-end">
-                <a href="/online/login" type="button" class="btn btn-outline-light me-2">Đăng nhập</a>
+            <!-- Đăng nhập / Chào mừng -->
+            <div class="d-flex align-items-center">
+                <a href="/online/login" id="btnLogin" class="btn btn-outline-light me-3">Đăng nhập</a>
+                <p id="textWelcome" class="mb-0 fw-bold text-light" style="display: none;"></p>
             </div>
         </div>
     </div>
 </header>
+
 
 <div class="content container mt-5">
     <div class="container my-5">
@@ -91,6 +93,10 @@
                         <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="đ"/>
                     </p>
                 </c:forEach>
+                <h6 class="fw-bold mt-4">Chi Tiết:</h6>
+                <p>Thương hiệu : ${quanJeans.thuongHieu.tenThuongHieu}</p>
+                <p>Chất liệu : ${quanJeans.chatLieu.tenChatLieu}</p>
+                <p>Ống quần : ${quanJeans.ongQuan.tenOngQuan}</p>
 
                 <!-- Màu sắc -->
                 <h6 class="fw-bold mt-4">Màu sắc:</h6>
@@ -133,7 +139,7 @@
                 </div>
 
                 <!-- Thêm vào giỏ hàng -->
-                <button class="btn btn-primary mt-4 w-100" ng-click="addToCart()">
+                <button class="btn btn-primary mt-4 w-100" id="btnAddToCart" ng-click="addToCart()" ng-class="{'disabled': quantity1 === 0}">
                     <i class="bi bi-cart-plus"></i> Thêm vào giỏ hàng
                 </button>
             </div>

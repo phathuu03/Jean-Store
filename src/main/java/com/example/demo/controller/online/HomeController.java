@@ -37,17 +37,49 @@ public class HomeController {
     private HinhAnhRepository hinhAnhRepository;
 
     @GetMapping("/home")
-    public String viewHome(Model model, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "12") int size) {
+    public String viewHome(Model model, @RequestParam(defaultValue = "0") int page,
+                           @RequestParam(defaultValue = "12") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
         Page<QuanJeans> quanJeansPage = quanJeansRepository.findAllByTrangThai(pageable);
 
-        model.addAttribute("thuongHieu", thuongHieu.findAll());
         model.addAttribute("quanJeans", quanJeansPage.getContent()); // Danh sách sản phẩm
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", quanJeansPage.getTotalPages());
-        model.addAttribute("chatLieu", chatLieu.findAll());
-        model.addAttribute("ongQuan", ongQuanRepository.findAll());
+
+        model.addAttribute("thuongHieu", thuongHieu.getThuongHieuGroupByQuanJeans());
+        model.addAttribute("chatLieu", chatLieu.getChatLieuGroupByQuanJeans());
+        model.addAttribute("ongQuan", ongQuanRepository.getOngQuanGroupByQuanJeans());
+        return "online/home/home";
+    }
+
+    @GetMapping("/home/empty")
+    public String viewHomeEmpty(Model model) {
+
+        model.addAttribute("thuongHieu", thuongHieu.getThuongHieuGroupByQuanJeans());
+        model.addAttribute("chatLieu", chatLieu.getChatLieuGroupByQuanJeans());
+        model.addAttribute("ongQuan", ongQuanRepository.getOngQuanGroupByQuanJeans());
+        return "online/home/find-empty";
+    }
+
+    @GetMapping("/onl-search")
+    public String searchProducts(@RequestParam("query") String query, Model model, @RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "12") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<QuanJeans> quanJeansPage = quanJeansRepository.findByTenSanPhamContainingIgnoreCase(query, pageable);
+
+        if (quanJeansPage.getContent().isEmpty()) {
+            return "redirect:/home/empty";
+        }
+
+        model.addAttribute("quanJeans", quanJeansPage.getContent()); // Danh sách sản phẩm
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", quanJeansPage.getTotalPages());
+
+        model.addAttribute("thuongHieu", thuongHieu.getThuongHieuGroupByQuanJeans());
+        model.addAttribute("chatLieu", chatLieu.getChatLieuGroupByQuanJeans());
+        model.addAttribute("ongQuan", ongQuanRepository.getOngQuanGroupByQuanJeans());
         return "online/home/home";
     }
 
@@ -62,9 +94,9 @@ public class HomeController {
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", quanJeansPage.getTotalPages());
 
-        model.addAttribute("thuongHieu", thuongHieu.findAll());
-        model.addAttribute("chatLieu", chatLieu.findAll());
-        model.addAttribute("ongQuan", ongQuanRepository.findAll());
+        model.addAttribute("thuongHieu", thuongHieu.getThuongHieuGroupByQuanJeans());
+        model.addAttribute("chatLieu", chatLieu.getChatLieuGroupByQuanJeans());
+        model.addAttribute("ongQuan", ongQuanRepository.getOngQuanGroupByQuanJeans());
         return "online/home/home";
     }
 
@@ -80,9 +112,9 @@ public class HomeController {
         model.addAttribute("totalPages", quanJeansPage.getTotalPages());
 
 
-        model.addAttribute("thuongHieu", thuongHieu.findAll());
-        model.addAttribute("chatLieu", chatLieu.findAll());
-        model.addAttribute("ongQuan", ongQuanRepository.findAll());
+        model.addAttribute("thuongHieu", thuongHieu.getThuongHieuGroupByQuanJeans());
+        model.addAttribute("chatLieu", chatLieu.getChatLieuGroupByQuanJeans());
+        model.addAttribute("ongQuan", ongQuanRepository.getOngQuanGroupByQuanJeans());
         return "online/home/home";
     }
 
@@ -94,9 +126,9 @@ public class HomeController {
         model.addAttribute("quanJeans", quanJeansPage.getContent()); // Danh sách sản phẩm
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", quanJeansPage.getTotalPages());
-        model.addAttribute("thuongHieu", thuongHieu.findAll());
-        model.addAttribute("chatLieu", chatLieu.findAll());
-        model.addAttribute("ongQuan", ongQuanRepository.findAll());
+        model.addAttribute("thuongHieu", thuongHieu.getThuongHieuGroupByQuanJeans());
+        model.addAttribute("chatLieu", chatLieu.getChatLieuGroupByQuanJeans());
+        model.addAttribute("ongQuan", ongQuanRepository.getOngQuanGroupByQuanJeans());
         return "online/home/home";
     }
 
@@ -121,11 +153,11 @@ public class HomeController {
     @ResponseBody
     public ResponseEntity<?> getImageByColor(@RequestParam("colorId") Long colorId, @RequestParam("productId") Long productId) {
 
-        String imageUrl = hinhAnhRepository.findImageByColorAndProduct(colorId, productId);
+        List<String> imageUrl = hinhAnhRepository.findImageByColorAndProduct(colorId, productId);
         if (imageUrl == null) {
             return ResponseEntity.badRequest().body(Map.of("error", "Không tìm thấy ảnh cho màu này."));
         }
-        return ResponseEntity.ok(Map.of("imageUrl", imageUrl));
+        return ResponseEntity.ok(Map.of("imageUrl", imageUrl.get(0)));
     }
 
     @GetMapping("/home/change-quantity")
@@ -148,5 +180,9 @@ public class HomeController {
             return ResponseEntity.badRequest().body(Map.of("error", "Không tìm thấy."));
         }
         return ResponseEntity.ok(Map.of("id", id));
+    }
+    @GetMapping("/address")
+    public String addressShipping (){
+        return "online/cart/test-ship";
     }
 }
