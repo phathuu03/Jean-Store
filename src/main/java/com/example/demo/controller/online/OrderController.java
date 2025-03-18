@@ -43,7 +43,7 @@ public class OrderController {
     public String orderDetail(Model model
     ) {
         Long id = securityUtil.getCurrentKhachHang().getId();
-        List<HoaDon> hoaDon = hoaDonRepository.getHoaDonByIdKhachHang(id);
+            List<HoaDon> hoaDon = hoaDonRepository.getHoaDonByIdKhachHang(id);
         Collections.reverse(hoaDon);
         model.addAttribute("hd", hoaDon);
         return "online/order/order-detail";
@@ -118,5 +118,7 @@ public class OrderController {
     public void updateTTHoanThang(@RequestParam("id") Long id) {
         hoaDonRepository.updateTrangThaiHoanThanh(id);
     }
+
+
 }
 
