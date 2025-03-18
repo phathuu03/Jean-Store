@@ -135,9 +135,7 @@
                 </li> <li class="nav-item">
                     <a class="nav-link text-white" href="/thong-ke" target="contentFrame">Thống kê</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="/thong-ke" target="contentFrame">Thống kê</a>
-                </li>
+
             </ul>
         </div>
         <div class="col-md-10 main-content">
