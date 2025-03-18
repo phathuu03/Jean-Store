@@ -1,5 +1,4 @@
 package com.example.demo.entity;
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,14 +13,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class HoaDon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // Thêm mã hóa đơn tự động từ SQL
     @Column(name = "MaHoaDon", insertable = false, updatable = false)
     private String maHoaDon;
+
 
     private Double tongTien;
 
@@ -31,7 +31,9 @@ public class HoaDon {
 
     private Double thanhTien;
 
+    @Column(name = "DiaChiGiaoHang", length = 225)
     private String diaChiGiaoHang;
+
 
     private Date ngayThanhToan;
 
@@ -40,7 +42,6 @@ public class HoaDon {
     private Date ngaySua;
 
     private Integer trangThai;
-
 
     @ManyToOne
     @JoinColumn(name = "ID_KhachHang")
