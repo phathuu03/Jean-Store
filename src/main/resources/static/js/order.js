@@ -122,11 +122,20 @@ app.controller('OrderController', function ($scope, $http) {
         }
             $scope.diaChi = document.getElementById("address").innerText
         if ($scope.idPTTT == 1) {
-            if ($scope.idVoucher == null) {
-                var urlInsert = `http://localhost:8080/insert-bill/isnull?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
-            } else {
-                var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
+            if ($scope.moneyIsReduced){
+                if ($scope.idVoucher == null) {
+                    var urlInsert = `http://localhost:8080/insert-bill/isnull?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
+                } else {
+                    var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
+                }
+            }else {
+                if ($scope.idVoucher == null) {
+                    var urlInsert = `http://localhost:8080/insert-bill/isnull?ship=${$scope.ship}&discount=0&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
+                } else {
+                    var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=0&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
+                }
             }
+
             $http.post(urlInsert).then(function (response) {
                     if (response.status == 200) {
                         $scope.idHoaDon = response.data

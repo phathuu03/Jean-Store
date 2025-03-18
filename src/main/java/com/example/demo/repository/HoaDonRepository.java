@@ -57,6 +57,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
                     @Param("idPTTT") Long idPTTT
     );
 
+
     @Query(value = "insert into HoaDon OUTPUT INSERTED.ID values " +
             "(:sumMoney,:ship,:discount,:money,:address,null,GETDATE(),null,0,:idUser,null,null,:idPTTT)", nativeQuery = true)
     Long saveHoaDonIsNullVoucher(@Param("sumMoney") Double sumMoney,
