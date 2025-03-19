@@ -37,7 +37,7 @@ public class NhanVienController {
     @GetMapping("/nhan-vien/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model) {
         model.addAttribute("nv", nhanVienRepository.findById(id).orElse(null));
-        return "/quanly/nhanvien/detail-nhanvien";
+        return "quanly/nhanvien/detail-nhanvien";
     }
 
     @GetMapping("/nhan-vien/view-add")
