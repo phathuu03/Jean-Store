@@ -16,7 +16,6 @@
             <input type="text" name="query" placeholder="Nhập từ khóa..."  >
             <button class="btn btn-primary ms-2" type="submit">Tìm kiếm</button>
         </form>
-        <a href="/khach-hang/view-add" class="btn btn-success">+ Thêm Mới</a>
     </div>
 
     <table class="table table-bordered table-striped">
@@ -44,7 +43,7 @@
                 <td>${kh.tenDangNhap}</td>
                 <td>${kh.matKhau}</td>
                 <td>${kh.soDienThoai}</td>
-                <td>${kh.diaChi}</td>
+                <td>${kh.diaChi}, ${kh.phuongXa}, ${kh.quanHuyen}, ${kh.tinhTP}</td>
                 <td>${kh.email}</td>
                 <td>${kh.gioiTinh ? "Nam" : "Nữ"}</td>
                 <td>${kh.ngayTao}</td>
@@ -55,7 +54,7 @@
                         <a href="/khach-hang/detail/${kh.id}" class="d-flex justify-content-center align-items-center p-2">
                             <i class="bi bi-eye-fill fs-5"></i>
                         </a>
-                        <a href="/khach-hang/view-update/${kh.id}" class="btn btn-secondary">Update</a>
+                        <a href="/khach-hang/viewDonHang/${kh.id}" class="btn btn-secondary">Xem Đơn Hàng</a>
                     </div>
                 </td>
             </tr>

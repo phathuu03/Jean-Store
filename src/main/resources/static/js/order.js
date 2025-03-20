@@ -3,7 +3,7 @@ var app = angular.module('myApp', []);
 app.controller('OrderController', function ($scope, $http) {
     $scope.cart = JSON.parse(sessionStorage.getItem('cart')) || [];
     $scope.sumPriceCart = $scope.cart.reduce((total, item) => total + item.quantity * item.price, 0);
-    $scope.sumQuantity = $scope.cart.reduce((total, item) => total + item.quantity,0)
+    $scope.sumQuantity = $scope.cart.reduce((total, item) => total + item.quantity, 0)
     console.log("sumQuanity", $scope.sumQuantity)
     console.log(sessionStorage.getItem('cart'))
 
@@ -120,15 +120,21 @@ app.controller('OrderController', function ($scope, $http) {
             alert("Vui lòng chọn phương thức thanh toán !")
             return;
         }
-            $scope.diaChi = document.getElementById("address").innerText
+        $scope.diaChi = document.getElementById("address").innerText
+        if($scope.user.tinhTP === null||$scope.user.phuongXa === null||$scope.user.quanHuyen === null||$scope.user.diaChi === null){
+            alert("Vui lòng cập nhật địa chỉ giao hàng.")
+            window.location.href = "http://localhost:8080/user/detail"
+            return;
+        }
+
         if ($scope.idPTTT == 1) {
-            if ($scope.moneyIsReduced){
+            if ($scope.moneyIsReduced) {
                 if ($scope.idVoucher == null) {
                     var urlInsert = `http://localhost:8080/insert-bill/isnull?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
                 } else {
                     var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
                 }
-            }else {
+            } else {
                 if ($scope.idVoucher == null) {
                     var urlInsert = `http://localhost:8080/insert-bill/isnull?ship=${$scope.ship}&discount=0&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
                 } else {
@@ -244,7 +250,6 @@ app.controller('OrderController', function ($scope, $http) {
             }
         });
     };
-
 
 
 });

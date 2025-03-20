@@ -35,7 +35,7 @@ public interface KhachHangRepository extends JpaRepository<KhachHang, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "insert into KhachHang values(:name,:username,:password,:sdt,:email,:gender,GETDATE(),null,1,null,null,null,null)", nativeQuery = true)
+    @Query(value = "insert into KhachHang values(:name,:username,:password,:sdt,null,null,null,null,:email,:gender,GETDATE(),null,1)", nativeQuery = true)
     void insertUser(@Param("name") String name, @Param("username") String username, @Param("password") String password, @Param("sdt") String sdt,
                     @Param("email") String email, @Param("gender") Boolean gender);
 

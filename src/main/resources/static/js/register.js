@@ -51,9 +51,9 @@ app.controller('RegisterController', function ($scope, $http, $location) {
             $scope.check.name = true
             return;
         }
-        if ($scope.name.length < 5 || $scope.name.length > 15) {
-            $scope.mes.name = "Tên đăng nhập phải lớn hơn 5 ký tự và nhỏ hơn 15 ký tự";
-            $scope.check.name = true
+        if ($scope.username.length < 5 || $scope.username.length > 15) {
+            $scope.mes.username = "Tên đăng nhập phải lớn hơn 5 ký tự và nhỏ hơn 15 ký tự";
+            $scope.check.username = true
             return;
         }
         if ($scope.username == null || $scope.username == "") {

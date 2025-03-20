@@ -59,6 +59,14 @@
     .toggle-password:focus {
         outline: none;
     }
+    .error-message {
+        font-size: 14px;
+        color: red;
+        margin-top: 5px;
+        max-width: 500px;
+        word-wrap: break-word;
+        white-space: normal;
+    }
 
 </style>
 <body ng-app="myApp" ng-controller="RegisterController">
@@ -93,7 +101,7 @@
             <button type="button" class="toggle-password" onclick="togglePassword()">
                 <i id="eyeIcon" class="fa-solid fa-eye"></i>
             </button>
-            <p class="text-danger" ng-if="check.password">{{mes.password}}</p>
+            <p class="text-danger error-message" ng-if="check.password">{{mes.password}}</p>
         </div>
         <div class="form-floating mb-4">
             <input type="password" id="passwordConfirm" class="form-control" name="passwordConfirm" required/>
@@ -109,17 +117,11 @@
             <p class="text-danger" ng-if="check.sdt">{{mes.sdt}}</p>
 
         </div>
-        <div class="form-floating mb-4">
-            <input type="text" id="address" class="form-control" name="diaChi" required/>
-            <label for="address"><i class=""></i> Địa chỉ</label>
-            <p class="text-danger" ng-if="check.address">{{mes.address}}</p>
 
-        </div>
         <div class="form-floating mb-4">
             <input type="text" id="email" class="form-control" name="email" required/>
             <label for="email"><i class=""></i> Email</label>
             <p class="text-danger" ng-if="check.email">{{mes.email}}</p>
-
         </div>
         <div class="mb-4">
             <label class="form-label">Giới tính</label><br>

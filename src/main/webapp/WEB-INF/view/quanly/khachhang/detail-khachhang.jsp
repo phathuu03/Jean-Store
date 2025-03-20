@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="diaChi" class="form-label">Địa Chỉ</label>
-                    <input type="text" id="diaChi" name="diaChi" class="form-control" value="${kh.diaChi}" readonly>
+                    <input type="text" id="diaChi" name="diaChi" class="form-control" value="${kh.diaChi}, ${kh.phuongXa}, ${kh.quanHuyen}, ${kh.tinhTP}" readonly>
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="form-label">Email</label>
@@ -46,7 +46,7 @@
 
                 <div class="col-md-6">
                     <label for="trangThai" class="form-label">Trạng Thái</label>
-                    <input type="text" id="trangThai" name="trangThai" class="form-control" value="${kh.trangThai == 0 ? 'Hoạt Động' : 'Ngừng Hoạt Động'}" readonly>
+                    <input type="text" id="trangThai" name="trangThai" class="form-control" value="${kh.trangThai == 1  ? 'Hoạt Động' : 'Ngừng Hoạt Động'}" readonly>
                 </div>
             </div>
             <div class="mt-4">
