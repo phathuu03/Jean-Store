@@ -90,7 +90,7 @@
                 <c:forEach var="quanCT" items="${quanJeans.quanJeansChiTiets}" begin="0" end="0">
                     <p class="product-price" id="product-price"
                        style="font-size: 25px;color: #dd4b39;font-weight: bold">
-                        <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="đ"/>
+                        <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="VND"/>
                     </p>
                 </c:forEach>
                 <h6 class="fw-bold mt-4">Chi Tiết:</h6>

@@ -45,7 +45,6 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
     @Query(value = "select * from HoaDon where ID_KhachHang =:id", nativeQuery = true)
     List<HoaDon> getHoaDonByIdKhachHang(@Param("id") Long id);
 
-
     @Query(value = "select * from HoaDon where ID_KhachHang =:id and trangThai = :status", nativeQuery = true)
     List<HoaDon> getHoaDonByIdKhachHangaAndTrangThai(@Param("id") Long id, @Param("status") Integer status);
 

@@ -58,8 +58,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="trangThai" class="form-label">Trạng Thái</label>
                     <select id="trangThai" name="trangThai" class="form-select" required>
-                        <option value="0">Đang Hoạt Động</option>
-                        <option value="1">Ngừng Hoạt Động</option>
+                        <option value="1">Đang Hoạt Động</option>
+                        <option value="0">Ngừng Hoạt Động</option>
                     </select>
                 </div>
             </div>

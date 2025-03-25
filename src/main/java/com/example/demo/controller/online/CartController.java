@@ -89,7 +89,7 @@ public class CartController {
     @ResponseBody
     public ResponseEntity<?> deleteCart(@RequestParam("id") Long id) {
         gioHangChiTietRepository.deleteGioHangChiTietByIdKhachHang(id);
-        return ResponseEntity.ok("Xóa giỏ hàng thành công");
+        return ResponseEntity.ok(Map.of("mes","Xóa giỏ hàng thành công"));
     }
 
     @DeleteMapping("/delete-cart/onclick")

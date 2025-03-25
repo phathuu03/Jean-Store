@@ -43,9 +43,11 @@
 
 <div class="container mt-4" ng-app="myApp" ng-controller="OrderController">
     <h4 class="fw-bold text-primary">🚚 Địa chỉ giao hàng</h4>
+
     <div class="border rounded p-3 bg-white shadow-sm">
         <p class="mb-1"><strong class="text-dark">{{user.tenKhachHang}}</strong> - {{user.soDienThoai}}</p>
         <p class="text-muted mb-1" id="address">{{user.diaChi +" - "+ user.phuongXa +" - "+ user.quanHuyen +" - "+ user.tinhTP}}</p>
+        <a href="#" data-bs-toggle="modal" data-bs-target="#changeAddress" class="text-danger smal">Thay đổi địa chỉ</a>
     </div>
 
     <div class="border rounded p-3 bg-white shadow-sm" style="margin-top: 30px">
@@ -59,18 +61,18 @@
             </div>
 
             <div class="ms-3 text-end">
-                <p class="mb-1 text-muted"><strong>Giá:</strong> {{item.price | currency:"đ "}}</p>
+                <p class="mb-1 text-muted"><strong>Giá:</strong> {{item.price | number:0 }} VND</p>
                 <p class="mb-1 text-muted"><strong>Số lượng:</strong> {{item.quantity}}</p>
             </div>
 
             <div class="ms-3 text-end">
-                <p class="mb-0 text-danger fw-bold">Thành tiền: {{item.price * item.quantity | currency:"đ "}}</p>
+                <p class="mb-0 text-danger fw-bold">Thành tiền: {{item.price * item.quantity | number:0 }} VND</p>
             </div>
         </div>
     </div>
 
     <h5 class="mt-3 text-end fw-bold text-primary">
-        Tổng Tiền: <span class="text-danger fs-4">{{sumPriceCart | currency:"đ "}}</span>
+        Tổng Tiền: <span class="text-danger fs-4">{{sumPriceCart | number:0 }} VND</span>
     </h5>
 
     <h4 class="mt-4 text-success">🎁 Áp dụng khuyến mãi</h4>
@@ -82,13 +84,13 @@
     <h4 class="mt-4 fw-bold">🛒 Thông tin đơn hàng</h4>
     <div class="border rounded p-3 bg-white shadow-sm">
         <p>🛍️ Tạm tính ({{cart.length}} sản phẩm) <span
-                class="float-end text-muted">{{sumPriceCart | currency:"đ "}}</span></p>
-        <p>🚚 Phí vận chuyển <span class="float-end text-success" id="ship">+ {{ship | currency:"đ "}}</span></p>
+                class="float-end text-muted">{{sumPriceCart | number:0 }} VND</span></p>
+        <p>🚚 Phí vận chuyển <span class="float-end text-success" id="ship">+ {{ship | number:0 }} VND</span></p>
         <hr>
-        <p>💲 Giảm giá <span class="float-end text-success"> - {{moneyIsReduced | currency:"đ "}}</span></p>
+        <p>💲 Giảm giá <span class="float-end text-success"> - {{moneyIsReduced | number:0 }} VND</span></p>
         <hr>
         <p><strong>💳 Tổng cộng:</strong> <span
-                class="float-end text-danger fs-4 fw-bold">{{moneySum | currency:"đ "}}</span>
+                class="float-end text-danger fs-4 fw-bold">{{moneySum | number:0 }} VND</span>
         </p>
         <h5 class="mt-3 text-primary">💰 Chọn phương thức thanh toán</h5>
         <select class="form-select" ng-model="selectedPaymentMethod" ng-change="onPaymentMethodChange()">
@@ -98,7 +100,69 @@
         </select>
         <a class="btn btn-success w-100 mt-3" ng-click="checkout()">🛍️ Đặt hàng ngay</a>
     </div>
+    <div class="modal fade" id="changeAddress" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalTitleAdress">Thay Đổi Địa Chỉ</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <h6 class="text-center mb-3">Chọn địa chỉ giao hàng</h6>
+                    <form>
+                        <!-- Tỉnh / Thành phố -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Tỉnh / TP</label>
+                            <select id="province" name="province" class="form-select"
+                                    ng-model="selectedProvince"
+                                    ng-options="item.ProvinceID as item.ProvinceName for item in provinces1"
+                                    ng-change="onProvinceChange(selectedProvince)">
+                                <option value="">Chọn tỉnh</option>
+                            </select>
+                        </div>
+
+                        <!-- Quận / Huyện -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Quận / Huyện</label>
+                            <select id="districts" name="districts" class="form-select"
+                                    ng-model="selectedDistricts"
+                                    ng-options="item.DistrictID as item.DistrictName for item in districts1"
+                                    ng-change="onDistrictsChange(selectedDistricts)">
+                                <option value="">Chọn huyện</option>
+                            </select>
+                        </div>
+
+                        <!-- Phường / Xã -->
+                        <!-- Quận / Huyện -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Phường / Xã</label>
+                            <select id="wards" name="wards" class="form-select"
+                                    ng-model="selectedWards"
+                                    ng-options="item.WardCode as item.WardName for item in wards1">
+                                <option value="">Chọn xã</option>
+                            </select>
+                        </div>
+                        <!-- Địa chỉ cụ thể -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Địa chỉ cụ thể</label>
+                            <input type="text" class="form-control" id="addressDetail"
+                                   placeholder="Nhập số nhà, tên đường..." required>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" ng-click="changeAddress()">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <div class="footer">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
         <div class="col-md-4 d-flex align-items-center">
@@ -116,6 +180,5 @@
     </footer>
 </div>
 </div>
-
 </body>
 </html>

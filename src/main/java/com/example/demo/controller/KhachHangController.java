@@ -1,7 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.HinhAnh;
+import com.example.demo.entity.HoaDon;
 import com.example.demo.entity.KhachHang;
-
+import com.example.demo.repository.HinhAnhRepository;
+import com.example.demo.repository.HoaDonRepository;
 import com.example.demo.repository.KhachHangRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -19,9 +21,13 @@ import java.util.Optional;
 public class KhachHangController {
     @Autowired
     private KhachHangRepository khachHangRepository;
+    @Autowired
+    private HoaDonRepository hoaDonRepository;
+    @Autowired
+    private HinhAnhRepository hinhAnhRepository;
 
     @GetMapping("/khach-hang")
-    public String hienThiKhachHang(Model model){
+    public String hienThiKhachHang(Model model) {
         model.addAttribute("list", khachHangRepository.findAll());
         return "quanly/khachhang/khachhang";
     }
@@ -34,19 +40,19 @@ public class KhachHangController {
     }
 
     @GetMapping("/khach-hang/detail/{id}")
-    public String chiTietKhachHang(@PathVariable("id") Long id, Model model){
+    public String chiTietKhachHang(@PathVariable("id") Long id, Model model) {
         model.addAttribute("kh", khachHangRepository.findById(id).orElse(null));
         return "quanly/khachhang/detail-khachhang";
     }
 
     @GetMapping("/khach-hang/view-add")
-    public String viewAdd(){
+    public String viewAdd() {
         return "quanly/khachhang/add-khachhang";
     }
 
     @PostMapping("/khach-hang/add")
-    public String add(@ModelAttribute("kh") @Valid KhachHang khachHang, BindingResult result, Model model){
-        if(result.hasErrors()){
+    public String add(@ModelAttribute("kh") @Valid KhachHang khachHang, BindingResult result, Model model) {
+        if (result.hasErrors()) {
             model.addAttribute("errors", result.getAllErrors());
             return "quanly/khachhang/add-khachhang";
         }
@@ -56,14 +62,27 @@ public class KhachHangController {
     }
 
     @GetMapping("/khach-hang/view-update/{id}")
-    public String viewUpdateKhachHang(@PathVariable("id") Long id, Model model){
+    public String viewUpdateKhachHang(@PathVariable("id") Long id, Model model) {
         Optional<KhachHang> optionalKhachHang = khachHangRepository.findById(id);
-        if(optionalKhachHang.isPresent()){
+        if (optionalKhachHang.isPresent()) {
             model.addAttribute("kh", optionalKhachHang.get());
             return "quanly/khachhang/update-khachhang";
         }
         return "redirect:/khach-hang";
     }
+
+    @GetMapping("/khach-hang/viewDonHang/{id}")
+    public String viewHoaDonKhachHang(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("hd", hoaDonRepository.getHoaDonByIdKhachHang(id));
+        return "quanly/khachhang/viewDonHang";
+    }
+
+    @GetMapping("/khach-hang/viewDetailDonHang/{id}")
+    public String viewHoaDonDetailKhachHang(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("hd", hoaDonRepository.findById(id).get());
+        return "quanly/khachhang/viewDonHangDetail";
+    }
+
 
     @PostMapping("/khach-hang/update/{id}")
     public String updateKhachHang(@PathVariable("id") Long id,
@@ -108,7 +127,6 @@ public class KhachHangController {
         }
         return "redirect:/khach-hang";
     }
-
 
 
 }

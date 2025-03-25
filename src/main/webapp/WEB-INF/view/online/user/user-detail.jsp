@@ -100,8 +100,15 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Địa chỉ nhận hàng</label>
-        <input type="text" id="address" class="form-control"
-               value="${user.diaChi},${ user.phuongXa},${ user.quanHuyen}, ${ user.tinhTP}" required disabled>
+        <c:if test="${user.diaChi == null}">
+            <input type="text" id="address" class="form-control"
+                   value="" required disabled>
+        </c:if>
+        <c:if test="${user.diaChi != null}">
+            <input type="text" id="address" class="form-control"
+                   value="${user.diaChi},${ user.phuongXa},${ user.quanHuyen}, ${ user.tinhTP}" required disabled>
+        </c:if>
+
         <a href="#" data-bs-toggle="modal" data-bs-target="#changeAddress" class="text-danger smal">Thay đổi địa chỉ</a>
     </div>
 

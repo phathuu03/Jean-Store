@@ -107,10 +107,7 @@ app.controller('ProductController', function ($scope, $http, $timeout) {
                             if (response.data) {
                                 $scope.priceProductDetail = response.data
                                 document.getElementById("product-price").innerText =
-                                    $scope.priceProductDetail.toLocaleString('vi-VN', {
-                                        style: 'currency',
-                                        currency: 'VND'
-                                    });
+                                    $scope.priceProductDetail.toLocaleString('vi-VN') + " VND"
 
                             }
                         })
