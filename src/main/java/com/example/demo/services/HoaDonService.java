@@ -1,12 +1,18 @@
 package com.example.demo.services;
 
 import com.example.demo.entity.HoaDon;
+import com.example.demo.entity.HoaDonChiTiet;
+import com.example.demo.entity.QuanJeansChiTiet;
+import com.example.demo.entity.Voucher;
 import com.example.demo.repository.HoaDonRepository;
+import com.example.demo.repository.QuanJeansChiTietRepository;
+import com.example.demo.repository.VoucherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -14,6 +20,13 @@ public class HoaDonService {
 
     @Autowired
     private HoaDonRepository hoaDonRepository;
+
+    @Autowired
+    QuanJeansChiTietRepository quanJeansChiTietRepository;
+
+    @Autowired
+    VoucherRepository voucherRepository;
+
 
     public Page<HoaDon> getAll(Pageable pageable) {
         return hoaDonRepository.findAll(pageable);
@@ -42,32 +55,119 @@ public class HoaDonService {
 
     public Page<HoaDon> getAllHoaDon (Pageable pageable) { return hoaDonRepository.findAll(pageable);}
 
-    public Boolean xacNhanTrangThai(Long idHoaDon)  {
-       HoaDon hd = findHoaDonById(idHoaDon);
-       if(hd!= null){
-           hd.setTrangThai(1);
-           updateHoaDon(hd);
-           return true;
-       }
-       return  false;
 
+    public Boolean xacNhanTrangThai(Long idHoaDon, List<String> errorMessages) {
+        HoaDon hd = findHoaDonById(idHoaDon);
+
+        if (hd != null) {
+            boolean allItemsAvailable = true;
+            boolean voucherAvailable = true;
+
+            // Kiểm tra voucher trước
+            if (hd.getVoucher() != null && hd.getVoucher().getSoLuong() <= 0) {
+                errorMessages.add("Voucher đã hết số lượng.");
+                voucherAvailable = false; // Voucher không còn đủ
+            }
+
+            // Kiểm tra từng sản phẩm chi tiết trong hóa đơn
+            for (HoaDonChiTiet hoaDonChiTiet : hd.getHoaDonChiTiets()) {
+                QuanJeansChiTiet chiTiet = hoaDonChiTiet.getQuanJeansChiTiet();
+                Integer soLuongDatHang = hoaDonChiTiet.getSoLuong();
+                Integer soLuongConLai = chiTiet.getSoLuong(); // Số lượng còn trong kho
+
+                // Kiểm tra xem số lượng có đủ không
+                if (soLuongDatHang > soLuongConLai) {
+                    errorMessages.add("Sản phẩm " + chiTiet.getQuanJeans().getTenSanPham() + " không đủ số lượng.");
+                    allItemsAvailable = false; // Nếu có sản phẩm thiếu, đánh dấu không đủ
+                    break; // Không cần kiểm tra các sản phẩm còn lại nữa
+                }
+            }
+
+            // Kiểm tra cả hai điều kiện: đủ sản phẩm và đủ voucher
+            if (allItemsAvailable && voucherAvailable) {
+                // Trừ số lượng sản phẩm trong kho
+                for (HoaDonChiTiet hoaDonChiTiet : hd.getHoaDonChiTiets()) {
+                    QuanJeansChiTiet chiTiet = hoaDonChiTiet.getQuanJeansChiTiet();
+                    Integer soLuongDatHang = hoaDonChiTiet.getSoLuong();
+                    Integer soLuongConLai = chiTiet.getSoLuong(); // Số lượng còn trong kho
+
+                    chiTiet.setSoLuong(soLuongConLai - soLuongDatHang);
+                    quanJeansChiTietRepository.save(chiTiet); // Lưu thay đổi vào cơ sở dữ liệu
+                }
+
+                // Nếu có voucher, trừ số lượng voucher khi tất cả điều kiện được đáp ứng
+                if (hd.getVoucher() != null && hd.getVoucher().getSoLuong() > 0) {
+                    Voucher voucher = hd.getVoucher();
+                    voucher.setSoLuong(voucher.getSoLuong() - 1); // Giảm số lượng voucher khi sử dụng
+                    voucherRepository.save(voucher); // Lưu thay đổi vào cơ sở dữ liệu
+                }
+            }
+
+            // Cập nhật trạng thái hóa đơn
+            if (allItemsAvailable && voucherAvailable) {
+                hd.setTrangThai(1); // Trạng thái "Chờ giao hàng"
+                updateHoaDon(hd);
+
+            }
+
+            // Lưu lại hóa đơn với trạng thái mới
+            return allItemsAvailable && voucherAvailable; // Trả về true nếu tất cả điều kiện đều thỏa mãn
+        }
+
+        return false; // Trường hợp không tìm thấy hóa đơn
     }
 
-    public Boolean huyDonHang(Long idHoaDon)  {
-       HoaDon hd = findHoaDonById(idHoaDon);
-       if(hd!= null){
-           hd.setTrangThai(4);
-           updateHoaDon(hd);
-           return true;
-       }
-       return  false;
 
+
+
+
+
+    public Boolean huyDonHang(Long idHoaDon) {
+        HoaDon hd = findHoaDonById(idHoaDon);
+
+        // Kiểm tra nếu hóa đơn tồn tại
+        if (hd != null) {
+            // Nếu trạng thái hóa đơn lớn hơn 1 (đã xác nhận), khôi phục lại số lượng sản phẩm
+            if (hd.getPublicTrangThai() >= 1) {
+                // Duyệt qua các sản phẩm chi tiết trong hóa đơn
+                for (HoaDonChiTiet hoaDonChiTiet : hd.getHoaDonChiTiets()) {
+                    QuanJeansChiTiet chiTiet = hoaDonChiTiet.getQuanJeansChiTiet();
+                    Integer soLuongDatHang = hoaDonChiTiet.getSoLuong();
+                    Integer soLuongConLai = chiTiet.getSoLuong(); // Số lượng còn trong kho
+
+                    // Khôi phục lại số lượng sản phẩm đã bị trừ
+                    chiTiet.setSoLuong(soLuongConLai + soLuongDatHang);
+                    quanJeansChiTietRepository.save(chiTiet); // Lưu thay đổi vào cơ sở dữ liệu
+                }
+            }
+
+            // Thay đổi trạng thái hóa đơn thành "Đã hủy" (trạng thái = 4)
+            hd.setTrangThai(4);
+            updateHoaDon(hd); // Lưu lại hóa đơn với trạng thái mới
+
+            return true; // Hủy đơn hàng thành công
+        }
+
+        return false; // Trường hợp không tìm thấy hóa đơn
     }
+
 
     public Boolean xnvc(Long idHoaDon)  {
        HoaDon hd = findHoaDonById(idHoaDon);
        if(hd!= null){
            hd.setTrangThai(2);
+           updateHoaDon(hd);
+           return true;
+       }
+       return  false;
+
+    }
+
+    public Boolean hoanThanhDonHang(Long idHoaDon)  {
+       HoaDon hd = findHoaDonById(idHoaDon);
+       if(hd!= null){
+           hd.setTrangThai(3);
+           hd.setNgayThanhToan(new Date());
            updateHoaDon(hd);
            return true;
        }
