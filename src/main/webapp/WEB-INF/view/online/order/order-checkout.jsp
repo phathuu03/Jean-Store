@@ -180,17 +180,5 @@
     </footer>
 </div>
 </div>
-<script>
-    window.addEventListener("beforeunload", function (event) {
-        var isFormDirty = true; // Giả sử có dữ liệu chưa lưu
-
-        if (isFormDirty) {
-            sessionStorage.clear();
-            event.preventDefault();
-            event.returnValue = "Bạn có chắc chắn muốn rời khỏi trang này?";
-        }
-    });
-</script>
-
 </body>
 </html>

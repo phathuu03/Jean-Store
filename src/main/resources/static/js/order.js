@@ -11,6 +11,24 @@ app.controller('OrderController', function ($scope, $http) {
     $scope.idUser = null;
     $scope.user = null;
 
+    $scope.deleteCartUser = function (idUser) {
+        const urlDeleteCard = `http://localhost:8080/delete/cart?id=${idUser}`;
+
+        $http.delete(urlDeleteCard).then(function (response) {
+            if (response.status == 200) {
+                $scope.cart.forEach(item => {
+                        const url = `http://localhost:8080/cart/insert?idProductDetail=${item.idProductDetail}&quantity=${item.quantity}&idKhachHang=${idUser}`;
+                        $http.post(url).then(function (response) {
+                            console.log(response.status)
+                        })
+                    }
+                )
+            }
+        }).catch(function (error) {
+            console.error("error delete :", error)
+        })
+    }
+
     $scope.getAchat = function () {
 
         const urlGetIdUser = `http://localhost:8080/user/id`;
@@ -30,6 +48,7 @@ app.controller('OrderController', function ($scope, $http) {
             });
     };
 
+
     // Lấy thông tin user bằng ID
     $scope.getUser = function () {
         $scope.getAchat().then(function (idUser) {
@@ -42,6 +61,7 @@ app.controller('OrderController', function ($scope, $http) {
                     if (response.data.khachHang) {
                         $scope.user = response.data.khachHang;
                         $scope.setButtonLogin($scope.idUser);
+                        $scope.deleteCartUser($scope.idUser)
                         $scope.getProvinces();
                         console.log("Thông tin user:", $scope.user);
                     } else {
@@ -121,7 +141,7 @@ app.controller('OrderController', function ($scope, $http) {
             return;
         }
         $scope.diaChi = document.getElementById("address").innerText
-        if($scope.user.tinhTP === null||$scope.user.phuongXa === null||$scope.user.quanHuyen === null||$scope.user.diaChi === null){
+        if ($scope.user.tinhTP === null || $scope.user.phuongXa === null || $scope.user.quanHuyen === null || $scope.user.diaChi === null) {
             alert("Vui lòng cập nhật địa chỉ giao hàng.")
             return;
         }
