@@ -141,6 +141,7 @@ app.controller('OrderController', function ($scope, $http) {
             return;
         }
         $scope.diaChi = document.getElementById("address").innerText
+
         if ($scope.user.tinhTP === null || $scope.user.phuongXa === null || $scope.user.quanHuyen === null || $scope.user.diaChi === null) {
             alert("Vui lòng cập nhật địa chỉ giao hàng.")
             return;
@@ -151,13 +152,13 @@ app.controller('OrderController', function ($scope, $http) {
                 if ($scope.idVoucher == null) {
                     var urlInsert = `http://localhost:8080/insert-bill/isnull?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
                 } else {
-                    var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
+                    var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=${$scope.moneyIsReduced}&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
                 }
             } else {
                 if ($scope.idVoucher == null) {
                     var urlInsert = `http://localhost:8080/insert-bill/isnull?ship=${$scope.ship}&discount=0&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idPTTT=${$scope.idPTTT}`;
                 } else {
-                    var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=0&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.user.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
+                    var urlInsert = `http://localhost:8080/insert-bill?ship=${$scope.ship}&discount=0&money=${$scope.moneySum}&sumMoney=${$scope.moneyAfterDiscount}&address=${$scope.diaChi}&idUser=${$scope.idUser}&idVoucher=${$scope.idVoucher}&idPTTT=${$scope.idPTTT}`;
                 }
             }
 
