@@ -104,6 +104,9 @@
 <div class="container mt-5">
     <h2 class="text-center mb-4">Chi tiết Hóa Đơn</h2>
 
+    <!-- Hiển thị thông báo lỗi nếu có -->
+    <div id="errorMessages" class="alert alert-danger" style="display:none;"></div>
+
     <!-- Hiển thị thông báo nếu trạng thái đơn hàng là 4 -->
     <c:if test="${hoaDon.publicTrangThai >= 4}">
         <div class="alert alert-danger text-center" role="alert">
@@ -114,7 +117,6 @@
     <!-- Thanh trạng thái đơn hàng chỉ hiển thị nếu trạng thái < 4 -->
     <c:if test="${hoaDon.publicTrangThai < 4}">
         <div class="process-bar-container">
-            <!-- Trạng thái "Chờ xác nhận" sẽ có class 'active' nếu trang thái là 0 -->
             <div class="process-step ${hoaDon.publicTrangThai == 0 ? 'active' : hoaDon.publicTrangThai > 0 ? 'completed' : 'inactive'}">
                 <div class="process-step-circle">1</div>
                 <div class="process-step-text">Chờ xác nhận</div>
@@ -142,37 +144,41 @@
         </div>
     </c:if>
 
-
+    <!-- Hiển thị nút "Xác nhận đơn hàng" khi trạng thái là 0 -->
     <c:if test="${hoaDon.publicTrangThai == 0}">
         <div class="text-center mt-4 mb-4">
-            <form action="/xac-nhan-don-hang" method="POST" onsubmit="return confirmConfirm();">
+            <form action="javascript:void(0);" onsubmit="return confirmConfirm();">
                 <input type="hidden" name="hoaDonId" value="${hoaDon.id}">
-                <button type="submit" class="btn-confirm">Xác nhận đơn hàng</button>
+                <button type="submit" class="btn btn-primary">Xác nhận đơn hàng</button>
             </form>
-
-            <script>
-                function confirmConfirm() {
-                    return confirm("Bạn chắc chắn muốn xác nhận đơn hàng này?");
-                }
-            </script>
         </div>
     </c:if>
 
-
+    <!-- Hiển thị nút "Sẵn sàng giao hàng" khi trạng thái là 1 -->
     <c:if test="${hoaDon.publicTrangThai == 1}">
         <div class="text-center mt-4 mb-4">
             <form action="/xac-nhan-vc-nhan-don-hang" method="POST">
                 <input type="hidden" name="hoaDonId" value="${hoaDon.id}">
-                <button type="submit" class="btn-confirm">Sẵn sàng giao hàng</button>
+                <button type="submit" class="btn btn-success">Sẵn sàng giao hàng</button>
             </form>
         </div>
     </c:if>
 
-    <c:if test="${hoaDon.publicTrangThai <3 }">
+    <c:if test="${hoaDon.publicTrangThai == 2}">
+        <div class="text-center mt-4 mb-4">
+            <form action="/hoan-thanh-don-hang" method="POST">
+                <input type="hidden" name="hoaDonId" value="${hoaDon.id}">
+                <button type="submit" class="btn btn-success">Hoàn thành đơn hàng</button>
+            </form>
+        </div>
+    </c:if>
+
+    <!-- Hiển thị nút "Hủy đơn hàng" khi trạng thái < 3 -->
+    <c:if test="${hoaDon.publicTrangThai == 0}">
         <div class="text-center mt-4 mb-4">
             <form action="/huy-don-hang" method="POST" onsubmit="return confirmCancel();">
                 <input type="hidden" name="hoaDonId" value="${hoaDon.id}">
-                <button type="submit" class="btn-confirm">Hủy đơn hàng</button>
+                <button type="submit" class="btn btn-danger">Hủy đơn hàng</button>
             </form>
 
             <script>
@@ -180,168 +186,136 @@
                     return confirm("Bạn chắc chắn muốn hủy đơn hàng này?");
                 }
             </script>
-
         </div>
     </c:if>
 
-
-
-
     <!-- Card chứa thông tin hóa đơn -->
-<div class="card shadow-lg p-4">
-    <div class="row">
-        <!-- Cột trái: Thông tin Hóa Đơn -->
-        <div class="col-md-6">
-            <h4 class="text-primary">Thông tin Hóa Đơn</h4>
-            <ul class="list-group">
-                <li class="list-group-item"><strong>ID: </strong> ${hoaDon.id}</li>
-                <li class="list-group-item"><strong>Mã hóa đơn: </strong> ${hoaDon.maHoaDon}</li>
-                <li class="list-group-item">
-                    <strong>Tổng Tiền: </strong>
-                    <fmt:formatNumber value="${hoaDon.tongTien}" type="currency" currencySymbol="₫"
-                                      groupingUsed="true"/>
-                </li>
-                <li class="list-group-item">
-                    <strong>Tiền ship: </strong>
-                    <fmt:formatNumber value="${hoaDon.phiShip}" type="currency" currencySymbol="₫" groupingUsed="true"/>
-                </li>
-                <li class="list-group-item">
-                    <strong>Giảm giá: </strong>
-                    <c:choose>
-                        <c:when test="${not empty hoaDon.giamGia}">
-                            <fmt:formatNumber value="${hoaDon.giamGia}" type="currency" currencySymbol="₫"
-                                              groupingUsed="true"/>
-                        </c:when>
-                        <c:otherwise>
-                            0 ₫
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li class="list-group-item">
-                    <strong>Thành tiền: </strong>
-                    <fmt:formatNumber value="${hoaDon.thanhTien}" type="currency" currencySymbol="₫"
-                                      groupingUsed="true"/>
-                </li>
-                <li class="list-group-item"><strong>Voucher: </strong>
-                    <c:choose>
-                        <c:when test="${hoaDon.voucher != null}">
-                            ${hoaDon.voucher.tenVoucher}
-                        </c:when>
-                        <c:otherwise>
-                            Không dùng voucher
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li class="list-group-item"><strong>Trạng Thái:</strong> ${hoaDon.trangThai}</li>
-            </ul>
+    <div class="card shadow-lg p-4 mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="text-primary">Thông tin Hóa Đơn</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>ID: </strong> ${hoaDon.id}</li>
+                    <li class="list-group-item"><strong>Mã hóa đơn: </strong> ${hoaDon.maHoaDon}</li>
+                    <li class="list-group-item">
+                        <strong>Tổng Tiền: </strong>
+                        <fmt:formatNumber value="${hoaDon.tongTien}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Tiền ship: </strong>
+                        <fmt:formatNumber value="${hoaDon.phiShip}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Giảm giá: </strong>
+                        <c:choose>
+                            <c:when test="${not empty hoaDon.giamGia}">
+                                <fmt:formatNumber value="${hoaDon.giamGia}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                            </c:when>
+                            <c:otherwise>
+                                0 ₫
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Thành tiền: </strong>
+                        <fmt:formatNumber value="${hoaDon.thanhTien}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                    </li>
+                    <li class="list-group-item"><strong>Voucher: </strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.voucher != null}">
+                                ${hoaDon.voucher.tenVoucher}
+                            </c:when>
+                            <c:otherwise>
+                                Không dùng voucher
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="list-group-item"><strong>Trạng Thái:</strong> ${hoaDon.trangThai}</li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <h4 class="text-success">Thông tin bổ sung</h4>
+                <ul class="list-group">
+                    <li class="list-group-item"><strong>Khách Hàng:</strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.khachHang != null}">
+                                ${hoaDon.khachHang.tenKhachHang}
+                            </c:when>
+                            <c:otherwise>
+                                Không có thông tin khách hàng
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="list-group-item"><strong>Nhân Viên:</strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.nhanVien != null}">
+                                ${hoaDon.nhanVien.tenNhanVien}
+                            </c:when>
+                            <c:otherwise>
+                                Không có thông tin nhân viên
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="list-group-item"><strong>Phương Thức Thanh Toán:</strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.pttt != null}">
+                                ${hoaDon.pttt.tenPTTT}
+                            </c:when>
+                            <c:otherwise>
+                                Không có thông tin PTTT
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                    <li class="list-group-item"><strong>Địa Chỉ Giao Hàng:</strong> ${hoaDon.diaChiGiaoHang}</li>
+                    <li class="list-group-item"><strong>Ngày Thanh Toán:</strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.ngayThanhToan != null}">
+                                <fmt:formatDate value="${hoaDon.ngayThanhToan}" pattern="dd/MM/yyyy"/>
+                            </c:when>
+                            <c:otherwise>
+                                Chưa thanh toán
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
+                </ul>
+            </div>
         </div>
 
-        <!-- Cột phải: Thông tin bổ sung -->
-        <div class="col-md-6">
-            <h4 class="text-success">Thông tin bổ sung</h4>
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Khách Hàng:</strong>
-                    <c:choose>
-                        <c:when test="${hoaDon.khachHang != null}">
-                            ${hoaDon.khachHang.tenKhachHang}
-                        </c:when>
-                        <c:otherwise>
-                            Không có thông tin khách hàng
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li class="list-group-item"><strong>Nhân Viên:</strong>
-                    <c:choose>
-                        <c:when test="${hoaDon.nhanVien != null}">
-                            ${hoaDon.nhanVien.tenNhanVien}
-                        </c:when>
-                        <c:otherwise>
-                            Không có thông tin nhân viên
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li class="list-group-item"><strong>Phương Thức Thanh Toán:</strong>
-                    <c:choose>
-                        <c:when test="${hoaDon.pttt != null}">
-                            ${hoaDon.pttt.tenPTTT}
-                        </c:when>
-                        <c:otherwise>
-                            Không có thông tin PTTT
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li class="list-group-item"><strong>Địa Chỉ Giao Hàng:</strong> ${hoaDon.diaChiGiaoHang}</li>
-                <li class="list-group-item"><strong>Ngày Thanh Toán:</strong>
-                    <c:choose>
-                        <c:when test="${hoaDon.ngayThanhToan != null}">
-                            <fmt:formatDate value="${hoaDon.ngayThanhToan}" pattern="dd/MM/yyyy"/>
-                        </c:when>
-                        <c:otherwise>
-                            Chưa thanh toán
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li class="list-group-item"><strong>Ngày Tạo:</strong>
-                    <c:choose>
-                        <c:when test="${hoaDon.ngayTao != null}">
-                            <fmt:formatDate value="${hoaDon.ngayTao}" pattern="dd/MM/yyyy"/>
-                        </c:when>
-                        <c:otherwise>
-                            Không có ngày tạo
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-                <li class="list-group-item"><strong>Ngày Sửa:</strong>
-                    <c:choose>
-                        <c:when test="${hoaDon.ngaySua != null}">
-                            <fmt:formatDate value="${hoaDon.ngaySua}" pattern="dd/MM/yyyy"/>
-                        </c:when>
-                        <c:otherwise>
-                            Chưa cập nhật
-                        </c:otherwise>
-                    </c:choose>
-                </li>
-            </ul>
+        <div class="mt-4 text-center">
+            <a href="javascript:window.history.back()" class="btn btn-secondary me-2">Quay lại danh sách</a>
         </div>
     </div>
-
-    <!-- Hiển thị sản phẩm trong hóa đơn -->
-    <h4 class="text-success mt-5">Sản phẩm trong đơn hàng</h4>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col">Stt</th>
-            <th scope="col">Mã sản phẩm</th>
-            <th scope="col">Tên Sản Phẩm</th>
-            <th scope="col">Số Lượng</th>
-            <th scope="col">Đơn Giá</th>
-            <th scope="col">Thành Tiền</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach var="hdct" items="${listHdct}" varStatus="item">
-            <c:if test="${empty param.filter || hdct.trangThai == param.filter}">
-                <tr>
-                    <td>${item.index + 1}</td>
-                    <td>${hdct.quanJeansChiTiet.quanJeans.maSanPham}</td>
-                    <td>${hdct.quanJeansChiTiet.quanJeans.tenSanPham}</td>
-                    <td>${hdct.soLuong}</td>
-                    <td>${hdct.donGia}</td>
-                    <td>${hdct.tongTien}</td>
-                </tr>
-            </c:if>
-        </c:forEach>
-        </tbody>
-    </table>
-
-    <!-- Nút điều hướng -->
-    <div class="mt-4 text-center">
-        <a href="javascript:window.history.back()" class="btn btn-secondary me-2">Quay lại danh sách</a>
-    </div>
-</div>
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function confirmConfirm() {
+        var hoaDonId = ${hoaDon.id}; // Lấy ID hóa đơn từ JSP
+
+        $.ajax({
+            url: '/xac-nhan-don-hang',  // Đường dẫn tới @PostMapping của bạn
+            type: 'POST',
+            data: { hoaDonId: hoaDonId },  // Dữ liệu gửi đi (ID hóa đơn)
+            success: function(response) {
+                // Hiển thị thông báo thành công nếu không có lỗi
+                alert(response); // Bạn có thể tùy chỉnh thông báo này
+                location.reload(); // Tải lại trang sau khi xác nhận thành công (hoặc cập nhật phần tử nào đó nếu cần)
+            },
+            error: function(xhr, status, error) {
+                // Hiển thị lỗi nếu có
+                var errors = xhr.responseJSON;
+                var errorMessage = errors.join("<br>"); // Chuyển danh sách lỗi thành chuỗi HTML
+                $('#errorMessages').html(errorMessage).show(); // Hiển thị lỗi trong phần tử có id là errorMessages
+            }
+        });
+
+        return false;  // Ngăn form gửi lại trang
+    }
+</script>
+
 </body>
 </html>

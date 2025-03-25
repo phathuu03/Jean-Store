@@ -56,7 +56,7 @@ public class HoaDonController {
     @GetMapping("/view-hoa-don")
     public String quanLyTrangThaiDonHang(Model model,
                                          @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "5") int size,
+                                         @RequestParam(defaultValue = "15") int size,
                                          @RequestParam(defaultValue = "") String search) {
 
         Pageable pageable = PageRequest.of(page, size);

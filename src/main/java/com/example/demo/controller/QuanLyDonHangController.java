@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,7 +27,7 @@ public class QuanLyDonHangController {
     @GetMapping("/quanly/don-hang")
     public String quanLyTrangThaiDonHang(Model model,
                                          @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "5") int size,
+                                         @RequestParam(defaultValue = "15") int size,
                                          @RequestParam(defaultValue = "") String search) {
 
         Pageable pageable = PageRequest.of(page, size);
@@ -72,10 +71,23 @@ public class QuanLyDonHangController {
     }
 
     @PostMapping("/xac-nhan-don-hang")
-    public String xacNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
-        hoaDonService.xacNhanTrangThai(hoaDonId);
-        return "redirect:/view/detai-trang-thai/" + hoaDonId;
+    @ResponseBody  // Đảm bảo trả về dưới dạng JSON
+    public ResponseEntity<?> xacNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
+        List<String> errorMessages = new ArrayList<>();
+
+        // Gọi service với danh sách lỗi
+        boolean success = hoaDonService.xacNhanTrangThai(hoaDonId, errorMessages);
+
+        if (!success) {
+            // Nếu có lỗi, trả về lỗi dưới dạng JSON
+            return ResponseEntity.badRequest().body(errorMessages);
+        }
+
+        // Nếu không có lỗi, trả về trạng thái thành công
+        return ResponseEntity.ok("Đơn hàng đã được xác nhận thành công.");
     }
+
+
 
     @PostMapping("/huy-don-hang")
     public String huyNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
@@ -86,6 +98,12 @@ public class QuanLyDonHangController {
     @PostMapping("/xac-nhan-vc-nhan-don-hang")
     public String xnvcNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
         hoaDonService.xnvc(hoaDonId);
+        return "redirect:/view/detai-trang-thai/" + hoaDonId;
+    }
+
+    @PostMapping("/hoan-thanh-don-hang")
+    public String hoanThanhDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
+        hoaDonService.hoanThanhDonHang(hoaDonId);
         return "redirect:/view/detai-trang-thai/" + hoaDonId;
     }
 
