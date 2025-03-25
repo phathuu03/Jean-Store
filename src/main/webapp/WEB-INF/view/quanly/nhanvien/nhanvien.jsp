@@ -86,7 +86,7 @@
                 <td>${nv.chucVu}</td>
                 <td>${nv.ngayTao}</td>
                 <td>${nv.ngaySua}</td>
-                <td>${nv.trangThai ==  ? "Đang Làm" : "Đã Nghỉ Làm"}</td>1
+                <td>${nv.trangThai ==  1 ? "Đang Làm" : "Đã Nghỉ Làm"}</td>
                     <td>
                         <div style="display: flex; gap: 10px;">
                             <a href="/nhan-vien/detail/${nv.id}" class="d-flex justify-content-center align-items-center p-2">
