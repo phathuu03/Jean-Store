@@ -1,11 +1,15 @@
 var app = angular.module('myApp', []);
 
 app.controller('CartController', function ($scope, $http) {
+
     $scope.cart = JSON.parse(sessionStorage.getItem('cart')) || [];
     $scope.updateTotalPrice = function () {
         $scope.sumPriceCart = $scope.cart.reduce((total, item) => total + item.quantity * item.price, 0);
 
     };
+    if ($scope.idUser != null){
+        location.reload()
+    }
 
     $scope.cartUser = null;
     $scope.init = function (idUser) {

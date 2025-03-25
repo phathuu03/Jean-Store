@@ -87,7 +87,7 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.color }}</td>
                 <td>{{ item.size }}</td>
-                <td>{{ item.price | currency:"đ "}}</td>
+                <td>{{ item.price | number:0 }} VND</td>
                 <td>
                     <div class="input-group" style="width: 120px;">
                         <button class="btn btn-outline-secondary" type="button" ng-click="decreaseQuantityCart(item)">
@@ -100,7 +100,7 @@
                         </button>
                     </div>
                 </td>
-                <td>{{ item.quantity * item.price | currency:"đ "}}</td>
+                <td>{{ (item.quantity * item.price) | number:0 }} VND</td>
                 <td>
                     <button ng-click="removeFromCart(item.idProductDetail)">Xóa</button>
                 </td>
@@ -109,7 +109,7 @@
         </table>
         <div class="d-flex justify-content-end align-items-center">
             <div>
-                <h5>Tổng thanh toán: <span class="text-danger">{{sumPriceCart | currency:"đ "}}</span></h5>
+                <h5>Tổng thanh toán: <span class="text-danger">{{sumPriceCart | number:0 }} VND</span></h5>
                 <a id="btnPurchase" href="/order/checkout" ng-class="{'disabled': cart.length === 0}"
                    class="btn btn-success">Mua Hàng</a>
             </div>

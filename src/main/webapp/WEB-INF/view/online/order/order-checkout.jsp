@@ -61,18 +61,18 @@
             </div>
 
             <div class="ms-3 text-end">
-                <p class="mb-1 text-muted"><strong>Giá:</strong> {{item.price | currency:"đ "}}</p>
+                <p class="mb-1 text-muted"><strong>Giá:</strong> {{item.price | number:0 }} VND</p>
                 <p class="mb-1 text-muted"><strong>Số lượng:</strong> {{item.quantity}}</p>
             </div>
 
             <div class="ms-3 text-end">
-                <p class="mb-0 text-danger fw-bold">Thành tiền: {{item.price * item.quantity | currency:"đ "}}</p>
+                <p class="mb-0 text-danger fw-bold">Thành tiền: {{item.price * item.quantity | number:0 }} VND</p>
             </div>
         </div>
     </div>
 
     <h5 class="mt-3 text-end fw-bold text-primary">
-        Tổng Tiền: <span class="text-danger fs-4">{{sumPriceCart | currency:"đ "}}</span>
+        Tổng Tiền: <span class="text-danger fs-4">{{sumPriceCart | number:0 }} VND</span>
     </h5>
 
     <h4 class="mt-4 text-success">🎁 Áp dụng khuyến mãi</h4>
@@ -84,13 +84,13 @@
     <h4 class="mt-4 fw-bold">🛒 Thông tin đơn hàng</h4>
     <div class="border rounded p-3 bg-white shadow-sm">
         <p>🛍️ Tạm tính ({{cart.length}} sản phẩm) <span
-                class="float-end text-muted">{{sumPriceCart | currency:"đ "}}</span></p>
-        <p>🚚 Phí vận chuyển <span class="float-end text-success" id="ship">+ {{ship | currency:"đ "}}</span></p>
+                class="float-end text-muted">{{sumPriceCart | number:0 }} VND</span></p>
+        <p>🚚 Phí vận chuyển <span class="float-end text-success" id="ship">+ {{ship | number:0 }} VND</span></p>
         <hr>
-        <p>💲 Giảm giá <span class="float-end text-success"> - {{moneyIsReduced | currency:"đ "}}</span></p>
+        <p>💲 Giảm giá <span class="float-end text-success"> - {{moneyIsReduced | number:0 }} VND</span></p>
         <hr>
         <p><strong>💳 Tổng cộng:</strong> <span
-                class="float-end text-danger fs-4 fw-bold">{{moneySum | currency:"đ "}}</span>
+                class="float-end text-danger fs-4 fw-bold">{{moneySum | number:0 }} VND</span>
         </p>
         <h5 class="mt-3 text-primary">💰 Chọn phương thức thanh toán</h5>
         <select class="form-select" ng-model="selectedPaymentMethod" ng-change="onPaymentMethodChange()">
@@ -180,6 +180,17 @@
     </footer>
 </div>
 </div>
+<script>
+    window.addEventListener("beforeunload", function (event) {
+        var isFormDirty = true; // Giả sử có dữ liệu chưa lưu
+
+        if (isFormDirty) {
+            sessionStorage.clear();
+            event.preventDefault();
+            event.returnValue = "Bạn có chắc chắn muốn rời khỏi trang này?";
+        }
+    });
+</script>
 
 </body>
 </html>

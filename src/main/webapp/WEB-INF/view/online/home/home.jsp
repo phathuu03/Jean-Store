@@ -133,7 +133,7 @@
                                 <div class="card-body text-center">
                                     <c:forEach var="quanCT" items="${item1.quanJeansChiTiets}" begin="0" end="0">
                                         <p class="text-danger fw-bold">
-                                            <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="đ"/>
+                                            <fmt:formatNumber value="${quanCT.gia}" type="currency" currencySymbol="VND"/>
                                         </p>
                                     </c:forEach>
                                     <a href="/home/product-detail?id=${item1.id}"
