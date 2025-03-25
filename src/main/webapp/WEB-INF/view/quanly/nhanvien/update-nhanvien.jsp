@@ -71,8 +71,8 @@
                 <div class="col-md-6 mb-3">
                     <label for="trangThai" class="form-label">Trạng Thái</label>
                     <select id="trangThai" name="trangThai" class="form-select" required>
-                        <option value="0" ${nv.trangThai == 0 ? 'selected' : ''}>Đang Làm</option>
-                        <option value="1" ${nv.trangThai == 1 ? 'selected' : ''}>Đã Nghỉ Làm</option>
+                        <option value="0" ${nv.trangThai == 1 ? 'selected' : ''}>Đang Làm</option>
+                        <option value="1" ${nv.trangThai == 0 ? 'selected' : ''}>Đã Nghỉ Làm</option>
                     </select>
                 </div>
             </div>
