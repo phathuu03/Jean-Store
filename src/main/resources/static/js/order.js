@@ -123,7 +123,6 @@ app.controller('OrderController', function ($scope, $http) {
         $scope.diaChi = document.getElementById("address").innerText
         if($scope.user.tinhTP === null||$scope.user.phuongXa === null||$scope.user.quanHuyen === null||$scope.user.diaChi === null){
             alert("Vui lòng cập nhật địa chỉ giao hàng.")
-            window.location.href = "http://localhost:8080/user/detail"
             return;
         }
 
@@ -184,7 +183,7 @@ app.controller('OrderController', function ($scope, $http) {
     $scope.districtsUser = null;
     $scope.moneyShip = null;
 
-    $scope.getProvinces = function () {
+    $scope.getProvinces1 = function () {
         const urlProvinces = `http://localhost:8080/public/provinces`;
         $http.get(urlProvinces).then(function (response) {
             if (response.data) {
@@ -193,25 +192,25 @@ app.controller('OrderController', function ($scope, $http) {
                 console.log($scope.provinces)
                 $scope.provincesUser = $scope.provinces.find(item => item.ProvinceName === $scope.user.tinhTP);
                 console.log($scope.provincesUser.ProvinceName)
-                $scope.onProvinceChange($scope.provincesUser.ProvinceID)
+                $scope.onProvinceChange1($scope.provincesUser.ProvinceID)
             }
         });
     };
 
-    $scope.onProvinceChange = function (provinceID) {
+    $scope.onProvinceChange1 = function (provinceID) {
         const url = `http://localhost:8080/public/districts?province_id=${provinceID}`;
         $http.get(url).then(function (response) {
             if (response.data) {
                 $scope.districts = response.data.data;
                 $scope.districtsUser = $scope.districts.find(item => item.DistrictName === $scope.user.quanHuyen);
                 console.log("Quận Huyện", $scope.districtsUser)
-                $scope.onDistrictsChange($scope.districtsUser.DistrictID)
+                $scope.onDistrictsChange1($scope.districtsUser.DistrictID)
             }
         });
     };
     $scope.ship = null;
 
-    $scope.onDistrictsChange = function (districtID) {
+    $scope.onDistrictsChange1 = function (districtID) {
         const url = `http://localhost:8080/public/wards?district_id=${districtID}`;
         $http.get(url).then(function (response) {
             if (response.data) {
@@ -228,12 +227,51 @@ app.controller('OrderController', function ($scope, $http) {
             }
         });
     };
+
+    $scope.provinces1 = [];
+    $scope.districts1 = [];
+    $scope.wards1 = [];
+
+    $scope.getProvinces = function () {
+        const urlProvinces = `http://localhost:8080/public/provinces`;
+        $http.get(urlProvinces).then(function (response) {
+            if (response.data) {
+                $scope.provinces1 = response.data.data;
+                console.log("Provinces loaded:", response.data);
+            }
+        });
+    };
+
+    $scope.onProvinceChange = function (provinceID) {
+        $scope.districts1 = []; // Xóa dữ liệu quận/huyện khi chọn tỉnh mới
+        $scope.wards1 = []; // Xóa dữ liệu phường/xã
+
+        const url = `http://localhost:8080/public/districts?province_id=${provinceID}`;
+        $http.get(url).then(function (response) {
+            if (response.data) {
+                $scope.districts1 = response.data.data;
+                console.log("Districts loaded:", response.data);
+            }
+        });
+    };
+
+    $scope.onDistrictsChange = function (districtID) {
+        $scope.wards1 = []; // Xóa dữ liệu phường/xã khi chọn quận/huyện mới
+
+        const url = `http://localhost:8080/public/wards?district_id=${districtID}`;
+        $http.get(url).then(function (response) {
+            if (response.data) {
+                $scope.wards1 = response.data.data;
+                console.log("Wards loaded:", response.data);
+            }
+        });
+    };
     $scope.changeAddress = function () {
         let addressDetail = document.getElementById("addressDetail").value;
 
-        let selectedProvince = $scope.provinces.find(p => p.ProvinceID == $scope.selectedProvince);
-        let selectedDistrict = $scope.districts.find(d => d.DistrictID == $scope.selectedDistricts);
-        let selectedWard = $scope.wards.find(w => w.WardCode == $scope.selectedWards);
+        let selectedProvince = $scope.provinces1.find(p => p.ProvinceID == $scope.selectedProvince);
+        let selectedDistrict = $scope.districts1.find(d => d.DistrictID == $scope.selectedDistricts);
+        let selectedWard = $scope.wards1.find(w => w.WardCode == $scope.selectedWards);
 
 
         if (!selectedDistrict || !selectedDistrict || !selectedWard || !addressDetail) {
@@ -250,6 +288,10 @@ app.controller('OrderController', function ($scope, $http) {
             }
         });
     };
+
+
+    $scope.getProvinces();
+    $scope.getProvinces1();
 
 
 });
