@@ -156,7 +156,7 @@
 
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" ng-click="changeAddress()">Xác nhận</button>
+                    <button type="button" class="btn btn-primary"  ng-click="changeAddress()">Xác nhận</button>
                 </div>
             </div>
         </div>

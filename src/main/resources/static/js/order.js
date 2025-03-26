@@ -136,6 +136,7 @@ app.controller('OrderController', function ($scope, $http) {
     }
     $scope.idHoaDon = null;
     $scope.checkout = function () {
+
         if ($scope.idPTTT == null) {
             alert("Vui lòng chọn phương thức thanh toán !")
             return;
@@ -144,6 +145,11 @@ app.controller('OrderController', function ($scope, $http) {
 
         if ($scope.user.tinhTP === null || $scope.user.phuongXa === null || $scope.user.quanHuyen === null || $scope.user.diaChi === null) {
             alert("Vui lòng cập nhật địa chỉ giao hàng.")
+            return;
+        }
+        let isConfirm = confirm("Bạn có muốn mua hàng không?")
+
+        if (!isConfirm) {
             return;
         }
 
@@ -242,7 +248,7 @@ app.controller('OrderController', function ($scope, $http) {
 
                 $http.post(urlShip).then(function (response) {
                     console.log(response.data)
-                    $scope.ship = response.data.data.total
+                    $scope.ship = Math.round(response.data.data.total / 1000) * 1000
                     $scope.moneySum = $scope.moneyAfterDiscount + $scope.ship
                 })
             }

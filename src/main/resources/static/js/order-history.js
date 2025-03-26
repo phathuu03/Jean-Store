@@ -66,8 +66,10 @@ app.controller('OrderDetailController', function ($scope, $http) {
 
     $scope.loadImages();
 
-    $scope.setTTHuy = function (id) {
-        const url = `http://localhost:8080/update/tt-huy?id=${id}`;
+    $scope.setTTHuy = function () {
+        $scope.reason = document.getElementById("textReason").value
+
+        const url = `http://localhost:8080/update/tt-huy?id=${$scope.id}&ghiChu=${$scope.reason}`;
 
         let isConfirmed = confirm("Bạn có muốn hủy không?");
 
@@ -80,6 +82,11 @@ app.controller('OrderDetailController', function ($scope, $http) {
                 alert("Đã hủy thành công");
             }
         })
+    }
+    $scope.id = null;
+
+    $scope.getId = function (id) {
+        $scope.id = id
     }
 
     $scope.setTTHoanThanh = function (id) {

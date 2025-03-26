@@ -37,7 +37,7 @@
 
             <div class="col-md-6 mb-3">
                 <label for="dieuKienApDung" class="form-label">Điều Kiện Áp Dụng</label>
-                <input type="number" id="dieuKienApDung" name="dieuKienApDung" class="form-control" placeholder="Nhập điều kiện áp dụng" required>
+                <input type="number" id="dieuKienApDung" name="dieuKienApDung" class="form-control"value="${voucher.dieuKienApDung}" placeholder="Nhập điều kiện áp dụng" required>
             </div>
         </div>
 

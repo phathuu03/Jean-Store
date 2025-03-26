@@ -109,8 +109,8 @@ public class OrderController {
 
     @PutMapping("/update/tt-huy")
     @ResponseBody
-    public void updateTTHuy(@RequestParam("id") Long id) {
-        hoaDonRepository.updateTrangThaiDaHuy(id);
+    public void updateTTHuy(@RequestParam("id") Long id,@RequestParam("ghiChu") String ghiChu) {
+        hoaDonRepository.updateTrangThaiDaHuy(id,ghiChu);
     }
 
     @PutMapping("/update/tt-hoanthanh")
