@@ -66,8 +66,6 @@
             <th>Email</th>
             <th>Giới Tính</th>
             <th>Chức Vụ</th>
-            <th>Ngày Tạo</th>
-            <th>Ngày Sửa</th>
             <th>Trạng Thái</th>
             <th>Hành Động</th>
         </tr>
@@ -82,10 +80,8 @@
                 <td>${nv.soDienThoai}</td>
                 <td>${nv.diaChi}</td>
                 <td>${nv.email}</td>
-                <td>${nv.gioiTinh}</td>
+                <td>${nv.gioiTinh == true ? "Nam" : "Nữ"}</td>
                 <td>${nv.chucVu}</td>
-                <td>${nv.ngayTao}</td>
-                <td>${nv.ngaySua}</td>
                 <td>${nv.trangThai ==  1 ? "Đang Làm" : "Đã Nghỉ Làm"}</td>
                     <td>
                         <div style="display: flex; gap: 10px;">

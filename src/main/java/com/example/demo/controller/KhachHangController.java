@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -73,7 +74,9 @@ public class KhachHangController {
 
     @GetMapping("/khach-hang/viewDonHang/{id}")
     public String viewHoaDonKhachHang(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("hd", hoaDonRepository.getHoaDonByIdKhachHang(id));
+        List<HoaDon> list = hoaDonRepository.getHoaDonByIdKhachHang(id);
+        Collections.reverse(list);
+        model.addAttribute("hd",list );
         return "quanly/khachhang/viewDonHang";
     }
 

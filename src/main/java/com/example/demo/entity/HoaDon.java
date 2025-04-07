@@ -43,6 +43,8 @@ public class HoaDon {
 
     private Integer trangThai;
 
+    private String ghiChu;
+
     @ManyToOne
     @JoinColumn(name = "ID_KhachHang")
     private KhachHang khachHang;

@@ -162,7 +162,11 @@
     <c:forEach var="item" items="${hd}">
         <div class="order-container">
             <div class="order-header">
-                <div class="order-status">${item.trangThai}</div>
+                <div class="order-status">${item.trangThai}
+                    <c:if test="${item.ghiChu != null}">
+                        <div class="order-status">Lý do: ${item.ghiChu}</div>
+                    </c:if>
+                </div>
             </div>
             <c:forEach items="${item.hoaDonChiTiets}" var="hdct">
                 <div class="order-item"
@@ -171,6 +175,7 @@
                      data-hdct-id="${hdct.id}">
                     <img ng-src="{{ imageUrls[${hdct.id}]}}" alt="Product">
                     <div class="order-item-info">
+                        <strong>${ hdct.quanJeansChiTiet.quanJeans.maSanPham }</strong><br>
                         <strong>${ hdct.quanJeansChiTiet.quanJeans.tenSanPham }</strong>
                         <p class="text-muted">Phân
                             loại: ${ hdct.quanJeansChiTiet.mauSac.tenMauSac }, ${ hdct.quanJeansChiTiet.size.tenSize }</p>
@@ -204,7 +209,11 @@
                     <fmt:formatNumber value="${item.thanhTien}" type="currency" currencySymbol="VND"/>
                 </div>
                 <c:if test="${item.trangThai=='Chờ xác nhận'}">
-                    <button class="btn btn-danger" style="width: 120px" ng-click="setTTHuy(${item.id})">Hủy</button>
+                    <button class="btn btn-danger" ng-click="getId(${item.id})" data-bs-toggle="modal"
+                            data-bs-target="#modalReason"
+                            style="width: 120px">Hủy
+                    </button>
+
                 </c:if>
                 <c:if test="${item.trangThai=='Đang giao hàng'}">
                     <button class="btn btn-primary" ng-click="setTTHoanThanh(${item.id})">Đã nhận được hàng</button>
@@ -217,6 +226,36 @@
 </div>
 </div>
 
+<div class="modal fade" id="modalReason" tabindex="-1" aria-labelledby="modalReasonTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content shadow-lg rounded-3">
+            <!-- Header -->
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title fw-bold" id="modalReasonTitle">Lý do hủy</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="textReason" class="form-label fw-semibold">Lý do</label>
+                    <input type="text" class="form-control" id="textReason"
+                           placeholder="Nhập lý do hủy...">
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-danger" ng-click="setTTHuy()">Xác
+                    nhận
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 <div class="footer mt-auto">

@@ -17,7 +17,7 @@ import java.util.List;
 @Repository
 public interface VoucherRepository extends JpaRepository<Voucher, Long> {
     Page<Voucher> findByTenVoucherContainingIgnoreCase(String tenVoucher, Pageable pageable);
-    @Query(value = "select * from Voucher where DieuKienApDung <= :dieuKien and NgayBatDau <= GETDATE() and GETDATE() <= NgayKetThuc and TrangThai =1", nativeQuery = true)
+    @Query(value = "select * from Voucher where SoLuong > 0 and DieuKienApDung <= :dieuKien and NgayBatDau <= GETDATE() and GETDATE() <= NgayKetThuc and TrangThai =1", nativeQuery = true)
     List<Voucher> getVoucherByDieuKienApDung(@Param("dieuKien") Double dieuKien);
 
     @Modifying

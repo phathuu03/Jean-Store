@@ -62,8 +62,8 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "update HoaDon set TrangThai = 4 where ID = :id", nativeQuery = true)
-    void updateTrangThaiDaHuy(@Param("id") Long id);
+    @Query(value = "update HoaDon set TrangThai = 4,GhiChu= :ghiChu where ID = :id", nativeQuery = true)
+    void updateTrangThaiDaHuy(@Param("id") Long id,@Param("ghiChu") String ghiChu);
 
     @Modifying
     @Transactional
