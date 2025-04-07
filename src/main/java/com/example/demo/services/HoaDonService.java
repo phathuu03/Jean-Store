@@ -62,11 +62,13 @@ public class HoaDonService {
         if (hd != null) {
             boolean allItemsAvailable = true;
             boolean voucherAvailable = true;
+            String ghiChu = ""; // Khởi tạo ghi chú
 
             // Kiểm tra voucher trước
             if (hd.getVoucher() != null && hd.getVoucher().getSoLuong() <= 0) {
                 errorMessages.add("Voucher đã hết số lượng.");
                 voucherAvailable = false; // Voucher không còn đủ
+                ghiChu += "Voucher không đủ. "; // Thêm ghi chú
             }
 
             // Kiểm tra từng sản phẩm chi tiết trong hóa đơn
@@ -79,6 +81,7 @@ public class HoaDonService {
                 if (soLuongDatHang > soLuongConLai) {
                     errorMessages.add("Sản phẩm " + chiTiet.getQuanJeans().getTenSanPham() + " không đủ số lượng.");
                     allItemsAvailable = false; // Nếu có sản phẩm thiếu, đánh dấu không đủ
+                    ghiChu += "Hàng không đủ. "; // Thêm ghi chú
                     break; // Không cần kiểm tra các sản phẩm còn lại nữa
                 }
             }
@@ -103,11 +106,15 @@ public class HoaDonService {
                 }
             }
 
-            // Cập nhật trạng thái hóa đơn
+            // Cập nhật trạng thái hóa đơn và ghi chú
             if (allItemsAvailable && voucherAvailable) {
                 hd.setTrangThai(1); // Trạng thái "Chờ giao hàng"
+                hd.setGhiChu("");  // Nếu mọi thứ ổn, ghi chú rỗng
                 updateHoaDon(hd);
-
+            } else {
+                hd.setTrangThai(0); // Trạng thái "Đã hủy"
+                hd.setGhiChu(ghiChu); // Cập nhật ghi chú theo trạng thái bị hủy
+                updateHoaDon(hd); // Lưu trạng thái mới và ghi chú
             }
 
             // Lưu lại hóa đơn với trạng thái mới
@@ -122,7 +129,8 @@ public class HoaDonService {
 
 
 
-    public Boolean huyDonHang(Long idHoaDon) {
+
+    public Boolean huyDonHang(Long idHoaDon, String cancelReason) {
         HoaDon hd = findHoaDonById(idHoaDon);
 
         // Kiểm tra nếu hóa đơn tồn tại
@@ -143,13 +151,16 @@ public class HoaDonService {
 
             // Thay đổi trạng thái hóa đơn thành "Đã hủy" (trạng thái = 4)
             hd.setTrangThai(4);
-            updateHoaDon(hd); // Lưu lại hóa đơn với trạng thái mới
+            hd.setGhiChu("Cửa hàng đã hủy đơn hàng của bạn. Lý do: " + cancelReason); // Lưu lý do hủy vào ghi chú
+            updateHoaDon(hd); // Lưu lại hóa đơn với trạng thái và ghi chú mới
 
             return true; // Hủy đơn hàng thành công
         }
 
         return false; // Trường hợp không tìm thấy hóa đơn
     }
+
+
 
 
     public Boolean xnvc(Long idHoaDon)  {
