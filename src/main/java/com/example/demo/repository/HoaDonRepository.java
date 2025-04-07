@@ -50,7 +50,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
 
     @Query(value = "insert into HoaDon OUTPUT INSERTED.ID values " +
-            "(:sumMoney,:ship,:discount,:money,:address,null,GETDATE(),null,0,:idUser,null,null,:idPTTT)", nativeQuery = true)
+            "(:sumMoney,:ship,:discount,:money,:address,null,GETDATE(),null,0,:idUser,null,null,:idPTTT,null)", nativeQuery = true)
     Long saveHoaDonIsNullVoucher(@Param("sumMoney") Double sumMoney,
                                  @Param("ship") Double ship,
                                  @Param("discount") Double discount,
@@ -72,7 +72,7 @@ public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
 
     @Query(value = "insert into HoaDon OUTPUT INSERTED.ID values " +
-            "(:sumMoney,:ship,:discount,:money,:address,null,GETDATE(),null,0,:idUser,null,:idVoucher,:idPTTT)", nativeQuery = true)
+            "(:sumMoney,:ship,:discount,:money,:address,null,GETDATE(),null,0,:idUser,null,:idVoucher,:idPTTT,null)", nativeQuery = true)
     Long saveHoaDon(@Param("sumMoney") Double sumMoney,
                     @Param("ship") Double ship,
                     @Param("discount") Double discount,
