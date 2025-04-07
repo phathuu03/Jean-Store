@@ -163,7 +163,7 @@
         <div class="order-container">
             <div class="order-header">
                 <div class="order-status">${item.trangThai}
-                    <c:if test="${item.ghiChu != null}">
+                    <c:if test="${item.trangThai == 'Đã hủy'}">
                         <div class="order-status">Lý do: ${item.ghiChu}</div>
                     </c:if>
                 </div>
