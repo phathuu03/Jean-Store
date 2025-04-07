@@ -157,7 +157,7 @@
     <!-- Hiển thị nút "Sẵn sàng giao hàng" khi trạng thái là 1 -->
     <c:if test="${hoaDon.publicTrangThai == 1}">
         <div class="text-center mt-4 mb-4">
-            <form action="/xac-nhan-vc-nhan-don-hang" method="POST">
+            <form action="/xac-nhan-vc-nhan-don-hang" method="POST" onsubmit="return confirmAction('Bạn chắc chắn muốn đánh dấu đơn hàng là sẵn sàng giao hàng?');">
                 <input type="hidden" name="hoaDonId" value="${hoaDon.id}">
                 <button type="submit" class="btn btn-success">Sẵn sàng giao hàng</button>
             </form>
@@ -166,28 +166,55 @@
 
     <c:if test="${hoaDon.publicTrangThai == 2}">
         <div class="text-center mt-4 mb-4">
-            <form action="/hoan-thanh-don-hang" method="POST">
+            <form action="/hoan-thanh-don-hang" method="POST" onsubmit="return confirmAction('Bạn chắc chắn muốn hoàn thành đơn hàng này?');">
                 <input type="hidden" name="hoaDonId" value="${hoaDon.id}">
                 <button type="submit" class="btn btn-success">Hoàn thành đơn hàng</button>
             </form>
         </div>
     </c:if>
 
+    <script>
+        function confirmAction(message) {
+            return confirm(message); // Hiển thị hộp thoại xác nhận
+        }
+    </script>
+
+
     <!-- Hiển thị nút "Hủy đơn hàng" khi trạng thái < 3 -->
     <c:if test="${hoaDon.publicTrangThai == 0}">
         <div class="text-center mt-4 mb-4">
             <form action="/huy-don-hang" method="POST" onsubmit="return confirmCancel();">
                 <input type="hidden" name="hoaDonId" value="${hoaDon.id}">
-                <button type="submit" class="btn btn-danger">Hủy đơn hàng</button>
+
+                <!-- Nút hủy đơn hàng -->
+                <button type="button" class="btn btn-danger" onclick="showCancelReasonBox()">Hủy đơn hàng</button>
+
+                <!-- Hộp nhập lý do hủy đơn hàng -->
+                <div id="cancelReasonBox" style="display: none; margin-top: 10px;">
+                    <label for="cancelReason">Lý do hủy (tối đa 200 ký tự):</label><br>
+                    <textarea id="cancelReason" name="cancelReason" maxlength="200" rows="4" cols="50" placeholder="Nhập lý do hủy đơn hàng..."></textarea><br>
+                    <button type="submit" class="btn btn-danger mt-2">Xác nhận hủy</button>
+                </div>
             </form>
 
             <script>
                 function confirmCancel() {
-                    return confirm("Bạn chắc chắn muốn hủy đơn hàng này?");
+                    var cancelReason = document.getElementById('cancelReason').value;
+                    if (!cancelReason) {
+                        alert("Vui lòng nhập lý do hủy đơn hàng!");
+                        return false;
+                    }
+                    return true;
+                }
+
+                // Hiển thị hộp lý do hủy khi bấm nút hủy
+                function showCancelReasonBox() {
+                    document.getElementById('cancelReasonBox').style.display = 'block';
                 }
             </script>
         </div>
     </c:if>
+
 
     <!-- Card chứa thông tin hóa đơn -->
     <div class="card shadow-lg p-4 mt-5">
@@ -205,6 +232,16 @@
                         <strong>Tiền ship: </strong>
                         <fmt:formatNumber value="${hoaDon.phiShip}" type="currency" currencySymbol="₫" groupingUsed="true"/>
                     </li>
+                    <li class="list-group-item"><strong>Voucher: </strong>
+                        <c:choose>
+                            <c:when test="${hoaDon.voucher != null}">
+                                ${hoaDon.voucher.tenVoucher}
+                            </c:when>
+                            <c:otherwise>
+                                Không dùng voucher
+                            </c:otherwise>
+                        </c:choose>
+                    </li>
                     <li class="list-group-item">
                         <strong>Giảm giá: </strong>
                         <c:choose>
@@ -216,21 +253,12 @@
                             </c:otherwise>
                         </c:choose>
                     </li>
+
                     <li class="list-group-item">
                         <strong>Thành tiền: </strong>
                         <fmt:formatNumber value="${hoaDon.thanhTien}" type="currency" currencySymbol="₫" groupingUsed="true"/>
                     </li>
-                    <li class="list-group-item"><strong>Voucher: </strong>
-                        <c:choose>
-                            <c:when test="${hoaDon.voucher != null}">
-                                ${hoaDon.voucher.tenVoucher}
-                            </c:when>
-                            <c:otherwise>
-                                Không dùng voucher
-                            </c:otherwise>
-                        </c:choose>
-                    </li>
-                    <li class="list-group-item"><strong>Trạng Thái:</strong> ${hoaDon.trangThai}</li>
+
                 </ul>
             </div>
 
@@ -278,6 +306,14 @@
                             </c:otherwise>
                         </c:choose>
                     </li>
+                    <li class="list-group-item"><strong>Trạng Thái:</strong> ${hoaDon.trangThai}</li>
+
+                    <c:choose>
+                        <c:when test="${hoaDon.publicTrangThai == 4}">
+                            <li class="list-group-item"><strong>Lý Do Hủy:</strong> ${hoaDon.ghiChu}</li>
+                        </c:when>
+                    </c:choose>
+
                 </ul>
             </div>
         </div>

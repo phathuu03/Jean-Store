@@ -17,6 +17,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -69,14 +71,21 @@ public class HoaDonController {
             hoaDons = hoaDonService.getAllHoaDon(pageable);  // Lấy tất cả hóa đơn với phân trang
         }
 
+        // Đảo ngược thứ tự của danh sách hóa đơn
+        List<HoaDon> reversedHoaDons = new ArrayList<>(hoaDons.getContent());
+        Collections.reverse(reversedHoaDons);  // Đảo ngược danh sách
+
         // Thêm thông tin vào model
-        model.addAttribute("listHoaDon", hoaDons.getContent());
+        model.addAttribute("listHoaDon", reversedHoaDons);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", hoaDons.getTotalPages());
         model.addAttribute("search", search);  // Thêm search vào model để duy trì tìm kiếm trên các trang phân trang
 
         return "quanly/hoadon/hoadon";
     }
+
+
+
 
     @GetMapping("/view/detail/{id}")
     public String detailHoaDon(@PathVariable Long id, Model model){

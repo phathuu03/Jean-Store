@@ -49,6 +49,31 @@ public class QuanLyDonHangController {
         return "quanly/trangthaidonhang/trangthaidonhang";
     }
 
+    @GetMapping("/view-trang-thai-don-hang")
+    public String quanLyTrangThaiDonHanghd(Model model,
+                                           @RequestParam(defaultValue = "0") int page,
+                                           @RequestParam(defaultValue = "15") int size,
+                                           @RequestParam(defaultValue = "") String search) {
+
+        Pageable pageable = PageRequest.of(page, size);
+
+        // Nếu có tìm kiếm
+        Page<HoaDon> hoaDons;
+        if (!search.isEmpty()) {
+            hoaDons = hoaDonService.searchHoaDon(search, pageable);  // Lấy kết quả tìm kiếm với phân trang
+        } else {
+            hoaDons = hoaDonService.getAllHoaDon(pageable);  // Lấy tất cả hóa đơn với phân trang
+        }
+
+        // Thêm thông tin vào model
+        model.addAttribute("listHoaDon", hoaDons.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", hoaDons.getTotalPages());
+        model.addAttribute("search", search);  // Thêm search vào model để duy trì tìm kiếm trên các trang phân trang
+
+        return "quanly/trangthaidonhang/hoadon";
+    }
+
 
 //    @GetMapping("/chuyen-muc/chat-lieu")
 //    public String quanLyChuyenMucChatLieu(Model model,
@@ -90,10 +115,12 @@ public class QuanLyDonHangController {
 
 
     @PostMapping("/huy-don-hang")
-    public String huyNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {
-        hoaDonService.huyDonHang(hoaDonId);
+    public String huyNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId,
+                                 @RequestParam("cancelReason") String cancelReason) {
+        hoaDonService.huyDonHang(hoaDonId, cancelReason); // Truyền lý do hủy vào service
         return "redirect:/view/detai-trang-thai/" + hoaDonId;
     }
+
 
     @PostMapping("/xac-nhan-vc-nhan-don-hang")
     public String xnvcNhanDonHang(@RequestParam("hoaDonId") Long hoaDonId) {

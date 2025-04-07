@@ -126,7 +126,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/quanly/don-hang" target="contentFrame">
+                    <a class="nav-link" href="/view-trang-thai-don-hang" target="contentFrame">
                         Quản lý trạng thái đơn hàng
                     </a>
                 </li>
