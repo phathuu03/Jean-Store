@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -54,10 +57,24 @@ public class VoucherController {
     }
 
     @PostMapping("/voucher/add")
-    public String add(@ModelAttribute("voucher") @Valid Voucher voucher, BindingResult result) {
+    public String add(@ModelAttribute("voucher") @Valid Voucher voucher, BindingResult result, Model model) {
+        if (voucher.getPhanTramGiamGia() <= 0 || voucher.getPhanTramGiamGia() > 100) {
+            model.addAttribute("error2", "Phần trăm giảm giá phải lớn hơn 0 và nhỏ hơn 100");
+            return "quanly/voucher/add-voucher";
+        }
+        if (voucher.getNgayBatDau().after(voucher.getNgayKetThuc())) {
+            model.addAttribute("error1", "Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+            return "quanly/voucher/add-voucher";
+        }
+        if (voucher.getDieuKienApDung() < voucher.getGiamGiaToiDa()) {
+            model.addAttribute("error", "Giảm giá tối đa phải nhỏ hơn điều kiện áp dụng");
+            return "quanly/voucher/add-voucher";
+        }
+
         if (result.hasErrors()) {
             return "quanly/voucher/add-voucher";
         }
+
 
         // Kiểm tra nếu trạng thái chưa set gì thì mặc định là "Đang diễn ra"
         if (voucher.getTrangThai() == null) {
@@ -67,7 +84,6 @@ public class VoucherController {
         voucherRepository.save(voucher);
         return "redirect:/voucher/hien-thi";
     }
-
 
 
     @GetMapping("/voucher/detail/{id}")
@@ -93,6 +109,20 @@ public class VoucherController {
             BindingResult result,
             Model model) {
 
+        if (voucher.getPhanTramGiamGia() <= 0 || voucher.getPhanTramGiamGia() > 100) {
+            model.addAttribute("error2", "Phần trăm giảm giá phải lớn hơn 0 và nhỏ hơn 100");
+            return "quanly/voucher/update-voucher";
+        }
+        if (voucher.getNgayBatDau().after(voucher.getNgayKetThuc())) {
+            model.addAttribute("error1", "Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+            return "quanly/voucher/update-voucher";
+
+        }
+        if (voucher.getDieuKienApDung() < voucher.getGiamGiaToiDa()) {
+            model.addAttribute("error", "Giảm giá tối đa phải nhỏ hơn điều kiện áp dụng");
+            return "quanly/voucher/update-voucher";
+        }
+
         if (result.hasErrors()) {
             return "quanly/voucher/update-voucher";
         }
@@ -110,7 +140,6 @@ public class VoucherController {
         }
         return "redirect:/voucher/hien-thi";
     }
-
 
 
     @GetMapping("/voucher/search")
@@ -138,9 +167,5 @@ public class VoucherController {
 
         return "quanly/voucher/voucher";
     }
-
-
-
-
 
 }

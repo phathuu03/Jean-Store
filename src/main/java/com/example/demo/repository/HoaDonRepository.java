@@ -15,13 +15,13 @@ import java.util.List;
 @Repository
 public interface HoaDonRepository extends JpaRepository<HoaDon, Long> {
 
-    @Query("SELECT MONTH(h.ngayThanhToan), SUM(h.tongTien), SUM(h.phiShip), SUM(h.giamGia) " +
+    @Query("SELECT MONTH(h.ngayThanhToan), SUM(h.thanhTien), SUM(h.phiShip), SUM(h.giamGia) " +
             "FROM HoaDon h WHERE YEAR(h.ngayThanhToan) = :nam " +
             "AND h.trangThai = 3 " +
             "GROUP BY MONTH(h.ngayThanhToan) ORDER BY MONTH(h.ngayThanhToan)")
     List<Object[]> getDoanhThuTheoNam(@Param("nam") int nam);
 
-    @Query("SELECT YEAR(h.ngayThanhToan), SUM(h.tongTien) " +
+    @Query("SELECT YEAR(h.ngayThanhToan), SUM(h.thanhTien) " +
             "FROM HoaDon h WHERE h.trangThai = 3 AND h.ngayThanhToan IS NOT NULL " +
             "GROUP BY YEAR(h.ngayThanhToan) ORDER BY YEAR(h.ngayThanhToan)")
     List<Object[]> getDoanhThuCacNam();
