@@ -68,6 +68,12 @@ public class LoginController {
         // Kiểm tra nhân viên
         NhanVien nhanVien = nhanVienRepository.findByTenDangNhap(tenDangNhap);
         if (nhanVien != null) {
+
+            if (nhanVien.getTrangThai() != null && nhanVien.getTrangThai() != 1) {
+                model.addAttribute("errorUsername", "⚠️ Tài khoản của bạn hiện đang bị vô hiệu hoá!");
+                return "quanly/login/login";
+            }
+
             if (nhanVien.getMatKhau().equals(matKhau)) {
                 session.setAttribute("userRole", "EMPLOYEE");
                 session.setAttribute("userName", nhanVien.getTenNhanVien());
