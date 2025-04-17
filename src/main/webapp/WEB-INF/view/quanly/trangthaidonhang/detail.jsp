@@ -318,6 +318,16 @@
             </div>
         </div>
 
+        <h4 class="text-center mt-4 text-info">Danh sách Chi Tiết Hóa Đơn</h4>
+
+
+        <div class="mt-3">
+            <!-- Tất cả Chi Tiết Hóa Đơn -->
+            <div class="fade show active" id="all">
+                <jsp:include page="table-hoa-don-chi-tiet.jsp" />
+            </div>
+        </div>
+
         <div class="mt-4 text-center">
             <a href="javascript:window.history.back()" class="btn btn-secondary me-2">Quay lại danh sách</a>
         </div>
