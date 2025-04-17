@@ -151,7 +151,7 @@ public class HoaDonService {
 
             // Thay đổi trạng thái hóa đơn thành "Đã hủy" (trạng thái = 4)
             hd.setTrangThai(4);
-            hd.setGhiChu("Cửa hàng đã hủy đơn hàng của bạn. Lý do: " + cancelReason); // Lưu lý do hủy vào ghi chú
+            hd.setGhiChu("Cửa hàng đã hủy đơn hàng của bạn: " + cancelReason); // Lưu lý do hủy vào ghi chú
             updateHoaDon(hd); // Lưu lại hóa đơn với trạng thái và ghi chú mới
 
             return true; // Hủy đơn hàng thành công
