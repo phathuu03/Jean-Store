@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.KhachHang;
-import com.example.demo.repository.KhachHangRepository;
+import com.example.demo.entity.NhanVien;
+import com.example.demo.repository.NhanVienRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,85 +10,85 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.regex.Pattern;
-
 @Controller
 public class LoginController {
 
     @Autowired
-    private KhachHangRepository khachHangRepository;
+    private NhanVienRepository nhanVienRepository;
 
-    private static final String ADMIN_EMAIL = "admin@gmail.com";
+    private static final String ADMIN_USERNAME = "admin";
     private static final String ADMIN_PASSWORD = "admin123";
-
-    // Regex kiểm tra email hợp lệ
-    private static final Pattern EMAIL_REGEX = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}$");
 
     @GetMapping("/login")
     public String viewLogin(HttpSession session, Model model) {
-        session.invalidate(); // Xóa session để tránh tự động chuyển hướng
-        return "khachang/login/login";
+        session.invalidate(); // Xóa toàn bộ session
+        model.addAttribute("tenDangNhap", "");
+        return "quanly/login/login";
     }
 
     @PostMapping("/login")
     public String login(
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String password,
+            @RequestParam String tenDangNhap,
+            @RequestParam String matKhau,
             HttpSession session,
             Model model) {
 
         boolean hasError = false;
 
-        // Kiểm tra email
-        if (email == null || email.trim().isEmpty()) {
-            model.addAttribute("errorEmail", "⚠️ Email không được để trống!");
-            hasError = true;
-        } else if (!EMAIL_REGEX.matcher(email).matches()) {
-            model.addAttribute("errorEmail", "⚠️ Email không hợp lệ!");
+        // Kiểm tra tên đăng nhập rỗng
+        if (tenDangNhap.trim().isEmpty()) {
+            model.addAttribute("errorUsername", "⚠️ Tên đăng nhập không được để trống!");
             hasError = true;
         }
 
-        // Kiểm tra mật khẩu
-        if (password == null || password.trim().isEmpty()) {
+        // Kiểm tra mật khẩu rỗng
+        if (matKhau.trim().isEmpty()) {
             model.addAttribute("errorPassword", "⚠️ Mật khẩu không được để trống!");
             hasError = true;
         }
 
-        // Nếu có lỗi validate, giữ lại email đã nhập và hiển thị lại trang login
         if (hasError) {
-            model.addAttribute("email", email);
-            return "khachang/login/login";
+            model.addAttribute("tenDangNhap", tenDangNhap);
+            return "quanly/login/login";
         }
 
-        // Kiểm tra đăng nhập cho Admin trước
-        if (ADMIN_EMAIL.equals(email)) {
-            if (ADMIN_PASSWORD.equals(password)) {
+        // Kiểm tra Admin
+        if (ADMIN_USERNAME.equals(tenDangNhap)) {
+            if (ADMIN_PASSWORD.equals(matKhau)) {
                 session.setAttribute("userRole", "ADMIN");
+                session.setAttribute("userName", "Administrator");
                 return "redirect:/index";
             } else {
-                model.addAttribute("errorPassword", " Mật khẩu không chính xác!");
-                model.addAttribute("email", email);
-                return "khachang/login/login";
+                model.addAttribute("errorPassword", "⚠️ Mật khẩu không đúng!");
+                model.addAttribute("tenDangNhap", tenDangNhap);
+                return "quanly/login/login";
             }
         }
 
-        // Tìm khách hàng theo email
-        KhachHang khachHang = khachHangRepository.findByEmail(email);
+        // Kiểm tra nhân viên
+        NhanVien nhanVien = nhanVienRepository.findByTenDangNhap(tenDangNhap);
+        if (nhanVien != null) {
 
-        if (khachHang == null) {
-            model.addAttribute("errorEmail", " Email không tồn tại!");
-        } else if (!khachHang.getMatKhau().equals(password)) {
-            model.addAttribute("errorPassword", " Mật khẩu không chính xác!");
-        } else {
-            // Đăng nhập thành công
-            session.setAttribute("userRole", "USER");
-            session.setAttribute("userName", khachHang.getTenKhachHang());
-            return "redirect:/index";
+            if (nhanVien.getTrangThai() != null && nhanVien.getTrangThai() != 1) {
+                model.addAttribute("errorUsername", "⚠️ Tài khoản của bạn hiện đang bị vô hiệu hoá!");
+                return "quanly/login/login";
+            }
+
+            if (nhanVien.getMatKhau().equals(matKhau)) {
+                session.setAttribute("userRole", "EMPLOYEE");
+                session.setAttribute("userName", nhanVien.getTenNhanVien());
+                session.setAttribute("userPosition", nhanVien.getChucVu());
+                return "redirect:/index";
+            } else {
+                model.addAttribute("errorPassword", "⚠️ Mật khẩu không đúng!");
+                model.addAttribute("tenDangNhap", tenDangNhap);
+                return "quanly/login/login";
+            }
         }
 
-        // Giữ lại email đã nhập nếu có lỗi
-        model.addAttribute("email", email);
-        return "khachang/login/login";
+        // Nếu không tìm thấy tài khoản
+        model.addAttribute("errorUsername", "⚠️ Tên đăng nhập không tồn tại!");
+        return "quanly/login/login";
     }
 
 

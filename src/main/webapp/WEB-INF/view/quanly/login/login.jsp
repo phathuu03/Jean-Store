@@ -88,15 +88,16 @@
                     <h2 class="text-primary mb-4 mt-5">Login</h2>
                     <form action="/login" method="POST">
                         <div class="mb-3 form-group">
-                            <input type="email" name="email" class="form-control" placeholder="Enter your email" value="${email}">
-                            <i class="bi bi-envelope icon"></i>
-                            <c:if test="${not empty errorEmail}">
-                                <p class="error-message"> ${errorEmail}</p>
+                            <input type="text" name="tenDangNhap" class="form-control" placeholder="Enter your username" value="${tenDangNhap}">
+                            <i class="bi bi-person icon"></i>
+                            <c:if test="${not empty errorUsername}">
+                                <p class="error-message"> ${errorUsername}</p>
                             </c:if>
                         </div>
 
+
                         <div class="mb-3 form-group">
-                            <input type="password" name="password" class="form-control" placeholder="Enter your password">
+                            <input type="password" name="matKhau" class="form-control" placeholder="Enter your password">
                             <i class="bi bi-lock icon"></i>
                             <c:if test="${not empty errorPassword}">
                                 <p class="error-message"> ${errorPassword}</p>
@@ -113,9 +114,7 @@
 
                         <button type="submit" class="btn btn-primary w-100">Sign in</button>
 
-                        <p class="mt-3">Don't have an account? <a href="/register" class="text-primary">Register</a></p>
                     </form>
-
 
                 </div>
             </div>
