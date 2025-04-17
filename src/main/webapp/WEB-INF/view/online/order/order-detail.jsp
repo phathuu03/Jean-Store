@@ -162,11 +162,12 @@
     <c:forEach var="item" items="${hd}">
         <div class="order-container">
             <div class="order-header">
-                <div class="order-status">${item.trangThai}
+                <div class="text-primary" style="font-weight: bold;font-size: 20px">${item.trangThai}
                     <c:if test="${item.trangThai == 'Đã hủy'}">
-                        <div class="order-status">Lý do: ${item.ghiChu}</div>
+                        <div class="order-status" style="font-size: 17px">Lý do: ${item.ghiChu}</div>
                     </c:if>
                 </div>
+
             </div>
             <c:forEach items="${item.hoaDonChiTiets}" var="hdct">
                 <div class="order-item"

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,6 +25,7 @@ public class Voucher {
 
     private Integer soLuong;
 
+    @Min(value = 1)
     private Double phanTramGiamGia;
 
     private Double giamGiaToiDa;

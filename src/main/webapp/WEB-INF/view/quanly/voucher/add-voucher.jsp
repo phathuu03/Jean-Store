@@ -32,11 +32,12 @@
             <div class="col-md-6 mb-3">
                 <label for="phanTramGiamGia" class="form-label">Phần Trăm Giảm Giá</label>
                 <input type="number" id="phanTramGiamGia" name="phanTramGiamGia" class="form-control" min="0" max="100" required>
+                <p class="text-danger">${error2}</p>
             </div>
 
             <div class="col-md-6 mb-3">
                 <label for="dieuKienApDung" class="form-label">Điều Kiện Áp Dụng</label>
-                <input type="text" id="dieuKienApDung" name="dieuKienApDung" class="form-control" placeholder="Nhập điều kiện áp dụng" required>
+                <input type="number" id="dieuKienApDung" name="dieuKienApDung" class="form-control" min="0" placeholder="Nhập điều kiện áp dụng" required>
             </div>
         </div>
 
@@ -44,10 +45,12 @@
             <div class="col-md-6 mb-3">
                 <label for="giamGiaToiDa" class="form-label">Giảm Giá Tối Đa</label>
                 <input type="number" id="giamGiaToiDa" name="giamGiaToiDa" class="form-control" step="0.01" min="0" required>
+                <p class="text-danger">${error}</p>
             </div>
             <div class="col-md-6 mb-3">
                 <label for="ngayBatDau" class="form-label">Ngày Bắt Đầu</label>
                 <input type="date" id="ngayBatDau" name="ngayBatDau" class="form-control" required>
+                <p class="text-danger">${error1}</p>
             </div>
         </div>
             <div class="col-md-6 mb-3">

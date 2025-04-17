@@ -52,7 +52,7 @@ public class ThongKeController {
                 .sum();
         long tongPhiShip = hoaDonRepository.getTongPhiShip();
         long tongGiamGia = hoaDonRepository.getTongGiamGia();
-        long tongDoanhThuThucTe = Math.max(0, tongDoanhThu - (tongPhiShip + tongGiamGia));
+        long tongDoanhThuThucTe = Math.max(0, tongDoanhThu - tongPhiShip);
 
         List<Integer> doanhThuNam = new ArrayList<>(Collections.nCopies(3, 0));
         List<Object[]> doanhThuData = hoaDonRepository.getDoanhThuCacNam();
