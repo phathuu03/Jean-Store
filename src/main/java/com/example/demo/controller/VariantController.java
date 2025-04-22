@@ -30,7 +30,7 @@ public class VariantController {
 
         @GetMapping("/list-kich-thuoc")
         public String listKichThuoc(@RequestParam(defaultValue = "0") int page,
-                                    @RequestParam(defaultValue = "5") int size,
+                                    @RequestParam(defaultValue = "10") int size,
                                     Model model) {
             // Thiết lập Pageable để phân trang
             Pageable pageable = PageRequest.of(page, size);
@@ -50,7 +50,7 @@ public class VariantController {
 
     @GetMapping("/list-mau-sac")
     public String listMauSac(@RequestParam(defaultValue = "0") int page,
-                             @RequestParam(defaultValue = "5") int size,
+                             @RequestParam(defaultValue = "10") int size,
                              Model model) {
         // Thiết lập Pageable để phân trang
         Pageable pageable = PageRequest.of(page, size);

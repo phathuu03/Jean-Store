@@ -44,16 +44,25 @@ public class NhanVienController {
         return "quanly/nhanvien/add-nhanvien";
     }
 
-    @PostMapping("/nhan-vien/add")  // Đảm bảo đúng URL
+    @PostMapping("/nhan-vien/add")
     public String add(@ModelAttribute("nv") @Valid NhanVien nhanVien, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("errors", result.getAllErrors()); // Trả về lỗi để hiển thị
-            return "quanly/nhanvien/add-nhanvien";
+        // Kiểm tra xem tên đăng nhập đã tồn tại chưa
+        if (nhanVienRepository.existsByTenDangNhap(nhanVien.getTenDangNhap())) {
+            model.addAttribute("tenDangNhapError", "Tên đăng nhập đã tồn tại.");
+            return "quanly/nhanvien/add-nhanvien";  // Trả về lại form thêm nhân viên với lỗi
         }
 
+        // Kiểm tra nếu có lỗi khi validate
+        if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors());
+            return "quanly/nhanvien/add-nhanvien";  // Trả về lại form nếu có lỗi validate
+        }
+
+        // Nếu không có lỗi, lưu nhân viên vào cơ sở dữ liệu
         nhanVienRepository.save(nhanVien);
-        return "redirect:/nhan-vien/hien-thi";
+        return "redirect:/nhan-vien/hien-thi";  // Chuyển hướng về trang hiển thị danh sách nhân viên
     }
+
 
     @GetMapping("/nhan-vien/view-update/{id}")
     public String viewUpdateNhanVien(@PathVariable("id") Long id, Model model) {
@@ -69,16 +78,19 @@ public class NhanVienController {
     @PostMapping("/nhan-vien/update/{id}")
     public String updateNhanVien(@PathVariable("id") Long id, @ModelAttribute("nv") @Valid NhanVien nhanVien, BindingResult result) {
         if (result.hasErrors()) {
-            return "quanly/nhanvien/update-nhanvien";
+            return "quanly/nhanvien/update-nhanvien"; // Nếu có lỗi, quay lại trang sửa
         }
 
         if (nhanVienRepository.existsById(id)) {
             nhanVien.setId(id); // Đảm bảo ID không bị thay đổi
-            nhanVien.setNgaySua(new Date());
+            nhanVien.setNgaySua(new Date()); // Cập nhật ngày sửa
+
+            // Cập nhật thông tin nhân viên
             nhanVienRepository.save(nhanVien);
         }
 
-        return "redirect:/nhan-vien/hien-thi";
+        return "redirect:/nhan-vien/hien-thi"; // Quay lại trang danh sách nhân viên
     }
+
 
 }

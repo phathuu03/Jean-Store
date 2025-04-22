@@ -41,7 +41,6 @@
     </form>
 
     <div class="action-btns mb-3">
-        <button class="btn btn-primary">Xuất Excel</button>
         <a href="/voucher/view-add" class="btn btn-success">+ Tạo Mới</a>
     </div>
 

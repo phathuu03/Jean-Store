@@ -104,13 +104,13 @@
                             </c:if>
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
-                            </div>
-                            <a href="#" class="text-primary no-underline">Forgot password?</a>
-                        </div>
+<%--                        <div class="d-flex justify-content-between align-items-center mb-3">--%>
+<%--                            <div class="form-check">--%>
+<%--                                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">--%>
+<%--                                <label class="form-check-label" for="rememberMe">Remember me</label>--%>
+<%--                            </div>--%>
+<%--                            <a href="#" class="text-primary no-underline">Forgot password?</a>--%>
+<%--                        </div>--%>
 
                         <button type="submit" class="btn btn-primary w-100">Sign in</button>
 

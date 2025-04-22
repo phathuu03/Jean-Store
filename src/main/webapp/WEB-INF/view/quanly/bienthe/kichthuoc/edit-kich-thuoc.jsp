@@ -15,7 +15,7 @@
         <input type="hidden" name="id" value="${size.id}">
         <div class="mb-3">
             <label for="tenSize" class="form-label">Tên Kích Thước:</label>
-            <input type="text" class="form-control" name="tenSize" value="${size.tenSize}" required>
+            <input type="number" class="form-control" name="tenSize" value="${size.tenSize}" required>
         </div>
         <div class="mb-3">
             <label for="trangThai" class="form-label">Trạng Thái:</label>

@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -44,35 +46,32 @@
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label class="form-label">Giới Tính</label>
                     <div>
-                        <input type="radio" id="nam" name="gioiTinh" value="true" ${nv.gioiTinh ? 'checked' : ''}>
+                        <input type="radio" id="nam" name="gioiTinh" value="true" <c:if test="${nv.gioiTinh}">checked</c:if>>
                         <label for="nam">Nam</label>
 
-                        <input type="radio" id="nu" name="gioiTinh" value="false" ${!nv.gioiTinh ? 'checked' : ''}>
+                        <input type="radio" id="nu" name="gioiTinh" value="false" <c:if test="${!nv.gioiTinh}">checked</c:if>>
                         <label for="nu">Nữ</label>
                     </div>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="chucVu" class="form-label">Chức Vụ</label>
                     <select id="chucVu" name="chucVu" class="form-select" required>
-                        <option value="Nhân Viên" ${nv.chucVu == 'Nhân Viên' ? 'selected' : ''}>Nhân Viên</option>
-                        <option value="Quản Lý" ${nv.chucVu == 'Quản Lý' ? 'selected' : ''}>Quản Lý</option>
+                        <option value="Nhân Viên" <c:if test="${nv.chucVu == 'Nhân Viên'}">selected</c:if>>Nhân Viên</option>
+                        <option value="Quản Lý" <c:if test="${nv.chucVu == 'Quản Lý'}">selected</c:if>>Quản Lý</option>
                     </select>
                 </div>
             </div>
-
-
 
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="trangThai" class="form-label">Trạng Thái</label>
                     <select id="trangThai" name="trangThai" class="form-select" required>
-                        <option value="0" ${nv.trangThai == 1 ? 'selected' : ''}>Đang Làm</option>
-                        <option value="1" ${nv.trangThai == 0 ? 'selected' : ''}>Đã Nghỉ Làm</option>
+                        <option value="1" <c:if test="${nv.trangThai == 1}">selected</c:if>>Đang Làm</option>
+                        <option value="0" <c:if test="${nv.trangThai == 0}">selected</c:if>>Đã Nghỉ Làm</option>
                     </select>
                 </div>
             </div>

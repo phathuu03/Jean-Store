@@ -69,13 +69,21 @@ public class LoginController {
         NhanVien nhanVien = nhanVienRepository.findByTenDangNhap(tenDangNhap);
         if (nhanVien != null) {
 
+            // Kiểm tra trạng thái tài khoản nhân viên
             if (nhanVien.getTrangThai() != null && nhanVien.getTrangThai() != 1) {
                 model.addAttribute("errorUsername", "⚠️ Tài khoản của bạn hiện đang bị vô hiệu hoá!");
                 return "quanly/login/login";
             }
 
+            // Kiểm tra mật khẩu
             if (nhanVien.getMatKhau().equals(matKhau)) {
-                session.setAttribute("userRole", "EMPLOYEE");
+                // Nếu nhân viên có chức vụ là "Quản Lý", cấp quyền ADMIN
+                if ("Quản Lý".equals(nhanVien.getChucVu())) {
+                    session.setAttribute("userRole", "ADMIN");
+                } else {
+                    session.setAttribute("userRole", "EMPLOYEE");
+                }
+
                 session.setAttribute("userName", nhanVien.getTenNhanVien());
                 session.setAttribute("userPosition", nhanVien.getChucVu());
                 return "redirect:/index";
@@ -90,6 +98,7 @@ public class LoginController {
         model.addAttribute("errorUsername", "⚠️ Tên đăng nhập không tồn tại!");
         return "quanly/login/login";
     }
+
 
 
 }

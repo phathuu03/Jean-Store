@@ -53,7 +53,7 @@
         <div class="card-body">
             <form action="/api/quan-ly/add-size" method="post" class="mb-4 row g-3 align-items-center">
                 <div class="col-md-8">
-                    <input type="text" class="form-control" name="tenSize" placeholder="Nhập tên kích thước" required>
+                    <input type="number" class="form-control" name="tenSize" placeholder="Nhập tên kích thước" required>
                 </div>
                 <div class="col-md-3">
                     <select class="form-select" name="trangThai" required>

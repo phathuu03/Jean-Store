@@ -83,8 +83,8 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
-                <a href="/voucher/hien-thi" class="btn btn-secondary">Quay Lại
-                </a>
+            <a href="/voucher/hien-thi" class="btn btn-secondary">Quay Lại
+            </a>
         </form>
     </div>
 </div>

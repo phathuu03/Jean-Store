@@ -20,6 +20,7 @@
 
         .container {
             flex: 1;
+            padding-bottom: 60px; /* Dự phòng cho thanh phân trang */
         }
 
         .pagination-container {
@@ -35,6 +36,11 @@
 
         h2 {
             margin-top: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto; /* Cho phép cuộn bảng nếu quá rộng */
+            margin-bottom: 60px; /* Đảm bảo không bị che mất bởi thanh phân trang */
         }
     </style>
 </head>
@@ -78,37 +84,49 @@
     <div class="tab-content mt-3">
         <!-- Tab: Tất cả hóa đơn -->
         <div class="tab-pane fade show active" id="all">
-            <jsp:include page="table-hoa-don.jsp" />
+            <div class="table-container">
+                <jsp:include page="table-hoa-don.jsp" />
+            </div>
         </div>
         <!-- Tab trạng thái 0: Chờ xác nhận -->
         <div class="tab-pane fade" id="tab0">
-            <jsp:include page="table-hoa-don.jsp">
-                <jsp:param name="filter" value="0"/>
-            </jsp:include>
+            <div class="table-container">
+                <jsp:include page="table-hoa-don.jsp">
+                    <jsp:param name="filter" value="0"/>
+                </jsp:include>
+            </div>
         </div>
         <!-- Tab trạng thái 1: Chờ giao hàng -->
         <div class="tab-pane fade" id="tab1">
-            <jsp:include page="table-hoa-don.jsp">
-                <jsp:param name="filter" value="1"/>
-            </jsp:include>
+            <div class="table-container">
+                <jsp:include page="table-hoa-don.jsp">
+                    <jsp:param name="filter" value="1"/>
+                </jsp:include>
+            </div>
         </div>
         <!-- Tab trạng thái 2: Đang giao hàng -->
         <div class="tab-pane fade" id="tab2">
-            <jsp:include page="table-hoa-don.jsp">
-                <jsp:param name="filter" value="2"/>
-            </jsp:include>
+            <div class="table-container">
+                <jsp:include page="table-hoa-don.jsp">
+                    <jsp:param name="filter" value="2"/>
+                </jsp:include>
+            </div>
         </div>
         <!-- Tab trạng thái 3: Hoàn thành -->
         <div class="tab-pane fade" id="tab3">
-            <jsp:include page="table-hoa-don.jsp">
-                <jsp:param name="filter" value="3"/>
-            </jsp:include>
+            <div class="table-container">
+                <jsp:include page="table-hoa-don.jsp">
+                    <jsp:param name="filter" value="3"/>
+                </jsp:include>
+            </div>
         </div>
         <!-- Tab trạng thái 4: Đã hủy -->
         <div class="tab-pane fade" id="tab4">
-            <jsp:include page="table-hoa-don.jsp">
-                <jsp:param name="filter" value="4"/>
-            </jsp:include>
+            <div class="table-container">
+                <jsp:include page="table-hoa-don.jsp">
+                    <jsp:param name="filter" value="4"/>
+                </jsp:include>
+            </div>
         </div>
     </div>
 </div>
@@ -138,9 +156,6 @@
         <a href="/api/quan-ly/hoa-don/view-hoa-don?page=${totalPages - 1}&size=15&search=${search}" class="btn btn-outline-primary">Trang cuối</a>
     </c:if>
 </div>
-
-
-
 
 <!-- Bootstrap JS Bundle (bao gồm Popper) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.HinhAnh;
 import com.example.demo.entity.QuanJeans;
 import com.example.demo.services.*;
 import jakarta.validation.Valid;
@@ -12,13 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/api/quan-jean")
@@ -38,7 +32,7 @@ public class QuanJeansController {
 
     @GetMapping("/quanjeans")
     public String hienThiQuan(@RequestParam(defaultValue = "0") int page,
-                              @RequestParam(defaultValue = "5") int size,
+                              @RequestParam(defaultValue = "25") int size,
                               @RequestParam(defaultValue = "") String search, // Dùng cho tìm kiếm
                               Model model) {
         // Tạo Pageable cho phân trang
@@ -47,10 +41,10 @@ public class QuanJeansController {
 
         Page<QuanJeans> quanJeans;
 
-        if(!search.isEmpty()){
+        if (!search.isEmpty()) {
             quanJeans = quanJeansService.getAllQuanJean(search, pageable);
-        }else {
-            quanJeans = quanJeansService.getAllQuanJean( pageable);
+        } else {
+            quanJeans = quanJeansService.getAllQuanJean(pageable);
         }
 
         // Truyền vào model các dữ liệu liên quan đến phân trang và dữ liệu khác
@@ -69,15 +63,13 @@ public class QuanJeansController {
     }
 
 
-
-
     @PostMapping("/new-quan-jean")
     public String saveQuanJean(@Valid @ModelAttribute QuanJeans quanJeans,
                                BindingResult bindingResult,
                                Model model
     ) {
 
-        QuanJeans savedQuanJeans = quanJeansService.saveQuanJean(quanJeans);
+        quanJeansService.saveQuanJean(quanJeans);
         return "redirect:/api/quan-jean/quanjeans";  // Quay lại trang danh sách sản phẩm
     }
 

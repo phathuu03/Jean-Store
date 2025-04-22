@@ -318,7 +318,7 @@
             </div>
         </div>
 
-        <h4 class="text-center mt-4 text-info">Danh sách Chi Tiết Hóa Đơn</h4>
+        <h4 class="text-center mt-4 text-info">Danh sách sản phẩm có trong hóa đơn</h4>
 
 
         <div class="mt-3">
@@ -329,7 +329,7 @@
         </div>
 
         <div class="mt-4 text-center">
-            <a href="javascript:window.history.back()" class="btn btn-secondary me-2">Quay lại danh sách</a>
+            <a href="/view-trang-thai-don-hang" class="btn btn-secondary me-2">Quay lại danh sách</a>
         </div>
     </div>
 </div>

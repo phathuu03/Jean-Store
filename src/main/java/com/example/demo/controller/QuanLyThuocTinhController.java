@@ -14,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 @Controller
 @RequestMapping("/api/quan-ly")
 public class QuanLyThuocTinhController {
@@ -31,7 +33,7 @@ public class QuanLyThuocTinhController {
     @GetMapping("/chuyen-muc/chat-lieu")
     public String quanLyChuyenMucChatLieu(Model model,
                                           @RequestParam(defaultValue = "0") int page,
-                                          @RequestParam(defaultValue = "5") int size
+                                          @RequestParam(defaultValue = "10") int size
                                           ) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ChatLieu> pageChatLieu = chatLieuService.getAllChatLieu(pageable);
@@ -45,7 +47,7 @@ public class QuanLyThuocTinhController {
     @GetMapping("/chuyen-muc/ong-quan")
     public String quanLyChuyenMucOngQuan(Model model,
                                          @RequestParam(defaultValue = "0") int page,
-                                         @RequestParam(defaultValue = "5") int size) {
+                                         @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<OngQuan> pageOngQuan = ongQuanService.getAllOngQuan(pageable);
 
@@ -58,7 +60,7 @@ public class QuanLyThuocTinhController {
     @GetMapping("/chuyen-muc/thuong-hieu")
     public String quanLyChuyenMucThuongHieu(Model model,
                                             @RequestParam(defaultValue = "0") int page,
-                                            @RequestParam(defaultValue = "5") int size) {
+                                            @RequestParam(defaultValue = "10") int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<ThuongHieu> pageThuongHieu = thuongHieuService.getAllThuongHieu(pageable);
 
@@ -78,7 +80,7 @@ public class QuanLyThuocTinhController {
     @PostMapping("/new-chat-lieu")
     public String saveChatLieu(@ModelAttribute ChatLieu chatLieu,
                                @RequestParam(defaultValue = "0") int page,
-                               @RequestParam(defaultValue = "5") int size,
+                               @RequestParam(defaultValue = "10") int size,
                                Model model) {
         // Kiểm tra tên chất liệu đã tồn tại
         if(chatLieuService.exitsChatLieu(chatLieu.getTenChatLieu())){
@@ -147,6 +149,7 @@ public class QuanLyThuocTinhController {
     // Cập nhật ChatLieu
     @PostMapping("/update-chat-lieu")
     public String updateChatLieu(@ModelAttribute ChatLieu chatLieu) {
+        chatLieu.setNgaySua(new Date());
         chatLieuService.saveChatLieu(chatLieu); // Cập nhật thông tin
         return "redirect:/api/quan-ly/chuyen-muc/chat-lieu";
     }
@@ -161,6 +164,7 @@ public class QuanLyThuocTinhController {
 
     @PostMapping("/update-ong-quan")
     public String updateOngQuan(@ModelAttribute OngQuan ongQuan) {
+        ongQuan.setNgaySua(new Date());
         ongQuanService.saveOngQuan(ongQuan);
         return "redirect:/api/quan-ly/chuyen-muc/ong-quan";
     }
@@ -174,6 +178,7 @@ public class QuanLyThuocTinhController {
 
     @PostMapping("/update-thuong-hieu")
     public String updateThuongHieu(@ModelAttribute ThuongHieu thuongHieu) {
+        thuongHieu.setNgaySua(new Date());
         thuongHieuService.saveThuongHieu(thuongHieu);
         return "redirect:/api/quan-ly/chuyen-muc/thuong-hieu";
     }

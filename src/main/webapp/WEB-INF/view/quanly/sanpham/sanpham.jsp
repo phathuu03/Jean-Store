@@ -139,12 +139,12 @@
 <div class="pagination-container d-flex justify-content-center mt-4">
     <!-- Trang đầu -->
     <c:if test="${currentPage > 0}">
-        <a href="/api/quan-jean/quanjeans?page=0&size=5&search=${search}" class="btn btn-outline-primary me-2">Trang đầu</a>
+        <a href="/api/quan-jean/quanjeans?page=0&size=25&search=${search}" class="btn btn-outline-primary me-2">Trang đầu</a>
     </c:if>
 
     <!-- Trang trước -->
     <c:if test="${currentPage > 0}">
-        <a href="/api/quan-jean/quanjeans?page=${currentPage - 1}&size=5&search=${search}" class="btn btn-outline-primary me-2">Trang trước</a>
+        <a href="/api/quan-jean/quanjeans?page=${currentPage - 1}&size=25&search=${search}" class="btn btn-outline-primary me-2">Trang trước</a>
     </c:if>
 
     <!-- Trang hiện tại -->
@@ -152,12 +152,12 @@
 
     <!-- Trang tiếp theo -->
     <c:if test="${currentPage < totalPages - 1}">
-        <a href="/api/quan-jean/quanjeans?page=${currentPage + 1}&size=5&search=${search}" class="btn btn-outline-primary me-2">Trang tiếp theo</a>
+        <a href="/api/quan-jean/quanjeans?page=${currentPage + 1}&size=25&search=${search}" class="btn btn-outline-primary me-2">Trang tiếp theo</a>
     </c:if>
 
     <!-- Trang cuối -->
     <c:if test="${currentPage < totalPages - 1}">
-        <a href="/api/quan-jean/quanjeans?page=${totalPages - 1}&size=5&search=${search}" class="btn btn-outline-primary">Trang cuối</a>
+        <a href="/api/quan-jean/quanjeans?page=${totalPages - 1}&size=25&search=${search}" class="btn btn-outline-primary">Trang cuối</a>
     </c:if>
 </div>
 
