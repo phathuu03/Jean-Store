@@ -9,9 +9,11 @@ import com.example.demo.repository.QuanJeansChiTietRepository;
 import com.example.demo.repository.VoucherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +29,24 @@ public class HoaDonService {
     @Autowired
     VoucherRepository voucherRepository;
 
+
+    public Page<HoaDon> getAllHoaDon(Pageable pageable) {
+        // Lấy tất cả hóa đơn (không phân trang)
+        List<HoaDon> hoaDons = hoaDonRepository.findAll();
+
+        // Đảo ngược danh sách
+        Collections.reverse(hoaDons);
+
+        // Tính toán phạm vi phân trang
+        int start = pageable.getPageNumber() * pageable.getPageSize();
+        int end = Math.min((start + pageable.getPageSize()), hoaDons.size());
+
+        // Lấy một phần danh sách đã phân trang
+        List<HoaDon> paginatedList = hoaDons.subList(start, end);
+
+        // Tạo Page từ danh sách đã phân trang
+        return new PageImpl<>(paginatedList, pageable, hoaDons.size());
+    }
 
     public Page<HoaDon> getAll(Pageable pageable) {
         return hoaDonRepository.findAll(pageable);
@@ -53,7 +73,6 @@ public class HoaDonService {
         hoaDonRepository.save(hoaDon);
     }
 
-    public Page<HoaDon> getAllHoaDon (Pageable pageable) { return hoaDonRepository.findAll(pageable);}
 
 
     public Boolean xacNhanTrangThai(Long idHoaDon, List<String> errorMessages) {

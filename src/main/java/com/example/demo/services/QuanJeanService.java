@@ -6,10 +6,12 @@ import com.example.demo.entity.Size;
 import com.example.demo.repository.QuanJeansRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +21,23 @@ public class QuanJeanService {
     @Autowired
     private QuanJeansRepository quanJeansRepository;
 
+    // Phương thức lấy tất cả sản phẩm với phân trang và đảo ngược thứ tự
     public Page<QuanJeans> getAllQuanJean(Pageable pageable) {
-        return quanJeansRepository.findAll(pageable);
+        // Lấy tất cả sản phẩm
+        List<QuanJeans> allQuanJeans = quanJeansRepository.findAll();
+
+        // Đảo ngược thứ tự danh sách
+        Collections.reverse(allQuanJeans);
+
+        // Tính toán phạm vi phân trang
+        int start = pageable.getPageNumber() * pageable.getPageSize();
+        int end = Math.min((start + pageable.getPageSize()), allQuanJeans.size());
+
+        // Lấy danh sách đã phân trang từ danh sách đã đảo ngược
+        List<QuanJeans> paginatedQuanJeans = allQuanJeans.subList(start, end);
+
+        // Tạo Page từ danh sách đã phân trang
+        return new PageImpl<>(paginatedQuanJeans, pageable, allQuanJeans.size());
     }
     public Page<QuanJeans> getAllQuanJean(String search, Pageable pageable) {
         if (search == null || search.isEmpty()) {

@@ -36,7 +36,7 @@
             <th>Thành tiền</th>
             <th>Trạng Thái</th>
             <th>Khách Hàng</th>
-            <th>Nhân Viên</th>
+<%--            <th>Nhân Viên</th>--%>
             <th>Ngày Thanh Toán</th>
             <th>Hành động</th>
 
@@ -58,11 +58,11 @@
                             ${hoaDon.khachHang.tenKhachHang}
                         </c:if>
                     </td>
-                    <td>
-                        <c:if test="${hoaDon.nhanVien != null}">
-                            ${hoaDon.nhanVien.tenNhanVien}
-                        </c:if>
-                    </td>
+<%--                    <td>--%>
+<%--                        <c:if test="${hoaDon.nhanVien != null}">--%>
+<%--                            ${hoaDon.nhanVien.tenNhanVien}--%>
+<%--                        </c:if>--%>
+<%--                    </td>--%>
 
 
                     <td>
