@@ -32,4 +32,8 @@ public interface QuanJeansRepository extends JpaRepository<QuanJeans, Long> {
 
     Page<QuanJeans> findByTenSanPhamContainingIgnoreCase(String keyword,Pageable pageable);
 
+    @Query(value = "select * from QuanJeans qj where qj.maSanPham like %?1% or qj.tenSanPham like %?1%", nativeQuery = true)
+    Page<QuanJeans> findByTenSanPhamOrMaSanPhamContainingIgnoreCase(String keyword, Pageable pageable);
+
+
 }

@@ -45,7 +45,7 @@ public class QuanJeanService {
             return quanJeansRepository.findAll(pageable);
         } else {
             // Nếu có từ khóa tìm kiếm, tìm kiếm theo tên sản phẩm
-            return quanJeansRepository.findByTenSanPhamContainingIgnoreCase(search, pageable);
+            return quanJeansRepository.findByTenSanPhamOrMaSanPhamContainingIgnoreCase(search , pageable);
         }
     }
 

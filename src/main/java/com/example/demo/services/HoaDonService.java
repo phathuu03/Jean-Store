@@ -128,6 +128,7 @@ public class HoaDonService {
             // Cập nhật trạng thái hóa đơn và ghi chú
             if (allItemsAvailable && voucherAvailable) {
                 hd.setTrangThai(1); // Trạng thái "Chờ giao hàng"
+                hd.setNgaySua(new Date());
                 hd.setGhiChu("");  // Nếu mọi thứ ổn, ghi chú rỗng
                 updateHoaDon(hd);
             } else {
@@ -170,6 +171,7 @@ public class HoaDonService {
 
             // Thay đổi trạng thái hóa đơn thành "Đã hủy" (trạng thái = 4)
             hd.setTrangThai(4);
+            hd.setNgaySua(new Date());
             hd.setGhiChu("Cửa hàng đã hủy đơn hàng của bạn: " + cancelReason); // Lưu lý do hủy vào ghi chú
             updateHoaDon(hd); // Lưu lại hóa đơn với trạng thái và ghi chú mới
 
@@ -186,6 +188,7 @@ public class HoaDonService {
        HoaDon hd = findHoaDonById(idHoaDon);
        if(hd!= null){
            hd.setTrangThai(2);
+           hd.setNgaySua(new Date());
            updateHoaDon(hd);
            return true;
        }
@@ -198,6 +201,7 @@ public class HoaDonService {
        if(hd!= null){
            hd.setTrangThai(3);
            hd.setNgayThanhToan(new Date());
+           hd.setNgaySua(new Date());
            updateHoaDon(hd);
            return true;
        }

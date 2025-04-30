@@ -3,7 +3,6 @@
 <table class="table table-bordered table-striped">
     <thead class="table-dark">
     <tr>
-        <th>ID</th>
         <th>Mã sản phẩm</th>
         <th>Tên Sản Phẩm</th>
         <th>Trạng Thái</th>
@@ -14,10 +13,9 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="quanJeans" items="${listQuanJean}">
+    <c:forEach var="quanJeans" items="${listQuanJean}" >
         <c:if test="${empty param.filter || quanJeans.trangThai == param.filter}">
             <tr>
-                <td>${quanJeans.id}</td>
                 <td>${quanJeans.maSanPham}</td>
                 <td>${quanJeans.tenSanPham}</td>
                 <td>${quanJeans.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</td>

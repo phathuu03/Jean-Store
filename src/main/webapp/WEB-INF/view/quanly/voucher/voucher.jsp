@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -29,13 +30,13 @@
     <form th:action="@{/voucher/search}" method="get" id="searchForm" class="mb-4">
         <div class="row mb-3">
             <div class="col-md-6">
-            <input type="text" id="searchInput" name="keyword" class="form-control"
-                   th:value="${keyword}" placeholder="Tìm phiếu giảm giá">
+                <input type="text" id="searchInput" name="keyword" class="form-control"
+                       th:value="${keyword}" placeholder="Tìm phiếu giảm giá">
             </div>
             <div class="col-md-2">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-search"></i> Tìm kiếm
-                    </button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
             </div>
         </div>
     </form>
@@ -61,38 +62,39 @@
         </tr>
         </thead>
         <tbody>
-            <c:choose>
-                <c:when test="${not empty listVoucher}">
-                    <c:forEach items="${listVoucher}" var="voucher" varStatus="stt">
-                        <tr>
-                            <td>${(currentPage * size) + stt.index + 1}</td>
-                            <td>${voucher.tenVoucher}</td>
-                            <td>${voucher.moTa}</td>
-                            <td>${voucher.soLuong}</td>
-                            <td>${voucher.phanTramGiamGia}%</td>
-                            <td>${voucher.dieuKienApDung}</td>
-                            <td>${voucher.giamGiaToiDa}</td>
-                            <td>${voucher.ngayBatDau}</td>
-                            <td>${voucher.ngayKetThuc}</td>
-                            <td>${voucher.trangThai == 1 ? "Đang Diễn Ra" : "Đã Kết Thúc"}</td>
-                            <td>
-                                <div style="display: flex; gap: 10px;">
-                                    <a href="/voucher/detail/${voucher.id}" class="d-flex justify-content-center align-items-center p-2">
-                                        <i class="bi bi-eye-fill fs-5"></i>
-                                    </a>
-                                    <a href="/voucher/view-update/${voucher.id}" class="btn btn-secondary">Update</a>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </c:when>
-
-                <c:otherwise>
+        <c:choose>
+            <c:when test="${not empty listVoucher}">
+                <c:forEach items="${listVoucher}" var="voucher" varStatus="stt">
                     <tr>
-                        <td colspan="11" class="text-center text-danger">Không tìm thấy voucher nào phù hợp!</td>
+                        <td>${(currentPage * size) + stt.index + 1}</td>
+                        <td>${voucher.tenVoucher}</td>
+                        <td>${voucher.moTa}</td>
+                        <td>${voucher.soLuong}</td>
+                        <td>${voucher.phanTramGiamGia}%</td>
+                        <td><fmt:formatNumber value="${voucher.dieuKienApDung}" pattern="#,### VND"/></td>
+                        <td><fmt:formatNumber value="${voucher.giamGiaToiDa}" pattern="#,### VND"/></td>
+                        <td>${voucher.ngayBatDau}</td>
+                        <td>${voucher.ngayKetThuc}</td>
+                        <td>${voucher.trangThai == 1 ? "Đang Diễn Ra" : "Đã Kết Thúc"}</td>
+                        <td>
+                            <div style="display: flex; gap: 10px;">
+                                <a href="/voucher/detail/${voucher.id}"
+                                   class="d-flex justify-content-center align-items-center p-2">
+                                    <i class="bi bi-eye-fill fs-5"></i>
+                                </a>
+                                <a href="/voucher/view-update/${voucher.id}" class="btn btn-secondary">Update</a>
+                            </div>
+                        </td>
                     </tr>
-                </c:otherwise>
-            </c:choose>
+                </c:forEach>
+            </c:when>
+
+            <c:otherwise>
+                <tr>
+                    <td colspan="11" class="text-center text-danger">Không tìm thấy voucher nào phù hợp!</td>
+                </tr>
+            </c:otherwise>
+        </c:choose>
         </tbody>
 
 
@@ -135,34 +137,34 @@
 
     </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const pageSizeSelect = document.getElementById("pageSize");
-        const rows = document.querySelectorAll("#voucherTable tbody tr"); // Lấy đúng tbody tránh lỗi
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const pageSizeSelect = document.getElementById("pageSize");
+            const rows = document.querySelectorAll("#voucherTable tbody tr"); // Lấy đúng tbody tránh lỗi
 
-        function updateTable() {
-            const pageSize = parseInt(pageSizeSelect.value, 10);
+            function updateTable() {
+                const pageSize = parseInt(pageSizeSelect.value, 10);
 
-            if (rows.length === 0) {
-                console.warn("Không có voucher nào để hiển thị.");
-                return; // Tránh lỗi khi không có dữ liệu
+                if (rows.length === 0) {
+                    console.warn("Không có voucher nào để hiển thị.");
+                    return; // Tránh lỗi khi không có dữ liệu
+                }
+
+                // Hiển thị đúng số lượng voucher
+                rows.forEach((row, index) => {
+                    row.style.display = index < pageSize ? "table-row" : "none";
+                });
             }
 
-            // Hiển thị đúng số lượng voucher
-            rows.forEach((row, index) => {
-                row.style.display = index < pageSize ? "table-row" : "none";
-            });
-        }
+            // Set giá trị mặc định là 6 dòng khi tải trang
+            pageSizeSelect.value = "6";
+            updateTable();
 
-        // Set giá trị mặc định là 6 dòng khi tải trang
-        pageSizeSelect.value = "6";
-        updateTable();
+            // Lắng nghe thay đổi dropdown số lượng hiển thị
+            pageSizeSelect.addEventListener("change", updateTable);
+        });
 
-        // Lắng nghe thay đổi dropdown số lượng hiển thị
-        pageSizeSelect.addEventListener("change", updateTable);
-    });
-
-</script>
+    </script>
 
 </div>
 

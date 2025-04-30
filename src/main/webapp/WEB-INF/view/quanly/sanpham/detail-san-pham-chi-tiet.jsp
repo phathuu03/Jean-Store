@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -18,11 +19,13 @@
             width: 80px;
             height: 80px;
         }
+
         .image-container {
             position: relative;
             margin-right: 10px;
             margin-bottom: 10px;
         }
+
         .delete-icon {
             position: absolute;
             top: -5px;
@@ -39,14 +42,16 @@
             font-size: 14px;
             cursor: not-allowed; /* Thay đổi giao diện vì đã disable */
         }
+
         /* CSS cho overlay loading */
         #loadingOverlay {
             display: none;
             position: fixed;
-            top: 0; left: 0;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 9999;
             align-items: center;
             justify-content: center;
@@ -112,7 +117,8 @@
                     <label class="form-label fw-bold">Màu sắc:</label>
                     <select name="mauSac.id" class="form-select" disabled required>
                         <c:forEach var="mauSac" items="${listMauSac}">
-                            <option value="${mauSac.id}" <c:if test="${mauSac.id == quanJeansChiTiet.mauSac.id}">selected</c:if>>
+                            <option value="${mauSac.id}"
+                                    <c:if test="${mauSac.id == quanJeansChiTiet.mauSac.id}">selected</c:if>>
                                     ${mauSac.tenMauSac}
                             </option>
                         </c:forEach>
@@ -122,7 +128,8 @@
                     <label class="form-label fw-bold">Kích thước:</label>
                     <select name="size.id" class="form-select" disabled required>
                         <c:forEach var="size" items="${listSize}">
-                            <option value="${size.id}" <c:if test="${size.id == quanJeansChiTiet.size.id}">selected</c:if>>
+                            <option value="${size.id}"
+                                    <c:if test="${size.id == quanJeansChiTiet.size.id}">selected</c:if>>
                                     ${size.tenSize}
                             </option>
                         </c:forEach>
@@ -130,7 +137,8 @@
                 </div>
                 <div class="col-md-4">
                     <label class="form-label fw-bold">Số lượng:</label>
-                    <input type="number" name="soLuong" class="form-control" min="1" value="${quanJeansChiTiet.soLuong}" readonly required>
+                    <input type="number" name="soLuong" class="form-control" min="1" value="${quanJeansChiTiet.soLuong}"
+                           readonly required>
                 </div>
             </div>
 
@@ -160,7 +168,6 @@
 
                 </div>
             </div>
-
 
 
             <div id="imagePreview" class="d-flex flex-wrap mt-3"></div>

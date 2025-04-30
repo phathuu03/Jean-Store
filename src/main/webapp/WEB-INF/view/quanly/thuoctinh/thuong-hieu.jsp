@@ -72,7 +72,6 @@
                         <th>Tên Thương Hiệu</th>
                         <th>Trạng Thái</th>
                         <th>Ngày tạo</th>
-                        <th>Ngày sửa</th>
                         <th>Hành Động</th>
                     </tr>
                     </thead>
@@ -86,7 +85,6 @@
                                 </span>
                             </td>
                             <td><fmt:formatDate value="${thuongHieu.ngayTao}" pattern="dd/MM/yyyy" /></td>
-                            <td><fmt:formatDate value="${thuongHieu.ngaySua}" pattern="dd/MM/yyyy" /></td>
                             <td class="action-buttons">
                                 <a href="/api/quan-ly/edit-thuong-hieu/${thuongHieu.id}" class="btn btn-primary btn-sm w-100">Sửa</a>
                                 <a href="/api/quan-ly/delete-thuong-hieu/${thuongHieu.id}" class="btn btn-warning btn-sm w-100">Thay đổi trạng thái</a>

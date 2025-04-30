@@ -48,7 +48,7 @@
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h3 class="mb-0 text-info">Quản lý Chất Liệu</h3>
+            <h3 class="mb-0">Quản lý Chất Liệu</h3>
         </div>
         <div class="card-body">
             <form action="/api/quan-ly/new-chat-lieu" method="post" class="mb-4 row g-3 align-items-center">
@@ -79,7 +79,6 @@
                         <th>Tên Chất Liệu</th>
                         <th>Trạng Thái</th>
                         <th>Ngày tạo</th>
-                        <th>Ngày sửa</th>
                         <th>Hành Động</th>
                     </tr>
                     </thead>
@@ -93,7 +92,6 @@
                                 </span>
                             </td>
                             <td><fmt:formatDate value="${chatLieu.ngayTao}" pattern="dd/MM/yyyy" /></td>
-                            <td><fmt:formatDate value="${chatLieu.ngaySua}" pattern="dd/MM/yyyy" /></td>
                             <td class="action-buttons">
                                 <a href="/api/quan-ly/edit-chat-lieu/${chatLieu.id}" class="btn btn-primary btn-sm w-100">Sửa</a>
                                 <a href="/api/quan-ly/delete-chat-lieu/${chatLieu.id}" class="btn btn-warning btn-sm w-100">Thay đổi trạng thái</a>

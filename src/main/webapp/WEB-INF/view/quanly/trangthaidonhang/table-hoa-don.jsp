@@ -31,7 +31,6 @@
     <table class="table table-bordered table-striped custom-table">
         <thead class="table-dark">
         <tr>
-            <th>ID</th>
             <th>Mã hóa đơn</th>
             <th>Tổng Tiền</th>
             <th>Phí ship</th>
@@ -39,7 +38,6 @@
             <th>Thành tiền</th>
             <th>Trạng Thái</th>
             <th>Khách Hàng</th>
-            <th>Ngày Thanh Toán</th>
             <th>Hành động</th>
 
         </tr>
@@ -48,28 +46,19 @@
         <c:forEach var="hoaDon" items="${listHoaDon}">
             <c:if test="${empty param.filter || hoaDon.publicTrangThai == param.filter}">
                 <tr>
-                    <td>${hoaDon.id}</td>
                     <td>${hoaDon.maHoaDon}</td>
-                    <td>${hoaDon.tongTien}</td>
-                    <td>${hoaDon.phiShip}</td>
-                    <td>${hoaDon.giamGia}</td>
-                    <td>${hoaDon.thanhTien}</td>
+                    <td><fmt:formatNumber value="${hoaDon.tongTien}" pattern="#,### VND"/></td>
+                    <td><fmt:formatNumber value="${hoaDon.phiShip}" pattern="#,### VND"/></td>
+                    <td><fmt:formatNumber value="${hoaDon.giamGia}" pattern="#,### VND" /></td>
+                    <td><fmt:formatNumber value="${hoaDon.thanhTien}" pattern="#,### VND" /></td>
                     <td>${hoaDon.trangThai}</td>
                     <td>
                         <c:if test="${hoaDon.khachHang != null}">
                             ${hoaDon.khachHang.tenKhachHang}
                         </c:if>
                     </td>
-
-
-
                     <td>
-                        <c:if test="${hoaDon.ngayThanhToan != null}">
-                            <fmt:formatDate value="${hoaDon.ngayThanhToan}" pattern="dd/MM/yyyy"/>
-                        </c:if>
-                    </td>
-                    <td>
-                        <a href="http://localhost:8080/view/detai-trang-thai/${hoaDon.id}" class="btn btn-sm btn-info">Xem trạng thái đơn hàng</a>
+                        <a href="http://localhost:8080/view/detai-trang-thai/${hoaDon.id}" class="btn btn-sm btn-info">Cập nhật trạng thái đơn hàng</a>
 
                     </td>
                 </tr>

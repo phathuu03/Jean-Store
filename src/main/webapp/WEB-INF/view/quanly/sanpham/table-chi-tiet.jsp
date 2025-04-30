@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -79,7 +80,7 @@
                         <td>${chiTiet.id}</td>
                         <td>${chiTiet.mauSac.tenMauSac}</td>
                         <td>${chiTiet.size.tenSize}</td>
-                        <td>${chiTiet.gia} VND</td>
+                        <td><fmt:formatNumber value="${chiTiet.gia}" pattern="#,### VND" /></td>
                         <td>${chiTiet.soLuong}</td>
                         <td>${chiTiet.trangThai == 0 ? "Không hoạt động" : "Hoạt động"}</td>
                         <td>
