@@ -44,7 +44,7 @@
         <div class="mt-4 text-center">
             <a href="/api/quan-jeans-chi-tiet/add-san-pham-chi-tiet/${quanJeans.id}" class="btn btn-success me-2">Thêm sản phẩm chi tiết</a>
             <a href="/api/quan-jean/edit/${quanJeans.id}" class="btn btn-warning me-2">Chỉnh sửa</a>
-            <a href="javascript:window.history.back()" class="btn btn-secondary">Quay lại danh sách</a>
+            <a href="/api/quan-jean/quanjeans" class="btn btn-secondary">Quay lại danh sách</a>
         </div>
     </div>
 

@@ -15,6 +15,11 @@
             color: red;
         }
 
+        /* Đảm bảo container có đủ không gian cho bảng và phân trang */
+        .container {
+            padding-bottom: 80px; /* Dự phòng cho thanh phân trang */
+        }
+
         /* Thanh phân trang luôn ở dưới cùng */
         .pagination-container {
             position: fixed;
@@ -25,6 +30,12 @@
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
             padding: 10px 0;
             z-index: 100;
+        }
+
+        /* Đảm bảo bảng không bị che khuất bởi phân trang */
+        .table-container {
+            overflow-x: auto; /* Cho phép cuộn bảng nếu quá rộng */
+            margin-bottom: 80px; /* Đảm bảo không bị che mất bởi thanh phân trang */
         }
     </style>
     <script>
@@ -120,17 +131,23 @@
 
     <div class="tab-content mt-3">
         <div class="tab-pane fade show active" id="all">
-            <jsp:include page="table.jsp"/>
+            <div class="table-container">
+                <jsp:include page="table.jsp"/>
+            </div>
         </div>
         <div class="tab-pane fade" id="available">
-            <jsp:include page="table.jsp">
-                <jsp:param name="filter" value="1"/>
-            </jsp:include>
+            <div class="table-container">
+                <jsp:include page="table.jsp">
+                    <jsp:param name="filter" value="1"/>
+                </jsp:include>
+            </div>
         </div>
         <div class="tab-pane fade" id="outofstock">
-            <jsp:include page="table.jsp">
-                <jsp:param name="filter" value="0"/>
-            </jsp:include>
+            <div class="table-container">
+                <jsp:include page="table.jsp">
+                    <jsp:param name="filter" value="0"/>
+                </jsp:include>
+            </div>
         </div>
     </div>
 </div>

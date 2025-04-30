@@ -211,7 +211,7 @@
             <!-- Nút Submit & Hủy -->
             <div class="mt-4 text-center">
                 <button type="submit" class="btn btn-primary">Cập Nhật Chi Tiết</button>
-                <a href="javascript:window.history.back()" class="btn btn-secondary">Hủy</a>
+                <a href="${pageContext.request.contextPath}/api/quan-jean/detail/${quanJeans.id}" class="btn btn-secondary">Hủy</a>
             </div>
         </form>
     </div>

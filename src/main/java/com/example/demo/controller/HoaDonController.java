@@ -68,22 +68,17 @@ public class HoaDonController {
         if (!search.isEmpty()) {
             hoaDons = hoaDonService.searchHoaDon(search, pageable);  // Lấy kết quả tìm kiếm với phân trang
         } else {
-            hoaDons = hoaDonService.getAllHoaDon(pageable);  // Lấy tất cả hóa đơn với phân trang
+            hoaDons = hoaDonService.getAllHoaDon(pageable);  // Lấy tất cả hóa đơn với phân trang, đã đảo ngược
         }
 
-        // Đảo ngược thứ tự của danh sách hóa đơn
-        List<HoaDon> reversedHoaDons = new ArrayList<>(hoaDons.getContent());
-        Collections.reverse(reversedHoaDons);  // Đảo ngược danh sách
-
         // Thêm thông tin vào model
-        model.addAttribute("listHoaDon", reversedHoaDons);
+        model.addAttribute("listHoaDon", hoaDons.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", hoaDons.getTotalPages());
         model.addAttribute("search", search);  // Thêm search vào model để duy trì tìm kiếm trên các trang phân trang
 
         return "quanly/hoadon/hoadon";
     }
-
 
 
 

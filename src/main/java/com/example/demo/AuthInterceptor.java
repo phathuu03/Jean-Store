@@ -14,11 +14,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private static final List<String> EMPLOYEE_ALLOWED_PATHS = Arrays.asList(
             "/index",
             "/api/quan-ly/hoa-don",              // Quản lý hóa đơn
-            "/view-trang-thai-don-hang",         // Quản lý đơn hàng
-            "/api/quan-ly/chuyen-muc",           // Quản lý thuộc tính
-            "/api/quan-ly/list-mau-sac",         // Màu sắc
-            "/api/quan-ly/list-kich-thuoc",      // Kích thước
-            "/khach-hang"                        // Quản lý khách hàng
+            "/view-trang-thai-don-hang"         // Quản lý khách hàng
     );
 
     // Các đường dẫn không cần login (trang public)

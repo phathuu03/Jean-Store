@@ -81,17 +81,17 @@
                         </c:choose>
 
                     </li>
-                    <li class="list-group-item"><strong>Nhân Viên:</strong>
-                        <c:choose>
-                            <c:when test="${hoaDon.nhanVien != null}">
-                                ${hoaDon.nhanVien.tenNhanVien}
-                            </c:when>
-                            <c:otherwise>
-                                Không có thông tin nhân viên
-                            </c:otherwise>
-                        </c:choose>
+<%--                    <li class="list-group-item"><strong>Nhân Viên:</strong>--%>
+<%--                        <c:choose>--%>
+<%--                            <c:when test="${hoaDon.nhanVien != null}">--%>
+<%--                                ${hoaDon.nhanVien.tenNhanVien}--%>
+<%--                            </c:when>--%>
+<%--                            <c:otherwise>--%>
+<%--                                Không có thông tin nhân viên--%>
+<%--                            </c:otherwise>--%>
+<%--                        </c:choose>--%>
 
-                    </li>
+<%--                    </li>--%>
 
                     <li class="list-group-item"><strong>Phương Thức Thanh Toán:</strong>
                         <c:choose>

@@ -21,7 +21,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Lưu</button>
-        <a href="/api/quan-ly/quanly-thuonghieu-ongquan" class="btn btn-secondary">Hủy</a>
+        <a href="javascript:window.history.back()" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

@@ -23,19 +23,21 @@
                 <ul class="list-group">
                     <li class="list-group-item"><strong>ID:</strong> ${hoaDonChiTiet.id}</li>
                     <li class="list-group-item"><strong>Số lượng:</strong> ${hoaDonChiTiet.soLuong}</li>
-                    <li class="list-group-item"><strong>Đơn giá:</strong> ${hoaDonChiTiet.donGia}</li>
-                    <li class="list-group-item"><strong>Tổng tiền:</strong> ${hoaDonChiTiet.tongTien}</li>
+                    <li class="list-group-item"><strong>Đơn giá:</strong>
+                        <fmt:formatNumber value="${hoaDonChiTiet.donGia}" pattern="#,### VND"/></li>
+                    <li class="list-group-item"><strong>Tổng tiền:</strong> <fmt:formatNumber
+                            value="${hoaDonChiTiet.tongTien}" pattern="#,### VND"/></li>
                     <li class="list-group-item"><strong>Ngày Thanh Toán:</strong>
                         <c:if test="${hoaDonChiTiet.ngayThanhToan != null}">
-                            <fmt:formatDate value="${hoaDonChiTiet.ngayThanhToan}" pattern="dd/MM/yyyy" />
+                            <fmt:formatDate value="${hoaDonChiTiet.ngayThanhToan}" pattern="dd/MM/yyyy"/>
                         </c:if>
                     </li>
                     <li class="list-group-item"><strong>Ngày Tạo:</strong>
-                        <fmt:formatDate value="${hoaDonChiTiet.ngayTao}" pattern="dd/MM/yyyy" />
+                        <fmt:formatDate value="${hoaDonChiTiet.ngayTao}" pattern="dd/MM/yyyy"/>
                     </li>
-                    <li class="list-group-item"><strong>Ngày Sửa:</strong>
-                        <fmt:formatDate value="${hoaDonChiTiet.ngaySua}" pattern="dd/MM/yyyy" />
-                    </li>
+<%--                    <li class="list-group-item"><strong>Ngày Sửa:</strong>--%>
+<%--                        <fmt:formatDate value="${hoaDonChiTiet.ngaySua}" pattern="dd/MM/yyyy"/>--%>
+<%--                    </li>--%>
 
                 </ul>
             </div>
@@ -44,11 +46,7 @@
             <div class="col-md-6">
                 <h4 class="text-success">Thông tin bổ sung</h4>
                 <ul class="list-group">
-                    <li class="list-group-item"><strong>Hóa Đơn:</strong>
-                        <c:if test="${hoaDonChiTiet.hoaDon != null}">
-                            Hóa đơn #${hoaDonChiTiet.hoaDon.id}
-                        </c:if>
-                    </li>
+
                     <li class="list-group-item"><strong>Sản phẩm:</strong>
                         <c:if test="${hoaDonChiTiet.quanJeansChiTiet != null}">
                             ${hoaDonChiTiet.quanJeansChiTiet.quanJeans.tenSanPham}
@@ -68,8 +66,9 @@
 
         <!-- Nút điều hướng -->
         <div class="mt-4 text-center">
-<%--            <a href="/api/quan-ly/hoa-don/edit/hoa-don/${hoaDonChiTiet.id}" class="btn btn-warning me-2">Chỉnh sửa</a>--%>
-            <a href="/api/quan-ly/hoa-don/view/san-pham-chi-tiet/${hoaDonChiTiet.id}" class="btn btn-primary">Xem chi tiết sản phẩm</a>
+            <%--            <a href="/api/quan-ly/hoa-don/edit/hoa-don/${hoaDonChiTiet.id}" class="btn btn-warning me-2">Chỉnh sửa</a>--%>
+            <a href="/api/quan-ly/hoa-don/view/san-pham-chi-tiet/${hoaDonChiTiet.id}" class="btn btn-primary">Xem chi
+                tiết sản phẩm</a>
             <a href="javascript:window.history.back()" class="btn btn-secondary me-2">Quay lại danh sách</a>
         </div>
     </div>
