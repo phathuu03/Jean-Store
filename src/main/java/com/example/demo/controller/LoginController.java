@@ -78,7 +78,7 @@ public class LoginController {
             // Kiểm tra mật khẩu
             if (nhanVien.getMatKhau().equals(matKhau)) {
                 // Nếu nhân viên có chức vụ là "Quản Lý", cấp quyền ADMIN
-                if ("Quản Lý".equals(nhanVien.getChucVu())) {
+                if ("Quản Lý".equalsIgnoreCase(nhanVien.getChucVu())) {
                     session.setAttribute("userRole", "ADMIN");
                 } else {
                     session.setAttribute("userRole", "EMPLOYEE");
