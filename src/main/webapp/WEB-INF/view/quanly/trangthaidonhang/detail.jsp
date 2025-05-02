@@ -340,6 +340,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function confirmConfirm() {
+
+        if (!confirm("Bạn có chắc chắn muốn xác nhận đơn hàng này không?")) {
+            return false; // Nếu người dùng bấm Cancel
+        }
         var hoaDonId = ${hoaDon.id}; // Lấy ID hóa đơn từ JSP
 
         $.ajax({

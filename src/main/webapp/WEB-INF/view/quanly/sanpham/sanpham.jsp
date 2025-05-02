@@ -101,12 +101,12 @@
                     </div>
                     <div class="d-flex gap-3 mb-3">
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trangThai" value="0" checked>
-                            <label class="form-check-label">Còn hàng</label>
+                            <input class="form-check-input" type="radio" name="trangThai" value="1" checked>
+                            <label class="form-check-label">Hoạt động</label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="trangThai" value="1">
-                            <label class="form-check-label">Hết hàng</label>
+                            <input class="form-check-input" type="radio" name="trangThai" value="0">
+                            <label class="form-check-label">Không hoạt động</label>
                         </div>
                     </div>
                 </div>
