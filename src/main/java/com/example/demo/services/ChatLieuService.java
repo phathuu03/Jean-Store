@@ -34,6 +34,9 @@ public class ChatLieuService {
         return chatLieuRepository.existsChatLieuByTenChatLieu(tenChatLieu);
     }
 
+
+
+
     public Page<ChatLieu> getAllChatLieu(Pageable pageable) {
         return chatLieuRepository.findAll(pageable);
     }

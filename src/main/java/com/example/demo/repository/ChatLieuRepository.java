@@ -14,5 +14,6 @@ public interface ChatLieuRepository extends JpaRepository<ChatLieu, Long> {
     @Query(value = "select ChatLieu.TenChatLieu,ChatLieu.ID  from QuanJeans join ChatLieu on QuanJeans.ID_ChatLieu = ChatLieu.ID\n" +
             "where QuanJeans.TrangThai = 1 group by  ChatLieu.TenChatLieu,ChatLieu.ID", nativeQuery = true)
     List<Object[]> getChatLieuGroupByQuanJeans();
+
     boolean existsChatLieuByTenChatLieu(String tenChatLieu);
 }

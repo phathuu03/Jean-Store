@@ -26,6 +26,10 @@ public class KichThuocService {
         return sizeRepository.findAllByTrangThai(1);
     }
 
+    public Boolean exitsSize(String tenSize) {
+        return sizeRepository.existsChatLieuByTenSize(tenSize);
+    }
+
     // Lấy Kích thước theo ID
     public Size findById(Long id) {
         Optional<Size> size = sizeRepository.findById(id);
@@ -43,11 +47,11 @@ public class KichThuocService {
         Size size = findById(id);
         if (size != null) {
 
-            if(size.getTrangThai() == 0){
+            if (size.getTrangThai() == 0) {
                 size.setNgaySua(new Date());
                 size.setTrangThai(1);  // Đặt trạng thái thành "Không hoạt động"
                 save(size);
-            }else {
+            } else {
                 size.setNgaySua(new Date());
                 size.setTrangThai(0);  // Đặt trạng thái thành "Không hoạt động"
                 save(size);

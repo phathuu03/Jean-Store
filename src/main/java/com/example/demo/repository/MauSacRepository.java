@@ -21,4 +21,5 @@ public interface MauSacRepository extends JpaRepository<MauSac, Long> {
 
     List<MauSac> findAllByTrangThai(Integer trangThai);
 
+    boolean existsChatLieuByTenMauSac(String tenMauSac);
 }

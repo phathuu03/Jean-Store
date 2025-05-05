@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -70,21 +71,55 @@ public class VariantController {
 
 
 
-    // Xử lý thêm Màu sắc
+//    // Xử lý thêm Màu sắc
+//    @PostMapping("/add-mau-sac")
+//    public String addMauSac(@ModelAttribute MauSac mauSac) {
+//        mauSacService.save(mauSac);
+//        return "redirect:/api/quan-ly/list-mau-sac";  // Quay lại danh sách màu sắc
+//    }
+
     @PostMapping("/add-mau-sac")
-    public String addMauSac(@ModelAttribute MauSac mauSac) {
+    public String addMauSac(@ModelAttribute MauSac mauSac,
+                            RedirectAttributes redirectAttributes) {
+        // Kiểm tra tên màu sắc đã tồn tại
+        if(mauSacService.existsMauSac(mauSac.getTenMauSac())) {
+            // Nếu tên đã tồn tại, truyền thông báo lỗi và các thông tin phân trang
+            redirectAttributes.addFlashAttribute("error", "Tên màu sắc này đã tồn tại!");
+
+            return "redirect:/api/quan-ly/list-mau-sac";  // Redirect về trang quản lý Màu Sắc
+        }
+
+        // Lưu Màu Sắc nếu không có lỗi
         mauSacService.save(mauSac);
-        return "redirect:/api/quan-ly/list-mau-sac";  // Quay lại danh sách màu sắc
+        return "redirect:/api/quan-ly/list-mau-sac";  // Redirect về trang danh sách Màu Sắc
     }
+
 
 
 
     // Xử lý thêm Kích thước
+//    @PostMapping("/add-size")
+//    public String addSize(@ModelAttribute Size size) {
+//        sizeService.save(size);
+//        return "redirect:/api/quan-ly/list-kich-thuoc";  // Quay lại danh sách kích thước
+//    }
+
     @PostMapping("/add-size")
-    public String addSize(@ModelAttribute Size size) {
+    public String addSize(@ModelAttribute Size size,
+                          RedirectAttributes redirectAttributes) {
+        // Kiểm tra tên kích thước đã tồn tại
+        if(sizeService.exitsSize(size.getTenSize())) {
+            // Nếu tên đã tồn tại, truyền thông báo lỗi và các thông tin phân trang
+            redirectAttributes.addFlashAttribute("error", "Kích thước này đã tồn tại!");
+
+            return "redirect:/api/quan-ly/list-kich-thuoc";  // Redirect về trang quản lý Kích Thước
+        }
+
+        // Lưu Kích Thước nếu không có lỗi
         sizeService.save(size);
-        return "redirect:/api/quan-ly/list-kich-thuoc";  // Quay lại danh sách kích thước
+        return "redirect:/api/quan-ly/list-kich-thuoc";  // Redirect về trang danh sách Kích Thước
     }
+
 
     // Hiển thị form chỉnh sửa Màu sắc
     @GetMapping("/edit-mau-sac/{id}")
@@ -95,10 +130,23 @@ public class VariantController {
     }
 
     // Xử lý chỉnh sửa Màu sắc
+//    @PostMapping("/edit-mau-sac")
+//    public String updateMauSac( @ModelAttribute MauSac mauSac) {
+//        mauSac.setNgaySua(new Date());
+//        mauSacService.save(mauSac);
+//        return "redirect:/api/quan-ly/list-mau-sac";  // Quay lại danh sách màu sắc
+//    }
     @PostMapping("/edit-mau-sac")
-    public String updateMauSac( @ModelAttribute MauSac mauSac) {
+    public String updateMauSac(@ModelAttribute MauSac mauSac, RedirectAttributes redirectAttributes) {
+        // Kiểm tra tên màu sắc đã tồn tại và không phải là chính bản ghi hiện tại
+        if (mauSacService.existsMauSac(mauSac.getTenMauSac()) &&
+                !mauSacService.findById(mauSac.getId()).getTenMauSac().equals(mauSac.getTenMauSac())) {
+            redirectAttributes.addFlashAttribute("error", "Tên màu sắc này đã tồn tại!");
+            return "redirect:/api/quan-ly/edit-mau-sac/" + mauSac.getId();  // Quay lại trang chỉnh sửa
+        }
+
         mauSac.setNgaySua(new Date());
-        mauSacService.save(mauSac);
+        mauSacService.save(mauSac);  // Cập nhật thông tin
         return "redirect:/api/quan-ly/list-mau-sac";  // Quay lại danh sách màu sắc
     }
 
@@ -111,10 +159,23 @@ public class VariantController {
     }
 
     // Xử lý chỉnh sửa Kích thước
+//    @PostMapping("/edit-size")
+//    public String updateSize( @ModelAttribute Size size) {
+//        size.setNgaySua(new Date());
+//        sizeService.save(size);
+//        return "redirect:/api/quan-ly/list-kich-thuoc";  // Quay lại danh sách kích thước
+//    }
     @PostMapping("/edit-size")
-    public String updateSize( @ModelAttribute Size size) {
+    public String updateSize(@ModelAttribute Size size, RedirectAttributes redirectAttributes) {
+        // Kiểm tra tên kích thước đã tồn tại và không phải là chính bản ghi hiện tại
+        if (sizeService.exitsSize(size.getTenSize()) &&
+                !sizeService.findById(size.getId()).getTenSize().equals(size.getTenSize())) {
+            redirectAttributes.addFlashAttribute("error", "Kích thước này đã tồn tại!");
+            return "redirect:/api/quan-ly/edit-size/" + size.getId();  // Quay lại trang chỉnh sửa
+        }
+
         size.setNgaySua(new Date());
-        sizeService.save(size);
+        sizeService.save(size);  // Cập nhật thông tin
         return "redirect:/api/quan-ly/list-kich-thuoc";  // Quay lại danh sách kích thước
     }
 

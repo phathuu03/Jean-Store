@@ -15,4 +15,6 @@ public interface OngQuanRepository extends JpaRepository<OngQuan, Long> {
             "where QuanJeans.TrangThai = 1 group by OngQuan.TenOngQuan,OngQuan.ID", nativeQuery = true)
     List<Object[]> getOngQuanGroupByQuanJeans();
 
+    boolean existsChatLieuByTenOngQuan(String tenOngQuan);
+
 }

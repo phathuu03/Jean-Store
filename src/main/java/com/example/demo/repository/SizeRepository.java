@@ -18,4 +18,5 @@ public interface SizeRepository extends JpaRepository<Size, Long> {
     String getNameSize(@Param("id") Long id);
 
     List<Size> findAllByTrangThai(Integer trangThai);
+    boolean existsChatLieuByTenSize(String tenChatLieu);
 }
