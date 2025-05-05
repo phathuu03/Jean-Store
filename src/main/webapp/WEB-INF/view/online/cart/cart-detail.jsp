@@ -82,7 +82,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="item in cart">
+            <tr ng-repeat="item in cart track by item.idProductDetail">
                 <td><img ng-src="{{ item.image }}" width="50"></td>
                 <td>{{ item.name }}</td>
                 <td>{{ item.color }}</td>
