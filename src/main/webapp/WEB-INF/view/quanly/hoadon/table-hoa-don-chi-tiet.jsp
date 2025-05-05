@@ -9,10 +9,11 @@
     <tr>
         <th>Mã sản phẩm</th>
         <th>Tên sản phẩm</th>
+        <th>Màu sắc</th>
+        <th>Kích thước</th>
         <th>Số Lượng</th>
         <th>Đơn Giá</th>
         <th>Tổng Tiền</th>
-        <th>Hành động</th>
     </tr>
     </thead>
     <tbody>
@@ -21,18 +22,20 @@
             <tr>
                 <td>${hdct.quanJeansChiTiet.quanJeans.maSanPham}</td>
                 <td>${hdct.quanJeansChiTiet.quanJeans.tenSanPham}</td>
+                <td>${hdct.quanJeansChiTiet.mauSac.tenMauSac}</td>
+                <td>${hdct.quanJeansChiTiet.size.tenSize}</td>
                 <td>${hdct.soLuong}</td>
                 <td><fmt:formatNumber value="${hdct.donGia}" pattern="#,### VND"/>
                 </td>
                 <td><fmt:formatNumber value="${hdct.tongTien}" pattern="#,### VND"/>
                 </td>
 
-                <td>
-                    <!-- Giữ lại nút Detail (có thể bổ sung thêm hành động nếu cần) -->
-                    <a href="/api/quan-ly/hoa-don/view/hoa-don-chi-tiet/${hdct.id}" class="btn btn-info btn-sm">
-                        <i class="bi bi-eye-fill"></i> Detail
-                    </a>
-                </td>
+<%--                <td>--%>
+<%--                    <!-- Giữ lại nút Detail (có thể bổ sung thêm hành động nếu cần) -->--%>
+<%--                    <a href="/api/quan-ly/hoa-don/view/hoa-don-chi-tiet/${hdct.id}" class="btn btn-info btn-sm">--%>
+<%--                        <i class="bi bi-eye-fill"></i> Detail--%>
+<%--                    </a>--%>
+<%--                </td>--%>
             </tr>
         </c:if>
     </c:forEach>
