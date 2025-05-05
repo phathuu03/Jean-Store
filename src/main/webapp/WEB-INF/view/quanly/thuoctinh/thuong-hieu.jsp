@@ -51,6 +51,13 @@
             <h3 class="mb-0">Quản lý Thương Hiệu</h3>
         </div>
         <div class="card-body">
+            <!-- Hiển thị lỗi nếu có -->
+            <div class="mt-4 text-center">
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger">${error}</div>
+                </c:if>
+            </div>
+
             <form action="/api/quan-ly/new-thuong-hieu" method="post" class="mb-4 row g-3 align-items-center">
                 <div class="col-md-8">
                     <input type="text" class="form-control" name="tenThuongHieu" placeholder="Nhập tên thương hiệu" required>
@@ -105,35 +112,35 @@
             <!-- Trang đầu -->
             <c:if test="${currentPage > 0}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=0&size=5&search=${search}">Trang đầu</a>
+                    <a class="page-link" href="?page=0&size=10&search=${search}">Trang đầu</a>
                 </li>
             </c:if>
 
             <!-- Trang trước -->
             <c:if test="${currentPage > 0}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=${currentPage - 1}&size=5&search=${search}">Trang trước</a>
+                    <a class="page-link" href="?page=${currentPage - 1}&size=10&search=${search}">Trang trước</a>
                 </li>
             </c:if>
 
             <!-- Các trang số -->
             <c:forEach var="i" begin="0" end="${totalPages - 1}">
                 <li class="page-item ${i == currentPage ? 'active' : ''}">
-                    <a class="page-link" href="?page=${i}&size=5&search=${search}">${i + 1}</a>
+                    <a class="page-link" href="?page=${i}&size=10&search=${search}">${i + 1}</a>
                 </li>
             </c:forEach>
 
             <!-- Trang tiếp theo -->
             <c:if test="${currentPage < totalPages - 1}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=${currentPage + 1}&size=5&search=${search}">Trang tiếp theo</a>
+                    <a class="page-link" href="?page=${currentPage + 1}&size=10&search=${search}">Trang tiếp theo</a>
                 </li>
             </c:if>
 
             <!-- Trang cuối -->
             <c:if test="${currentPage < totalPages - 1}">
                 <li class="page-item">
-                    <a class="page-link" href="?page=${totalPages - 1}&size=5&search=${search}">Trang cuối</a>
+                    <a class="page-link" href="?page=${totalPages - 1}&size=10&search=${search}">Trang cuối</a>
                 </li>
             </c:if>
         </ul>

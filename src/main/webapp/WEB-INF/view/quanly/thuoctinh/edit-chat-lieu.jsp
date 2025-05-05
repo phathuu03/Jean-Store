@@ -11,6 +11,14 @@
 <body>
 <div class="container">
     <h2 class="text-center mb-4">Chỉnh sửa Chất Liệu</h2>
+
+    <!-- Hiển thị lỗi nếu có -->
+    <div class="mt-4 text-center">
+        <c:if test="${not empty error}">
+            <div class="alert alert-danger">${error}</div>
+        </c:if>
+    </div>
+
     <form action="/api/quan-ly/update-chat-lieu" method="post">
         <input type="hidden" name="id" value="${chatLieu.id}">
         <div class="mb-3">
@@ -25,7 +33,7 @@
             </select>
         </div>
         <button type="submit" class="btn btn-primary">Cập nhật</button>
-        <a href="javascript:window.history.back()" class="btn btn-secondary">Quay lại</a>
+        <a href="http://localhost:8080/api/quan-ly/chuyen-muc/chat-lieu" class="btn btn-secondary">Quay lại</a>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>

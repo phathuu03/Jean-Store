@@ -15,4 +15,6 @@ public interface ThuongHieuRepository extends JpaRepository<ThuongHieu, Long> {
             "where QuanJeans.TrangThai = 1 group by TenThuongHieu,ThuongHieu.ID", nativeQuery = true)
     List<Object[]> getThuongHieuGroupByQuanJeans();
 
+    boolean existsChatLieuByTenThuongHieu(String tenThuongHieu);
+
 }

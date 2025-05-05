@@ -24,6 +24,10 @@ public class ThuongHieuService {
         thuongHieu.setNgayTao(new Date());
         return thuongHieuRepository.save(thuongHieu);
     }
+    public Boolean existsThuongHieu(String tenThuongHieu){
+        return thuongHieuRepository.existsChatLieuByTenThuongHieu(tenThuongHieu);
+    }
+
     public List<ThuongHieu> getAllActiveThuongHieu() {
         return thuongHieuRepository.findAllByTrangThai(1);
     }

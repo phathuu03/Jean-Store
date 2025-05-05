@@ -24,6 +24,9 @@ public class MauSacService {
 
     public List<MauSac> findAllByTrangThai() { return mauSacRepository.findAllByTrangThai(1);
     }
+  public Boolean  existsMauSac(String tenMauSac){
+        return mauSacRepository.existsChatLieuByTenMauSac(tenMauSac);
+  }
 
 
 

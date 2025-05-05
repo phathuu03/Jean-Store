@@ -25,6 +25,10 @@ public class OngQuanService {
         return ongQuanRepository.findAllByTrangThai(1);
     }
 
+    public Boolean existsOngQuan(String tenOngQuan){
+        return ongQuanRepository.existsChatLieuByTenOngQuan(tenOngQuan);
+    }
+
     public OngQuan saveOngQuan(OngQuan ongQuan) {
 
         ongQuan.setNgayTao(new Date());
