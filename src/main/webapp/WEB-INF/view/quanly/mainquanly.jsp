@@ -112,6 +112,9 @@
                             Quản lý trạng thái đơn hàng
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/admin/logout" >Đăng xuất</a>
+                    </li>
                 </c:if>
 
                 <!-- Các mục chỉ hiển thị cho ADMIN -->
@@ -167,6 +170,9 @@
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/thong-ke" target="contentFrame">Thống kê</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="/admin/logout" >Đăng xuất</a>
+                    </li>
                 </c:if>
             </ul>
         </div>
@@ -182,6 +188,7 @@
                 </c:otherwise>
             </c:choose>
         </div>
+
     </div>
 </div>
 
